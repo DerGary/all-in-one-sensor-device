@@ -46,7 +46,7 @@ ota:
     password: !secret esp-password
 
 wifi:
-  ssid: "YOUR WIFI SSID"
+  ssid: !secret wifi-ssid
   password: !secret wifi-password
   output_power: 8.5dB ## you may need to increase this if the esp is far away from your wifi access point. This is the minimal output power and improves the reliability of the motion sensor.
 
