@@ -114,8 +114,8 @@ sensor:
   - platform: bme68x_bsec2
     temperature:
       name: "Temperature"
-      filters:
-        - offset: -0.5
+      # filters:
+      #   - offset: -0.5
     # pressure: ## I disabled the pressure as I don't need it and disabling everything you don't need helps in memory consumption.
     #   name: "Air Pressure"
     humidity:
