@@ -9,7 +9,7 @@ esphome:
 esp32:
   board: esp32dev
   framework:
-    type: arduino
+    type: esp-idf
 
 ## Remove this if you don't want to track bluetooth device presence.
 ## It is also better to comment this part out while you calibrate the ld2410 as this is very memory hungry and all the sensors of the ld2410 are also memory hungry. Disable all of the sensors that you don't need after calibration helps.
@@ -77,7 +77,6 @@ uart:
 
 ld2410:
   uart_id: ld2410_uart
-  throttle: 1000ms
   id: ld2410_comp
 
 sensor:
