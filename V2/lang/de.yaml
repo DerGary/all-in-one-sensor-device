@@ -1,0 +1,42 @@
+substitutions:
+  label_uptime: Betriebszeit
+  label_free_mem: Verfügbarer Arbeitsspeicher
+  label_wifi_signal: WiFi Signalstärke dB
+  label_brightness: Helligkeit
+  label_temperature: Temperatur
+  label_air_pressure: Luftdruck
+  label_humidity: Luftfeuchtigkeit
+  label_iaq: Luftqualitäts Index
+  label_co2: CO² (geschätzt)
+  label_voc: VOC
+  label_moving_distance: Bewegungsdistanz
+  label_still_distance: Stille Distanz
+  label_moving_energy: Bewegungsenergie
+  label_still_energy: Stille Energie
+  label_detection_distance: Erkennungsdistanz
+  label_iaq_accuracy: Luftqualitäts Genauigkeit
+  label_air_quality: Luftqualität
+  label_aq_50: Hervorragend
+  label_aq_100: Gut
+  label_aq_150: Leicht verunreinigt
+  label_aq_200: Mäßig verunreinigt
+  label_aq_250: Stark verunreinigt
+  label_aq_350: Massiv verunreinigt
+  label_aq_351: Extrem verunreinigt
+  label_error: Fehler
+  label_motion_sensor: Bewegungssensor
+  label_presence: Präsenz
+  label_moving_target: Bewegliches Ziel
+  label_still_target: Stilles Ziel
+  label_dev_mode: Entwicklungsmodus
+  label_ld2410_bluetooth_mode: LD2410 Bluetooth Modus
+  label_offset: Versatz
+  label_timeout: Zeitliche Begrenzung
+  label_max_move_distance_gate: Maximale Bewegungsziel Entfernung
+  label_max_still_distance_gate: Maximale Stille Ziel Entfernung
+  label_move_threshold: Bewegungsschwellenwert
+  label_still_threshold: Stille Schwellenwert
+  label_restart: Neustarten
+  label_presence_sensor: Präsenzsensor
+  label_factory_defaults: Werkseinstellungen
+  label_distance_resolution: Entfernungsauflösung

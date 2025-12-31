@@ -1,0 +1,17 @@
+sensor:
+  ## adds the bme280 sensors. see: https://esphome.io/components/sensor/bme280/
+  - platform: bme280_i2c
+    address: 0x76
+    temperature:
+      name: ${label_temperature}
+      icon: mdi:thermometer
+      filters:
+        - offset: !lambda return id(temperature_offset).state;
+    pressure:
+      name: ${label_air_pressure}
+    humidity:
+      name: ${label_humidity}
+      icon: mdi:water-percent
+      filters:
+        - offset: !lambda return id(humidity_offset).state;
+    update_interval: 3s

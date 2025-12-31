@@ -1,0 +1,327 @@
+substitutions:
+  friendly_name: CHANGEME # the friendly name of your device, can be anything.
+  bme680_temperature_offset: 5.8 # this can be changed to calibrate the sensor.
+
+packages:
+  ## choose which language you are using by uncommenting the correct line
+  # lang: !include lang/de.yaml
+  lang: !include lang/en.yaml
+  ## choose which sensor you are using by uncommenting the correct line
+  # bme680: !include sensors/bme680.yaml
+  bme280: !include sensors/bme280.yaml
+
+esphome:
+  name: changeme # the name of your device. It should not contain any special characters or whitespaces. the device can be found in the network by this name.
+  friendly_name: ${friendly_name}
+  #area: CHANGEME # the area where you deployed the device. optional
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+
+## Remove this if you don't want to track bluetooth device presence.
+esp32_ble_tracker:
+  scan_parameters:
+    active: True # Whether to send scan-request packets to devices to gather more info (like devicename)
+    interval: 211ms # suggested 211ms # default 320ms
+    window: 30ms # suggested 120ms # default 30ms
+
+## Remove this if you don't need to expand your home assistants bluetooth range
+bluetooth_proxy:
+  active: true
+
+## Enables logging, eats ram, only enable if necessary.
+# logger:
+#   level: DEBUG
+
+## should be disabled when BT Proxy is on due to memory consumption, may be necessary to debug issues
+web_server:
+  port: 80
+  auth:
+    username: !secret esp-username
+    password: !secret esp-password
+  local: true
+
+## Enables the Home Assistant API
+api:
+  encryption:
+    key: !secret esp-api-key
+
+## Enables to update the firmware over the air
+ota:
+  - platform: esphome
+    password: !secret esp-password
+
+wifi:
+  output_power: 8.5dB ## you may need to increase this if the esp is far away from your wifi access point. This is the minimal output power and improves the reliability of the motion sensor.
+  ssid: !secret wifi-ssid
+  password: !secret wifi-password
+  ap:
+    ssid: ESP Fallback Hotspot
+    password: !secret esp-password
+
+## adds support to choose your wifi through the esp fallback hotspot
+captive_portal:
+
+## setup the i2c bus and define the pins to use.
+i2c:
+  sda: GPIO21
+  scl: GPIO22
+  scan: true
+  id: bus_a
+
+## this sets up the uart connection to the LD2410B. If you have trouble reading sensor data you may have mixed up rx and tx bins so you can try to change them here.
+uart:
+  id: ld2410_uart
+  tx_pin: GPIO16
+  rx_pin: GPIO17
+  baud_rate: 256000
+  parity: NONE
+  stop_bits: 1
+
+ld2410:
+  uart_id: ld2410_uart
+
+sensor:
+  ## this will report the uptime of the device. If your device reboots unexpectedly you can see it in this value.
+  - platform: uptime
+    type: seconds
+    name: ${label_uptime}
+    update_interval: 60s
+    icon: mdi:timer-outline
+
+  ## this will report the free memory. If your device reboots unexpectedly it may be because there is not enough free memory. In my experience there must be at least 40-50kb available at all times for reliable operation.
+  - platform: template
+    name: ${label_free_mem}
+    lambda: return heap_caps_get_free_size(MALLOC_CAP_INTERNAL);
+    icon: "mdi:memory"
+    entity_category: diagnostic
+    state_class: measurement
+    unit_of_measurement: "b"
+    update_interval: 60s
+    disabled_by_default: true
+
+  ## this reports the wifi signal strength of your wifi access point. If you want to reduce or increase your wifi output power of your access point you can use this value for reference. This value does not reflect the output power of the esp device, but the output power of the wifi access point.
+  - platform: wifi_signal # Reports the WiFi signal strength/RSSI in dB
+    disabled_by_default: true
+    name: ${label_wifi_signal}
+    id: wifi_signal_db
+    update_interval: 1s
+    entity_category: "diagnostic"
+
+  ## adds the brightness sensor. See https://esphome.io/components/sensor/bh1750/
+  - platform: bh1750
+    name: ${label_brightness}
+    address: 0x23
+    update_interval: 3s
+    icon: "mdi:brightness-5"
+
+  ## adds the ld2410b sensor. see: https://esphome.io/components/sensor/ld2410/#ld2410-component
+  - platform: ld2410
+    moving_distance:
+      disabled_by_default: true
+      name: ${label_moving_distance}
+      icon: mdi:ruler
+    still_distance:
+      disabled_by_default: true
+      name: ${label_still_distance}
+      icon: mdi:ruler-square
+    moving_energy:
+      disabled_by_default: true
+      name: ${label_moving_energy}
+      icon: mdi:flash
+    still_energy:
+      disabled_by_default: true
+      name: ${label_still_energy}
+      icon: mdi:flash-outline
+    detection_distance:
+      disabled_by_default: true
+      name: ${label_detection_distance}
+      icon: mdi:radar
+    g0:
+      move_energy:
+        name: g0 ${label_moving_energy}
+      still_energy:
+        name: g0 ${label_still_energy}
+    g1:
+      move_energy:
+        name: g1 ${label_moving_energy}
+      still_energy:
+        name: g1 ${label_still_energy}
+    g2:
+      move_energy:
+        name: g2 ${label_moving_energy}
+      still_energy:
+        name: g2 ${label_still_energy}
+    g3:
+      move_energy:
+        name: g3 ${label_moving_energy}
+      still_energy:
+        name: g3 ${label_still_energy}
+    g4:
+      move_energy:
+        name: g4 ${label_moving_energy}
+      still_energy:
+        name: g4 ${label_still_energy}
+    g5:
+      move_energy:
+        name: g5 ${label_moving_energy}
+      still_energy:
+        name: g5 ${label_still_energy}
+    g6:
+      move_energy:
+        name: g6 ${label_moving_energy}
+      still_energy:
+        name: g6 ${label_still_energy}
+    g7:
+      move_energy:
+        name: g7 ${label_moving_energy}
+      still_energy:
+        name: g7 ${label_still_energy}
+    g8:
+      move_energy:
+        name: g8 ${label_moving_energy}
+      still_energy:
+        name: g8 ${label_still_energy}
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO27
+      mode:
+        input: true
+    name: ${label_motion_sensor}
+    device_class: motion
+    icon: mdi:motion-sensor
+
+  ## this reports wether the device is online.
+  - platform: status
+    icon: mdi:chip
+    name: "${friendly_name} Status"
+
+  ## sensors for ld2410
+  - platform: ld2410
+    has_target:
+      name: ${label_presence}
+      icon: mdi:account-eye-outline
+    has_moving_target:
+      name: ${label_moving_target}
+      icon: mdi:run
+    has_still_target:
+      name: ${label_still_target}
+      icon: mdi:human-handsdown
+
+switch:
+  ## these are necessary to disable the bluetooth function of the ld2410 and to enable engineering mode. Engineering mode is used to calibrate the sensor. You are only able to see and change the sensitivity when the engineering mode is enabled.
+  - platform: ld2410
+    engineering_mode:
+      name: ${label_dev_mode}
+      icon: mdi:tools
+    bluetooth:
+      name: ${label_ld2410_bluetooth_mode}
+      icon: mdi:bluetooth
+
+## These values are necessary to calibrate the sensor.
+number:
+  - platform: template
+    name: "${label_temperature} ${label_offset}"
+    id: temperature_offset
+    optimistic: true
+    min_value: -100
+    max_value: 100
+    step: 0.1
+    restore_value: true
+    initial_value: 0.0
+    unit_of_measurement: °C
+    icon: mdi:thermometer-plus
+  - platform: template
+    name: "${label_air_pressure} ${label_offset}"
+    id: humidity_offset
+    optimistic: true
+    min_value: -100
+    max_value: 100
+    step: 0.1
+    restore_value: true
+    initial_value: 0.0
+    unit_of_measurement: "%"
+    icon: mdi:water-plus
+
+  - platform: ld2410
+    timeout:
+      disabled_by_default: true
+      name: ${label_timeout}
+      icon: mdi:timer-cog-outline
+    max_move_distance_gate:
+      disabled_by_default: true
+      name: ${label_max_move_distance_gate}
+      icon: mdi:arrow-expand-horizontal
+    max_still_distance_gate:
+      disabled_by_default: true
+      name: ${label_max_still_distance_gate}
+      icon: mdi:arrow-expand
+    g0:
+      move_threshold:
+        name: g0 ${label_move_threshold}
+      still_threshold:
+        name: g0 ${label_still_threshold}
+    g1:
+      move_threshold:
+        name: g1 ${label_move_threshold}
+      still_threshold:
+        name: g1 ${label_still_threshold}
+    g2:
+      move_threshold:
+        name: g2 ${label_move_threshold}
+      still_threshold:
+        name: g2 ${label_still_threshold}
+    g3:
+      move_threshold:
+        name: g3 ${label_move_threshold}
+      still_threshold:
+        name: g3 ${label_still_threshold}
+    g4:
+      move_threshold:
+        name: g4 ${label_move_threshold}
+      still_threshold:
+        name: g4 ${label_still_threshold}
+    g5:
+      move_threshold:
+        name: g5 ${label_move_threshold}
+      still_threshold:
+        name: g5 ${label_still_threshold}
+    g6:
+      move_threshold:
+        name: g6 ${label_move_threshold}
+      still_threshold:
+        name: g6 ${label_still_threshold}
+    g7:
+      move_threshold:
+        name: g7 ${label_move_threshold}
+      still_threshold:
+        name: g7 ${label_still_threshold}
+    g8:
+      move_threshold:
+        name: g8 ${label_move_threshold}
+      still_threshold:
+        name: g8 ${label_still_threshold}
+
+button:
+  ## I use this button together with an automation to regularly restart the device. This helps in reliability.
+  - platform: restart
+    name: ${label_restart}
+    icon: mdi:restart
+  - platform: ld2410
+    factory_reset:
+      name: "${label_presence_sensor} ${label_factory_defaults}"
+      icon: mdi:factory
+    restart:
+      name: "${label_presence_sensor} ${label_restart}"
+      icon: mdi:restart-alert
+
+select:
+  - platform: ld2410
+    distance_resolution:
+      disabled_by_default: true
+      name: ${label_distance_resolution}
+      icon: mdi:resolution

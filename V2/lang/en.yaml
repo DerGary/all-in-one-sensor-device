@@ -1,0 +1,42 @@
+substitutions:
+  label_uptime: Uptime
+  label_free_mem: Available Memory
+  label_wifi_signal: WiFi Signal Strength dB
+  label_brightness: Brightness
+  label_temperature: Temperature
+  label_air_pressure: Air Pressure
+  label_humidity: Humidity
+  label_iaq: Air Quality Index
+  label_co2: CO² (approximated)
+  label_voc: VOC
+  label_moving_distance: Moving Distance
+  label_still_distance: Still Distance
+  label_moving_energy: Moving Energy
+  label_still_energy: Still Energy
+  label_detection_distance: Detection Distance
+  label_iaq_accuracy: Air Quality Accuracy
+  label_air_quality: Air Quality
+  label_aq_50: Excellent
+  label_aq_100: Good
+  label_aq_150: Lightly polluted
+  label_aq_200: Moderately polluted
+  label_aq_250: Heavily polluted
+  label_aq_350: Severely polluted
+  label_aq_351: Extremely polluted
+  label_error: Error
+  label_motion_sensor: Motion Sensor
+  label_presence: Presence
+  label_moving_target: Moving Target
+  label_still_target: Still Target
+  label_dev_mode: Engineering Mode
+  label_ld2410_bluetooth_mode: LD2410 Bluetooth Mode
+  label_offset: Offset
+  label_timeout: Timeout
+  label_max_move_distance_gate: Max Move Distance Gate
+  label_max_still_distance_gate: Max Still Distance Gate
+  label_move_threshold: Move Threshold
+  label_still_threshold: Still Threshold
+  label_restart: Restart
+  label_presence_sensor: Presence Sensor
+  label_factory_defaults: Factory Defaults
+  label_distance_resolution: Distance Resolution

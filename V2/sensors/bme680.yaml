@@ -1,0 +1,69 @@
+## adds the bme680 to the configuration. For information about the properties see: https://esphome.io/components/sensor/bme68x_bsec2/
+bme68x_bsec2_i2c:
+  address: 0x77
+  model: bme680
+  operating_age: 28d
+  sample_rate: LP
+  supply_voltage: 3.3V
+  temperature_offset: ${bme680_temperature_offset}
+
+sensor:
+  ## adds the bme680 sensors. see: https://esphome.io/components/sensor/bme68x_bsec2/
+  - platform: bme68x_bsec2
+    temperature:
+      name: ${label_temperature}
+      icon: mdi:thermometer
+      filters:
+        - offset: !lambda return id(temperature_offset).state;
+    pressure:
+      name: ${label_air_pressure}
+      icon: mdi:gauge
+    humidity:
+      name: ${label_humidity}
+      icon: mdi:water-percent
+      filters:
+        - offset: !lambda return id(humidity_offset).state;
+    iaq:
+      icon: mdi:check-decagram-outline
+      name: ${label_iaq}
+      id: iaq
+    co2_equivalent:
+      icon: mdi:molecule-co2
+      name: ${label_co2}
+    breath_voc_equivalent:
+      name: ${label_voc}
+      icon: mdi:cloud-outline
+
+text_sensor:
+  - platform: bme68x_bsec2
+    iaq_accuracy:
+      name: ${label_iaq_accuracy}
+      icon: mdi:check-decagram-outline
+  - platform: template
+    name: ${label_air_quality}
+    icon: "mdi:air-purifier"
+    lambda: |-
+      if ( int(id(iaq).state) <= 50) {
+        return {"${label_aq_50}"};
+      }
+      else if (int(id(iaq).state) >= 51 && int(id(iaq).state) <= 100) {
+        return {"${label_aq_100}"};
+      }
+      else if (int(id(iaq).state) >= 101 && int(id(iaq).state) <= 150) {
+        return {"${label_aq_150}"};
+      }
+      else if (int(id(iaq).state) >= 151 && int(id(iaq).state) <= 200) {
+        return {"${label_aq_200}"};
+      }
+      else if (int(id(iaq).state) >= 201 && int(id(iaq).state) <= 250) {
+        return {"${label_aq_250}"};
+      }
+      else if (int(id(iaq).state) >= 251 && int(id(iaq).state) <= 350) {
+        return {"${label_aq_350}"};
+      }
+      else if (int(id(iaq).state) >= 351) {
+        return {"${label_aq_351}"};
+      }
+      else {
+        return {"${label_error}"};
+      }
