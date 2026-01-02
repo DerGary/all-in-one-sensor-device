@@ -1,0 +1,170 @@
+ld2410:
+  uart_id: ld2410_uart
+
+sensor:
+  ## adds the ld2410b sensor. see: https://esphome.io/components/sensor/ld2410/#ld2410-component
+  - platform: ld2410
+    moving_distance:
+      disabled_by_default: true
+      name: ${label_moving_distance}
+      icon: mdi:ruler
+    still_distance:
+      disabled_by_default: true
+      name: ${label_still_distance}
+      icon: mdi:ruler-square
+    moving_energy:
+      disabled_by_default: true
+      name: ${label_moving_energy}
+      icon: mdi:flash
+    still_energy:
+      disabled_by_default: true
+      name: ${label_still_energy}
+      icon: mdi:flash-outline
+    detection_distance:
+      disabled_by_default: true
+      name: ${label_detection_distance}
+      icon: mdi:radar
+    g0:
+      move_energy:
+        name: g0 ${label_moving_energy}
+      still_energy:
+        name: g0 ${label_still_energy}
+    g1:
+      move_energy:
+        name: g1 ${label_moving_energy}
+      still_energy:
+        name: g1 ${label_still_energy}
+    g2:
+      move_energy:
+        name: g2 ${label_moving_energy}
+      still_energy:
+        name: g2 ${label_still_energy}
+    g3:
+      move_energy:
+        name: g3 ${label_moving_energy}
+      still_energy:
+        name: g3 ${label_still_energy}
+    g4:
+      move_energy:
+        name: g4 ${label_moving_energy}
+      still_energy:
+        name: g4 ${label_still_energy}
+    g5:
+      move_energy:
+        name: g5 ${label_moving_energy}
+      still_energy:
+        name: g5 ${label_still_energy}
+    g6:
+      move_energy:
+        name: g6 ${label_moving_energy}
+      still_energy:
+        name: g6 ${label_still_energy}
+    g7:
+      move_energy:
+        name: g7 ${label_moving_energy}
+      still_energy:
+        name: g7 ${label_still_energy}
+    g8:
+      move_energy:
+        name: g8 ${label_moving_energy}
+      still_energy:
+        name: g8 ${label_still_energy}
+
+binary_sensor:
+  ## sensors for ld2410
+  - platform: ld2410
+    has_target:
+      name: ${label_presence}
+      icon: mdi:account-eye-outline
+    has_moving_target:
+      name: ${label_moving_target}
+      icon: mdi:run
+    has_still_target:
+      name: ${label_still_target}
+      icon: mdi:human-handsdown
+
+switch:
+  ## these are necessary to disable the bluetooth function of the ld2410 and to enable engineering mode. Engineering mode is used to calibrate the sensor. You are only able to see and change the sensitivity when the engineering mode is enabled.
+  - platform: ld2410
+    engineering_mode:
+      name: ${label_dev_mode}
+      icon: mdi:tools
+    bluetooth:
+      name: ${label_ld2410_bluetooth_mode}
+      icon: mdi:bluetooth
+
+number:
+  - platform: ld2410
+    timeout:
+      disabled_by_default: true
+      name: ${label_timeout}
+      icon: mdi:timer-cog-outline
+    max_move_distance_gate:
+      disabled_by_default: true
+      name: ${label_max_move_distance_gate}
+      icon: mdi:arrow-expand-horizontal
+    max_still_distance_gate:
+      disabled_by_default: true
+      name: ${label_max_still_distance_gate}
+      icon: mdi:arrow-expand
+    g0:
+      move_threshold:
+        name: g0 ${label_move_threshold}
+      still_threshold:
+        name: g0 ${label_still_threshold}
+    g1:
+      move_threshold:
+        name: g1 ${label_move_threshold}
+      still_threshold:
+        name: g1 ${label_still_threshold}
+    g2:
+      move_threshold:
+        name: g2 ${label_move_threshold}
+      still_threshold:
+        name: g2 ${label_still_threshold}
+    g3:
+      move_threshold:
+        name: g3 ${label_move_threshold}
+      still_threshold:
+        name: g3 ${label_still_threshold}
+    g4:
+      move_threshold:
+        name: g4 ${label_move_threshold}
+      still_threshold:
+        name: g4 ${label_still_threshold}
+    g5:
+      move_threshold:
+        name: g5 ${label_move_threshold}
+      still_threshold:
+        name: g5 ${label_still_threshold}
+    g6:
+      move_threshold:
+        name: g6 ${label_move_threshold}
+      still_threshold:
+        name: g6 ${label_still_threshold}
+    g7:
+      move_threshold:
+        name: g7 ${label_move_threshold}
+      still_threshold:
+        name: g7 ${label_still_threshold}
+    g8:
+      move_threshold:
+        name: g8 ${label_move_threshold}
+      still_threshold:
+        name: g8 ${label_still_threshold}
+
+select:
+  - platform: ld2410
+    distance_resolution:
+      disabled_by_default: true
+      name: ${label_distance_resolution}
+      icon: mdi:resolution
+
+button:
+  - platform: ld2410
+    factory_reset:
+      name: "${label_presence_sensor} ${label_factory_defaults}"
+      icon: mdi:factory
+    restart:
+      name: "${label_presence_sensor} ${label_restart}"
+      icon: mdi:restart-alert

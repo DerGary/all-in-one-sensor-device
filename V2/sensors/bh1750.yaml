@@ -1,0 +1,7 @@
+sensor:
+  ## adds the brightness sensor. See https://esphome.io/components/sensor/bh1750/
+  - platform: bh1750
+    name: ${label_brightness}
+    address: 0x23
+    update_interval: 3s
+    icon: "mdi:brightness-5"

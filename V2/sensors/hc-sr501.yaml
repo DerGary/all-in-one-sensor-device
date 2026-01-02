@@ -1,0 +1,9 @@
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO27
+      mode:
+        input: true
+    name: ${label_motion_sensor}
+    device_class: motion
+    icon: mdi:motion-sensor
