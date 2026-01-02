@@ -16,6 +16,7 @@ sensor:
       filters:
         - offset: !lambda return id(temperature_offset).state;
     pressure:
+      disabled_by_default: true
       name: ${label_air_pressure}
       icon: mdi:gauge
     humidity:

@@ -1,3 +1,12 @@
+## this sets up the uart connection to the LD2410B. If you have trouble reading sensor data you may have mixed up rx and tx bins so you can try to change them here.
+uart:
+  id: ld2410_uart
+  tx_pin: ${tx_pin}
+  rx_pin: ${rx_pin}
+  baud_rate: 256000
+  parity: NONE
+  stop_bits: 1
+
 ld2410:
   uart_id: ld2410_uart
 
@@ -77,9 +86,11 @@ binary_sensor:
       name: ${label_presence}
       icon: mdi:account-eye-outline
     has_moving_target:
+      disabled_by_default: true
       name: ${label_moving_target}
       icon: mdi:run
     has_still_target:
+      disabled_by_default: true
       name: ${label_still_target}
       icon: mdi:human-handsdown
 

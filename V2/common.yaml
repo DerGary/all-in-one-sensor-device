@@ -22,27 +22,27 @@ bluetooth_proxy:
 web_server:
   port: 80
   auth:
-    username: !secret esp-username
-    password: !secret esp-password
+    username: ${username}
+    password: ${password}
   local: true
 
 ## Enables the Home Assistant API
 api:
   encryption:
-    key: !secret esp-api-key
+    key: ${api_key}
 
 ## Enables to update the firmware over the air
 ota:
   - platform: esphome
-    password: !secret esp-password
+    password: ${password}
 
 wifi:
   output_power: ${wifi_output_power}
-  ssid: !secret wifi-ssid
-  password: !secret wifi-password
+  ssid: ${wifi_ssid}
+  password: ${wifi_password}
   ap:
     ssid: ESP Fallback Hotspot
-    password: !secret esp-password
+    password: ${password}
 
 ## adds support to choose your wifi through the esp fallback hotspot
 captive_portal:
@@ -90,7 +90,7 @@ number:
     max_value: 100
     step: 0.1
     restore_value: true
-    initial_value: 0.0
+    initial_value: ${temperature_offset_initial_value}
     unit_of_measurement: °C
     icon: mdi:thermometer-plus
   - platform: template
@@ -101,7 +101,7 @@ number:
     max_value: 100
     step: 0.1
     restore_value: true
-    initial_value: 0.0
+    initial_value: ${humidity_offset_initial_value}
     unit_of_measurement: "%"
     icon: mdi:water-plus
 

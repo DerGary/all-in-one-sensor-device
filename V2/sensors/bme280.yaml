@@ -9,6 +9,7 @@ sensor:
         - offset: !lambda return id(temperature_offset).state;
     pressure:
       name: ${label_air_pressure}
+      disabled_by_default: true
     humidity:
       name: ${label_humidity}
       icon: mdi:water-percent
