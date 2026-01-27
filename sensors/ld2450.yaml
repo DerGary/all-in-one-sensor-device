@@ -1,0 +1,350 @@
+uart:
+  - id: ld2450_uart
+    tx_pin: ${tx_pin}
+    rx_pin: ${rx_pin}
+    baud_rate: 256000
+    parity: NONE
+    stop_bits: 1
+
+ld2450:
+  id: ld2450_radar
+  uart_id: ld2450_uart
+
+binary_sensor:
+  - platform: ld2450
+    ld2450_id: ld2450_radar
+    has_target:
+      disabled_by_default: true
+      id: ld2450_presence
+      name: LD2450 ${label_presence}
+      icon: mdi:account-eye-outline
+      web_server:
+        sorting_group_id: ld2450_group
+    has_moving_target:
+      disabled_by_default: true
+      name: LD2450 ${label_moving_target}
+      icon: mdi:run
+      web_server:
+        sorting_group_id: ld2450_group
+    has_still_target:
+      disabled_by_default: true
+      name: LD2450 ${label_still_target}
+      icon: mdi:human-handsdown
+      web_server:
+        sorting_group_id: ld2450_group
+
+sensor:
+  - platform: ld2450
+    ld2450_id: ld2450_radar
+    target_count:
+      disabled_by_default: true
+      name: LD2450 ${label_presence_target} ${label_count}
+      web_server:
+        sorting_group_id: ld2450_group
+    still_target_count:
+      disabled_by_default: true
+      name: LD2450 ${label_still_target} ${label_count}
+      web_server:
+        sorting_group_id: ld2450_group
+    moving_target_count:
+      disabled_by_default: true
+      name: LD2450 ${label_moving_target} ${label_count}
+      web_server:
+        sorting_group_id: ld2450_group
+    target_1:
+      x:
+        disabled_by_default: true
+        name: LD2450 ${label_target}-1 X
+        web_server:
+          sorting_group_id: ld2450_group
+      y:
+        disabled_by_default: true
+        name: LD2450 ${label_target}-1 Y
+        web_server:
+          sorting_group_id: ld2450_group
+      speed:
+        disabled_by_default: true
+        name: LD2450 ${label_target}-1 ${label_speed}
+        web_server:
+          sorting_group_id: ld2450_group
+      angle:
+        disabled_by_default: true
+        name: LD2450 ${label_target}-1 ${label_angle}
+        web_server:
+          sorting_group_id: ld2450_group
+      distance:
+        disabled_by_default: true
+        name: LD2450 ${label_target}-1 ${label_distance}
+        web_server:
+          sorting_group_id: ld2450_group
+      resolution:
+        disabled_by_default: true
+        name: LD2450 ${label_target}-1 ${label_resolution}
+        web_server:
+          sorting_group_id: ld2450_group
+    target_2:
+      x:
+        disabled_by_default: true
+        name: LD2450 ${label_target}-2 X
+        web_server:
+          sorting_group_id: ld2450_group
+      y:
+        disabled_by_default: true
+        name: LD2450 ${label_target}-2 Y
+        web_server:
+          sorting_group_id: ld2450_group
+      speed:
+        disabled_by_default: true
+        name: LD2450 ${label_target}-2 ${label_speed}
+        web_server:
+          sorting_group_id: ld2450_group
+      angle:
+        disabled_by_default: true
+        name: LD2450 ${label_target}-2 ${label_angle}
+        web_server:
+          sorting_group_id: ld2450_group
+      distance:
+        disabled_by_default: true
+        name: LD2450 ${label_target}-2 ${label_distance}
+        web_server:
+          sorting_group_id: ld2450_group
+      resolution:
+        disabled_by_default: true
+        name: LD2450 ${label_target}-2 ${label_resolution}
+        web_server:
+          sorting_group_id: ld2450_group
+    target_3:
+      x:
+        disabled_by_default: true
+        name: LD2450 ${label_target}-3 X
+        web_server:
+          sorting_group_id: ld2450_group
+      y:
+        disabled_by_default: true
+        name: LD2450 ${label_target}-3 Y
+        web_server:
+          sorting_group_id: ld2450_group
+      speed:
+        disabled_by_default: true
+        name: LD2450 ${label_target}-3 ${label_speed}
+        web_server:
+          sorting_group_id: ld2450_group
+      angle:
+        disabled_by_default: true
+        name: LD2450 ${label_target}-3 ${label_angle}
+        web_server:
+          sorting_group_id: ld2450_group
+      distance:
+        disabled_by_default: true
+        name: LD2450 ${label_target}-3 ${label_distance}
+        web_server:
+          sorting_group_id: ld2450_group
+      resolution:
+        disabled_by_default: true
+        name: LD2450 ${label_target}-3 ${label_resolution}
+        web_server:
+          sorting_group_id: ld2450_group
+    zone_1:
+      target_count:
+        name: LD2450 ${label_zone}-1 ${label_target} ${label_count}
+        accuracy_decimals: 0
+        web_server:
+          sorting_group_id: ld2450_group
+      still_target_count:
+        name: LD2450 ${label_zone}-1 ${label_still_target} ${label_count}
+        disabled_by_default: true
+        accuracy_decimals: 0
+        web_server:
+          sorting_group_id: ld2450_group
+      moving_target_count:
+        name: LD2450 ${label_zone}-1 ${label_moving_target} ${label_count}
+        accuracy_decimals: 0
+        disabled_by_default: true
+        web_server:
+          sorting_group_id: ld2450_group
+    zone_2:
+      target_count:
+        name: LD2450 ${label_zone}-2 ${label_target} ${label_count}
+        accuracy_decimals: 0
+        web_server:
+          sorting_group_id: ld2450_group
+      still_target_count:
+        name: LD2450 ${label_zone}-2 ${label_still_target} ${label_count}
+        disabled_by_default: true
+        accuracy_decimals: 0
+        web_server:
+          sorting_group_id: ld2450_group
+      moving_target_count:
+        name: LD2450 ${label_zone}-2 ${label_moving_target} ${label_count}
+        disabled_by_default: true
+        accuracy_decimals: 0
+        web_server:
+          sorting_group_id: ld2450_group
+    zone_3:
+      target_count:
+        name: LD2450 ${label_zone}-3 ${label_target} ${label_count}
+        accuracy_decimals: 0
+        web_server:
+          sorting_group_id: ld2450_group
+      still_target_count:
+        name: LD2450 ${label_zone}-3 ${label_still_target} ${label_count}
+        disabled_by_default: true
+        accuracy_decimals: 0
+        web_server:
+          sorting_group_id: ld2450_group
+      moving_target_count:
+        name: LD2450 ${label_zone}-3 ${label_moving_target} ${label_count}
+        disabled_by_default: true
+        accuracy_decimals: 0
+        web_server:
+          sorting_group_id: ld2450_group
+
+switch:
+  - platform: ld2450
+    ld2450_id: ld2450_radar
+    bluetooth:
+      disabled_by_default: true
+      entity_category: diagnostic
+      name: "LD2450 ${label_bluetooth_mode}"
+      icon: mdi:bluetooth
+      web_server:
+        sorting_group_id: ld2450_group
+    multi_target:
+      name: LD2450 ${label_multi_target_tracking}
+      web_server:
+        sorting_group_id: ld2450_group
+
+number:
+  - platform: ld2450
+    ld2450_id: ld2450_radar
+    presence_timeout:
+      disabled_by_default: true
+      name: LD2450 ${label_timeout}
+      icon: mdi:timer-cog-outline
+      entity_category: config
+      web_server:
+        sorting_group_id: ld2450_group
+    zone_1:
+      x1:
+        entity_category: config
+        name: LD2450 ${label_zone}-1 X1
+        web_server:
+          sorting_group_id: ld2450_group
+      y1:
+        entity_category: config
+        name: LD2450 ${label_zone}-1 Y1
+        web_server:
+          sorting_group_id: ld2450_group
+      x2:
+        entity_category: config
+        name: LD2450 ${label_zone}-1 X2
+        web_server:
+          sorting_group_id: ld2450_group
+      y2:
+        entity_category: config
+        name: LD2450 ${label_zone}-1 Y2
+        web_server:
+          sorting_group_id: ld2450_group
+    zone_2:
+      x1:
+        entity_category: config
+        name: LD2450 ${label_zone}-2 X1
+        web_server:
+          sorting_group_id: ld2450_group
+      y1:
+        entity_category: config
+        name: LD2450 ${label_zone}-2 Y1
+        web_server:
+          sorting_group_id: ld2450_group
+      x2:
+        entity_category: config
+        name: LD2450 ${label_zone}-2 X2
+        web_server:
+          sorting_group_id: ld2450_group
+      y2:
+        entity_category: config
+        name: LD2450 ${label_zone}-2 Y2
+        web_server:
+          sorting_group_id: ld2450_group
+    zone_3:
+      x1:
+        entity_category: config
+        name: LD2450 ${label_zone}-3 X1
+        web_server:
+          sorting_group_id: ld2450_group
+      y1:
+        entity_category: config
+        name: LD2450 ${label_zone}-3 Y1
+        web_server:
+          sorting_group_id: ld2450_group
+      x2:
+        entity_category: config
+        name: LD2450 ${label_zone}-3 X2
+        web_server:
+          sorting_group_id: ld2450_group
+      y2:
+        entity_category: config
+        name: LD2450 ${label_zone}-3 Y2
+        web_server:
+          sorting_group_id: ld2450_group
+
+button:
+  - platform: ld2450
+    ld2450_id: ld2450_radar
+    factory_reset:
+      name: "LD2450 ${label_factory_defaults}"
+      icon: mdi:factory
+      disabled_by_default: true
+      entity_category: diagnostic
+      web_server:
+        sorting_group_id: ld2450_group
+    restart:
+      name: "LD2450 ${label_restart}"
+      entity_category: diagnostic
+      disabled_by_default: true
+      icon: mdi:restart-alert
+      web_server:
+        sorting_group_id: ld2450_group
+
+text_sensor:
+  - platform: ld2450
+    ld2450_id: ld2450_radar
+    version:
+      name: "LD2450 ${label_firmware}"
+      entity_category: diagnostic
+      disabled_by_default: true
+      web_server:
+        sorting_group_id: ld2450_group
+    mac_address:
+      name: "LD2450 BT MAC"
+      entity_category: diagnostic
+      disabled_by_default: true
+      web_server:
+        sorting_group_id: ld2450_group
+    target_1:
+      direction:
+        disabled_by_default: true
+        name: LD2450 ${label_target}-1 ${label_direction}
+        web_server:
+          sorting_group_id: ld2450_group
+    target_2:
+      direction:
+        disabled_by_default: true
+        name: LD2450 ${label_target}-2 ${label_direction}
+        web_server:
+          sorting_group_id: ld2450_group
+    target_3:
+      direction:
+        disabled_by_default: true
+        name: LD2450 ${label_target}-3 ${label_direction}
+        web_server:
+          sorting_group_id: ld2450_group
+
+select:
+  - platform: ld2450
+    ld2450_id: ld2450_radar
+    zone_type:
+      name: LD2450 ${label_zone_type}
+      entity_category: config
+      web_server:
+        sorting_group_id: ld2450_group

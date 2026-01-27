@@ -1,0 +1,65 @@
+light:
+  - platform: esp32_rmt_led_strip
+    id: status_led
+    rgb_order: GRB
+    chipset: WS2812
+    pin: ${pin}
+    num_leds: 1
+    name: ${label_status_led}
+    effects:
+      - pulse:
+      - pulse:
+          transition_length: 2s
+          update_interval: 2s
+          name: Slow Pulse
+          min_brightness: 40%
+      - strobe:
+      - random:
+      - flicker:
+
+globals:
+  - id: air_quality_status_led
+    type: bool
+    restore_value: "false"
+    initial_value: "false"
+
+interval:
+  - interval: 1min
+    then:
+      - if:
+          condition:
+            - lambda: "return id(voc_index).state < 120 && id(co2).state < 1000;"
+            - lambda: "return id(air_quality_status_led);"
+          then:
+            - light.turn_off: status_led
+            - globals.set:
+                id: air_quality_status_led
+                value: "false"
+      - if:
+          condition:
+            - lambda: "return id(voc_index).state > 150 || id(co2).state > 1250;"
+            - lambda: "return id(air_quality_status_led) || (!id(air_quality_status_led) && id(status_led).current_values.is_on() == false);"
+          then:
+            - light.turn_on:
+                id: status_led
+                effect: Slow Pulse
+                red: 100%
+                green: 70%
+                blue: 0%
+            - globals.set:
+                id: air_quality_status_led
+                value: "true"
+      - if:
+          condition:
+            - lambda: "return id(voc_index).state > 250 || id(co2).state > 2000;"
+            - lambda: "return id(air_quality_status_led) || (!id(air_quality_status_led) && id(status_led).current_values.is_on() == false);"
+          then:
+            - light.turn_on:
+                id: status_led
+                effect: Slow Pulse
+                red: 100%
+                green: 0%
+                blue: 0%
+            - globals.set:
+                id: air_quality_status_led
+                value: "true"

@@ -1,0 +1,14 @@
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: ${pin}
+      mode:
+        input: true
+        pulldown: false
+      inverted: false
+    name: ${label_motion_sensor}
+    device_class: motion
+    icon: mdi:motion-sensor
+    filters:
+      - delayed_on: 20ms
+      - delayed_off: 5000ms

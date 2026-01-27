@@ -1,0 +1,14 @@
+sensor:
+  - platform: scd4x
+    co2:
+      id: co2
+      name: ${label_co2}
+      icon: mdi:molecule-co2
+    temperature:
+      name: "${label_temperature} SCD"
+      icon: mdi:thermometer
+      disabled_by_default: true
+    humidity:
+      name: "${label_humidity} SCD"
+      icon: mdi:water-percent
+      disabled_by_default: true

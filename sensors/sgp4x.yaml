@@ -1,0 +1,41 @@
+sensor:
+  - platform: sgp4x
+    voc:
+      name: ${label_voc_index}
+      icon: mdi:air-filter
+      id: voc_index
+    nox:
+      name: ${label_nox_index}
+      icon: mdi:smoke
+      id: nox_index
+      disabled_by_default: true
+    compensation:
+      humidity_source: humidity
+      temperature_source: temperature
+
+text_sensor:
+  - platform: template
+    name: ${label_air_quality}
+    icon: "mdi:air-purifier"
+    lambda: |-
+      if (int(id(voc_index).state) <= 50) {
+        return {"${label_aq_50}"};
+      }
+      else if (int(id(voc_index).state) <= 100) {
+        return {"${label_aq_100}"};
+      }
+      else if (int(id(voc_index).state) <= 150) {
+        return {"${label_aq_150}"};
+      }
+      else if (int(id(voc_index).state) <= 250) {
+        return {"${label_aq_200}"};
+      }
+      else if (int(id(voc_index).state) <= 400) {
+        return {"${label_aq_350}"};
+      }
+      else if (int(id(voc_index).state) > 400) {
+        return {"${label_aq_351}"};
+      }
+      else {
+        return {"${label_error}"};
+      }

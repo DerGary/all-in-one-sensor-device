@@ -1,0 +1,80 @@
+external_components:
+  - source:
+      type: local
+      path: ${components_path}
+    components:
+      - c4001
+    refresh: always
+
+uart:
+  - id: c4001_uart
+    tx_pin: ${tx_pin}
+    rx_pin: ${rx_pin}
+    baud_rate: 9600
+
+c4001:
+  uart_id: c4001_uart
+
+binary_sensor:
+  - platform: c4001
+    has_target:
+      id: c4001_presence
+      name: C4001 ${label_presence}
+      disabled_by_default: true
+      web_server:
+        sorting_group_id: c4001_group
+        sorting_weight: 1
+
+button:
+  - platform: c4001
+    save_config:
+      name: C4001 ${label_save_config}
+      web_server:
+        sorting_group_id: c4001_group
+        sorting_weight: 99
+
+number:
+  - platform: c4001
+    hold_sensitivity:
+      name: C4001 ${label_sustain} ${label_sensitivity}
+      web_server:
+        sorting_group_id: c4001_group
+        sorting_weight: 2
+    trigger_sensitivity:
+      name: C4001 ${label_trigger} ${label_sensitivity}
+      web_server:
+        sorting_group_id: c4001_group
+        sorting_weight: 3
+    min_detection_distance:
+      name: C4001 ${label_min} ${label_detection_distance}
+      web_server:
+        sorting_group_id: c4001_group
+        sorting_weight: 4
+    max_detection_distance:
+      name: C4001 ${label_max} ${label_detection_distance}
+      web_server:
+        sorting_group_id: c4001_group
+        sorting_weight: 5
+    max_trigger_distance:
+      name: C4001 ${label_trigger} ${label_detection_distance}
+      web_server:
+        sorting_group_id: c4001_group
+        sorting_weight: 6
+    confirmation_latency:
+      disabled_by_default: true
+      name: C4001 ${label_confirmation_latency}
+      web_server:
+        sorting_group_id: c4001_group
+        sorting_weight: 7
+    disappearance_latency:
+      disabled_by_default: true
+      name: C4001 ${label_disappearance_latency}
+      web_server:
+        sorting_group_id: c4001_group
+        sorting_weight: 8
+    blocking_time:
+      disabled_by_default: true
+      name: C4001 ${label_blocking_time}
+      web_server:
+        sorting_group_id: c4001_group
+        sorting_weight: 9
