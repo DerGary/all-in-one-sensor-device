@@ -2,12 +2,12 @@ substitutions:
   label_uptime: Uptime
   label_free_mem: Available Memory
   label_wifi_signal: WiFi Signal Strength dB
-  label_brightness: Brightness
+  label_brightness: Illuminance
   label_temperature: Temperature
   label_air_pressure: Air Pressure
   label_humidity: Humidity
   label_iaq: Air Quality Index
-  label_co2: CO² (approximated)
+  label_co2_approx: CO² (approximated)
   label_voc: VOC
   label_moving_distance: Moving Distance
   label_still_distance: Still Distance
@@ -26,10 +26,11 @@ substitutions:
   label_error: Error
   label_motion_sensor: Motion Sensor
   label_presence: Presence
+  label_presence_target: Presence Target
   label_moving_target: Moving Target
   label_still_target: Still Target
   label_dev_mode: Engineering Mode
-  label_ld2410_bluetooth_mode: LD2410 Bluetooth Mode
+  label_bluetooth_mode: Bluetooth Mode
   label_offset: Offset
   label_timeout: Timeout
   label_max_move_distance_gate: Max Move Distance Gate
@@ -40,3 +41,28 @@ substitutions:
   label_presence_sensor: Presence Sensor
   label_factory_defaults: Factory Defaults
   label_distance_resolution: Distance Resolution
+  label_voc_index: VOC Index
+  label_nox_index: NOx Index
+  label_co2: CO²
+  label_count: Count
+  label_target: Target
+  label_speed: Speed
+  label_angle: Angle
+  label_distance: Distance
+  label_resolution: Resolution
+  label_zone: Zone
+  label_all: All
+  label_multi_target_tracking: Multi Target Tracking
+  label_firmware: Firmware
+  label_direction: Direction
+  label_zone_type: Zone Type
+  label_min: Minimum
+  label_max: Maximum
+  label_trigger: Trigger
+  label_sensitivity: Sensitivity
+  label_sustain: Sustain
+  label_confirmation_latency: Confirmation Latency
+  label_disappearance_latency: Disappearance Latency
+  label_blocking_time: Blocking Time
+  label_save_config: Save Configuration
+  label_status_led: Status-LED

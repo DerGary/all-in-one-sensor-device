@@ -7,7 +7,7 @@ substitutions:
   label_air_pressure: Luftdruck
   label_humidity: Luftfeuchtigkeit
   label_iaq: Luftqualitäts Index
-  label_co2: CO² (geschätzt)
+  label_co2_approx: CO² (geschätzt)
   label_voc: VOC
   label_moving_distance: Bewegungsdistanz
   label_still_distance: Stille Distanz
@@ -26,10 +26,11 @@ substitutions:
   label_error: Fehler
   label_motion_sensor: Bewegungssensor
   label_presence: Präsenz
+  label_presence_target: Präsenz Ziel
   label_moving_target: Bewegliches Ziel
   label_still_target: Stilles Ziel
   label_dev_mode: Entwicklungsmodus
-  label_ld2410_bluetooth_mode: LD2410 Bluetooth Modus
+  label_bluetooth_mode: Bluetooth Modus
   label_offset: Versatz
   label_timeout: Zeitliche Begrenzung
   label_max_move_distance_gate: Maximale Bewegungsziel Entfernung
@@ -40,3 +41,28 @@ substitutions:
   label_presence_sensor: Präsenzsensor
   label_factory_defaults: Werkseinstellungen
   label_distance_resolution: Entfernungsauflösung
+  label_voc_index: VOC Index
+  label_nox_index: NOx Index
+  label_co2: CO²
+  label_count: Anzahl
+  label_target: Ziel
+  label_speed: Geschwindigkeit
+  label_angle: Winkel
+  label_distance: Abstand
+  label_resolution: Auflösung
+  label_zone: Zone
+  label_all: Alle
+  label_multi_target_tracking: Mehrzielverfolgung
+  label_firmware: Firmware
+  label_direction: Richtung
+  label_zone_type: Zonen Typ
+  label_min: Minimum
+  label_max: Maximum
+  label_trigger: Auslöser
+  label_sensitivity: Empfindlichkeit
+  label_sustain: Halte
+  label_confirmation_latency: Anwesenheitslatenz
+  label_disappearance_latency: Abwesenheitslatenz
+  label_blocking_time: Sperrzeit
+  label_save_config: Konfiguration speichern
+  label_status_led: Status-LED

@@ -101,7 +101,7 @@ switch:
       name: ${label_dev_mode}
       icon: mdi:tools
     bluetooth:
-      name: ${label_ld2410_bluetooth_mode}
+      name: "LD2410 ${label_bluetooth_mode}"
       icon: mdi:bluetooth
 
 number:

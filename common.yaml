@@ -1,5 +1,5 @@
 esp32:
-  board: esp32dev
+  variant: ${variant}
   framework:
     type: esp-idf
 
@@ -20,11 +20,19 @@ bluetooth_proxy:
 
 ## should be disabled when BT Proxy is on due to memory consumption, may be necessary to debug issues
 web_server:
+  version: 3
   port: 80
   auth:
     username: ${username}
     password: ${password}
   local: true
+  sorting_groups:
+    - id: ld2450_group
+      name: "LD2450"
+      sorting_weight: 10
+    - id: c4001_group
+      name: "C4001"
+      sorting_weight: 20
 
 ## Enables the Home Assistant API
 api:
@@ -75,7 +83,7 @@ sensor:
     entity_category: "diagnostic"
 
 binary_sensor:
-  ## this reports wether the device is online.
+  ## this reports whether the device is online.
   - platform: status
     icon: mdi:chip
     name: "${friendly_name} Status"
@@ -93,6 +101,7 @@ number:
     initial_value: ${temperature_offset_initial_value}
     unit_of_measurement: °C
     icon: mdi:thermometer-plus
+    entity_category: config
   - platform: template
     name: "${label_air_pressure} ${label_offset}"
     id: humidity_offset
@@ -104,6 +113,7 @@ number:
     initial_value: ${humidity_offset_initial_value}
     unit_of_measurement: "%"
     icon: mdi:water-plus
+    entity_category: config
 
 button:
   ## I use this button together with an automation to regularly restart the device. This helps in reliability.

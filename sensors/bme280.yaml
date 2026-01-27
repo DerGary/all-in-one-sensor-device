@@ -3,16 +3,20 @@ sensor:
   - platform: bme280_i2c
     address: 0x76
     temperature:
+      id: temperature
       name: ${label_temperature}
       icon: mdi:thermometer
       filters:
         - offset: !lambda return id(temperature_offset).state;
     pressure:
+      id: air_pressure
       name: ${label_air_pressure}
+      icon: mdi:gauge
       disabled_by_default: true
     humidity:
+      id: humidity
       name: ${label_humidity}
       icon: mdi:water-percent
       filters:
         - offset: !lambda return id(humidity_offset).state;
-    update_interval: 3s
+    update_interval: 5s
