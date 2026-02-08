@@ -4,11 +4,11 @@ binary_sensor:
       number: ${pin}
       mode:
         input: true
-        pulldown: false
+        pulldown: true
       inverted: false
     name: ${label_motion_sensor}
     device_class: motion
     icon: mdi:motion-sensor
     filters:
-      - delayed_on: 20ms
+      - delayed_on: 100ms
       - delayed_off: 5000ms

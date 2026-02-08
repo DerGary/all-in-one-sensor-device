@@ -4,6 +4,10 @@ sensor:
       name: ${label_voc_index}
       icon: mdi:air-filter
       id: voc_index
+      algorithm_tuning:
+        # the documentation at states that 72h is optimal for indoor use: https://sensirion.com/media/documents/25AB572C/62B463AA/Sensirion_Engineering_Guidelines_SEN5x.pdf
+        learning_time_gain_hours: 72
+        learning_time_offset_hours: 72
     nox:
       name: ${label_nox_index}
       icon: mdi:smoke
@@ -12,30 +16,3 @@ sensor:
     compensation:
       humidity_source: humidity
       temperature_source: temperature
-
-text_sensor:
-  - platform: template
-    name: ${label_air_quality}
-    icon: "mdi:air-purifier"
-    lambda: |-
-      if (int(id(voc_index).state) <= 50) {
-        return {"${label_aq_50}"};
-      }
-      else if (int(id(voc_index).state) <= 100) {
-        return {"${label_aq_100}"};
-      }
-      else if (int(id(voc_index).state) <= 150) {
-        return {"${label_aq_150}"};
-      }
-      else if (int(id(voc_index).state) <= 250) {
-        return {"${label_aq_200}"};
-      }
-      else if (int(id(voc_index).state) <= 400) {
-        return {"${label_aq_350}"};
-      }
-      else if (int(id(voc_index).state) > 400) {
-        return {"${label_aq_351}"};
-      }
-      else {
-        return {"${label_error}"};
-      }

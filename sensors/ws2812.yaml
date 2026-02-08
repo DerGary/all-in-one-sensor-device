@@ -17,49 +17,107 @@ light:
       - random:
       - flicker:
 
+switch:
+  - platform: template
+    id: air_quality_led_automation
+    name: ${label_air_quality_led_automation}
+    entity_category: config
+    restore_mode: RESTORE_DEFAULT_ON
+    optimistic: True
+
 globals:
-  - id: air_quality_status_led
+  - id: air_quality_status_led_active
     type: bool
-    restore_value: "false"
+    restore_value: no
     initial_value: "false"
+
+binary_sensor:
+  - platform: template
+    id: voc_warning_active
+    # WARNING: VOC index must be > 350 for 20 min
+    lambda: "return id(voc_index).state > 350;"
+    filters:
+      - delayed_on: 20min
+      - delayed_off: 5min
+
+  - platform: template
+    id: voc_critical_active
+    # CRITICAL: VOC index must be > 450 for 20 min
+    lambda: "return id(voc_index).state > 450;"
+    filters:
+      - delayed_on: 20min
+      - delayed_off: 5min
 
 interval:
   - interval: 1min
     then:
       - if:
           condition:
-            - lambda: "return id(voc_index).state < 120 && id(co2).state < 1000;"
-            - lambda: "return id(air_quality_status_led);"
+            lambda: "return id(air_quality_led_automation).state;"
           then:
-            - light.turn_off: status_led
-            - globals.set:
-                id: air_quality_status_led
-                value: "false"
-      - if:
-          condition:
-            - lambda: "return id(voc_index).state > 150 || id(co2).state > 1250;"
-            - lambda: "return id(air_quality_status_led) || (!id(air_quality_status_led) && id(status_led).current_values.is_on() == false);"
-          then:
-            - light.turn_on:
-                id: status_led
-                effect: Slow Pulse
-                red: 100%
-                green: 70%
-                blue: 0%
-            - globals.set:
-                id: air_quality_status_led
-                value: "true"
-      - if:
-          condition:
-            - lambda: "return id(voc_index).state > 250 || id(co2).state > 2000;"
-            - lambda: "return id(air_quality_status_led) || (!id(air_quality_status_led) && id(status_led).current_values.is_on() == false);"
-          then:
-            - light.turn_on:
-                id: status_led
-                effect: Slow Pulse
-                red: 100%
-                green: 0%
-                blue: 0%
-            - globals.set:
-                id: air_quality_status_led
-                value: "true"
+            - lambda: |-
+                float current_voc = id(voc_index).state;
+                float current_co2 = id(co2).state;
+                bool voc_warn_delayed = id(voc_warning_active).state;
+                bool voc_crit_delayed = id(voc_critical_active).state;
+
+                bool led_activated_by_automation = id(air_quality_status_led_active);
+                bool led_is_on = id(status_led).current_values.is_on();
+
+                // 1. Check for external override
+                if (led_is_on && !led_activated_by_automation) return;
+
+                // 2. IMMEDIATE RESET (Lüften-Erkennung)
+                // If values are currently good, turn off immediately, 
+                // ignoring the delayed sensors.
+                if (current_voc < 200 && current_co2 < 1000) {
+                  auto call = id(status_led).make_call();
+                  call.set_state(false);
+                  call.perform();
+                  id(air_quality_status_led_active) = false;
+                } else if (voc_crit_delayed || current_co2 > 2000) {
+                  // 3. CRITICAL State (Red)
+                  auto call = id(status_led).make_call();
+                  call.set_rgb(1.0, 0.0, 0.0);
+                  call.set_effect("Slow Pulse");
+                  call.set_state(true);
+                  call.perform();
+                  id(air_quality_status_led_active) = true;
+                } else if (voc_warn_delayed || current_co2 > 1250) {
+                // 4. WARNING State (Yellow)
+                  auto call = id(status_led).make_call();
+                  call.set_rgb(1.0, 0.7, 0.0);
+                  call.set_effect("Slow Pulse");
+                  call.set_state(true);
+                  call.perform();
+                  id(air_quality_status_led_active) = true;
+                }
+
+text_sensor:
+  - platform: template
+    name: ${label_air_quality}
+    icon: "mdi:air-purifier"
+    update_interval: 1min
+    lambda: |-
+      float current_voc = id(voc_index).state;
+      float current_co2 = id(co2).state;
+      bool is_warn_delayed = id(voc_warning_active).state;
+      bool is_crit_delayed = id(voc_critical_active).state;
+
+      // 1. CRITICAL (Same logic as Red LED)
+      if (is_crit_delayed || current_co2 > 2000) {
+        return {"${label_aq_351}"}; 
+      }
+
+      // 2. WARNING (Same logic as Yellow LED)
+      if (is_warn_delayed || current_co2 > 1250) {
+        return {"${label_aq_200}"};
+      }
+
+      // 3. EXCELLENT (Using your "Normal" reset threshold)
+      if (current_voc < 200 && current_co2 < 1000) {
+        return {"${label_aq_50}"};
+      }
+
+      // 4. GOOD (Default state if values are between 'Normal' and 'Warning')
+      return {"${label_aq_100}"};
