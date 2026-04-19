@@ -34,18 +34,18 @@ globals:
 binary_sensor:
   - platform: template
     id: voc_warning_active
-    # WARNING: VOC index must be > 350 for 20 min
-    lambda: "return id(voc_index).state > 350;"
+    # WARNING: VOC index must be > 400 for 5 min
+    lambda: "return id(voc_index).state > 400;"
     filters:
-      - delayed_on: 20min
+      - delayed_on: 5min
       - delayed_off: 5min
 
   - platform: template
     id: voc_critical_active
-    # CRITICAL: VOC index must be > 450 for 20 min
+    # CRITICAL: VOC index must be > 450 for 5 min
     lambda: "return id(voc_index).state > 450;"
     filters:
-      - delayed_on: 20min
+      - delayed_on: 5min
       - delayed_off: 5min
 
 interval:
