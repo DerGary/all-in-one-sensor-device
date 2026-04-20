@@ -34,16 +34,16 @@ globals:
 binary_sensor:
   - platform: template
     id: voc_warning_active
-    # WARNING: VOC index must be > 400 for 5 min
-    lambda: "return id(voc_index).state > 400;"
+    # WARNUNG: TVOC > 660 ppb for 5 min
+    lambda: "return id(tvoc).state > 660;"
     filters:
       - delayed_on: 5min
       - delayed_off: 5min
 
   - platform: template
     id: voc_critical_active
-    # CRITICAL: VOC index must be > 450 for 5 min
-    lambda: "return id(voc_index).state > 450;"
+    # KRITISCH: TVOC > 2200 ppb for 5 min
+    lambda: "return id(tvoc).state > 2200;"
     filters:
       - delayed_on: 5min
       - delayed_off: 5min
@@ -56,7 +56,7 @@ interval:
             lambda: "return id(air_quality_led_automation).state;"
           then:
             - lambda: |-
-                float current_voc = id(voc_index).state;
+                float current_tvoc = id(tvoc).state;
                 float current_co2 = id(co2).state;
                 bool voc_warn_delayed = id(voc_warning_active).state;
                 bool voc_crit_delayed = id(voc_critical_active).state;
@@ -70,21 +70,23 @@ interval:
                 // 2. IMMEDIATE RESET (Lüften-Erkennung)
                 // If values are currently good, turn off immediately, 
                 // ignoring the delayed sensors.
-                if (current_voc < 200 && current_co2 < 1000) {
+                if (current_tvoc < 220 && current_co2 < 1000) {
                   auto call = id(status_led).make_call();
                   call.set_state(false);
                   call.perform();
                   id(air_quality_status_led_active) = false;
-                } else if (voc_crit_delayed || current_co2 > 2000) {
-                  // 3. CRITICAL State (Red)
+                } 
+                // 3. CRITICAL State (Red)
+                else if (voc_crit_delayed || current_co2 > 2000) {
                   auto call = id(status_led).make_call();
                   call.set_rgb(1.0, 0.0, 0.0);
                   call.set_effect("Slow Pulse");
                   call.set_state(true);
                   call.perform();
                   id(air_quality_status_led_active) = true;
-                } else if (voc_warn_delayed || current_co2 > 1250) {
+                } 
                 // 4. WARNING State (Yellow)
+                else if (voc_warn_delayed || current_co2 > 1250) {
                   auto call = id(status_led).make_call();
                   call.set_rgb(1.0, 0.7, 0.0);
                   call.set_effect("Slow Pulse");
@@ -99,25 +101,25 @@ text_sensor:
     icon: "mdi:air-purifier"
     update_interval: 1min
     lambda: |-
-      float current_voc = id(voc_index).state;
+      float current_tvoc = id(tvoc).state;
       float current_co2 = id(co2).state;
       bool is_warn_delayed = id(voc_warning_active).state;
       bool is_crit_delayed = id(voc_critical_active).state;
 
-      // 1. CRITICAL (Same logic as Red LED)
+      // 1. CRITICAL
       if (is_crit_delayed || current_co2 > 2000) {
         return {"${label_aq_351}"}; 
       }
 
-      // 2. WARNING (Same logic as Yellow LED)
+      // 2. WARNING
       if (is_warn_delayed || current_co2 > 1250) {
         return {"${label_aq_200}"};
       }
 
-      // 3. EXCELLENT (Using your "Normal" reset threshold)
-      if (current_voc < 200 && current_co2 < 1000) {
+      // 3. EXCELLENT
+      if (current_tvoc < 220 && current_co2 < 1000) {
         return {"${label_aq_50}"};
       }
 
-      // 4. GOOD (Default state if values are between 'Normal' and 'Warning')
+      // 4. GOOD
       return {"${label_aq_100}"};

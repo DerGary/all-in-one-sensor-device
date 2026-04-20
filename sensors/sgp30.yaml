@@ -1,0 +1,9 @@
+sensor:
+  - platform: sgp30
+    tvoc:
+      name: ${label_tvoc}
+      icon: mdi:air-filter
+      id: tvoc
+    compensation:
+      humidity_source: humidity
+      temperature_source: temperature

@@ -37,7 +37,7 @@ packages:
   co2: !include
     file: ../sensors/scd4x.yaml
   voc: !include
-    file: ../sensors/sgp4x.yaml
+    file: ../sensors/sgp30.yaml
   temperature: !include
     file: ../sensors/sht4x.yaml
     # file: ../sensors/bme280.yaml
