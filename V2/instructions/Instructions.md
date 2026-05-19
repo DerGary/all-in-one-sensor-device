@@ -90,6 +90,9 @@ You also need:
 ### 🔢 Assembly Instructions
 
 1. If you are using the ESP32 Large version you need to desolder the pins
+    - Cut the black spacers into chunks of 4–5 pins and remove them with pliers.
+    - Clamp the ESP in a vise (I use a printable vise from Thingiverse).
+    - Desolder the pins and pull them out with pliers. It’s also possible to heat the solder and pull the pins with pliers **without** a desoldering pump.
 1. **Desolder Motion sensor (HC-SR501) pins:**
     - Remove the pin spacers with pliers.
     - Clamp the motion sensor in a vise.
@@ -98,7 +101,8 @@ You also need:
 1. Break a **4×3** matrix from the proto board — for **brightness** and **temperature** sensors.
 1. Cut wires to length. I wrote the length of the cables in mm into the connection drawings. I show the two distribution boards separately to make things easier to follow. (There are further steps below on soldering order.) Pick the Connection Drawing that matches the ESP32 Version that you are using. The cable lengths and pinout slightly differs depending on the version.
     - I only got 5 colors of cables
-        - red = Voltage (If you have more colors use different colors for 3.3V (BME/BH1750) and 5V(LD2410/HC-SR501), It is important to never mix them up)
+        - red = 3.3V (BME/BH1750)
+        - white/grey 5V(LD2410/HC-SR501)
         - black = Ground
         - Green = I2C SCL/UART (If you have more colors you can use different colors for UART and I2C)
         - Blue = I2C SDA/UART (If you have more colors you can use different colors for UART and I2C)
@@ -106,26 +110,16 @@ You also need:
 
    #### D1 Mini
 
-    Temperature and Brightness sensors
-
-    ![D1 Mini Temperature and Brightness sensors](images/D1MiniI2CBus.png)
-
-    Presence and Motion Sensors
-
-    ![D1 Mini Presence and Motion Sensors](images/D1MiniPresenceMotion.png)
+    ![D1 Mini Pinout](images/D1MiniPinout.png)
 
    #### ESP32 Large
 
-    Temperature and Brightness sensors
-    ![Temperature and Brightness sensors](images/LargeI2CBus.png)
-
-    Presence and Motion Sensors
-    ![Presence and Motion Sensors](images/LargePresenceMotion.png)
+    ![Large Pinout](images/LargePinout.png)
 
    #### Super Mini
 
     the Ground of the two distribution boards are connected as the board only has one ground pin
-    ![Super Mini](images/SuperMini.png)
+    ![Super Mini Pinout](images/SuperMiniPinout.png)
 
 1. Make sure to tin the wire ends
 1. Solder **one end** of each wire to the **sensors** as described in the Connection Drawings from Step 4
