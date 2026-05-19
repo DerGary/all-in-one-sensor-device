@@ -1,0 +1,64 @@
+name: CI & Release Pipeline
+
+on:
+  pull_request:
+    branches: ["main"]
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: node:26
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Install Dependencies
+        run: |
+            apt-get update
+            apt-get install -y chromium fonts-noto-color-emoji
+            
+      # md-to-pdf benötigt oft Chromium im Hintergrund. Falls dein Script fehlschlägt,
+      # weil Browser-Abhängigkeiten im Node-Docker-Image fehlen, müsste man ggf. Pakete nachinstallieren.
+      - name: Install md-to-pdf globally
+        run: npm i -g md-to-pdf
+
+      - name: Run PDF render script
+        working-directory: V2/instructions
+        run: |
+          chmod +x ./renderPdf.sh
+          ./renderPdf.sh
+
+      - name: Upload PDF Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: instructions-pdf
+          path: ./V2/instructions/Instructions.pdf
+          if-no-files-found: error # Pipeline bricht ab, wenn die Datei nicht existiert
+
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/') # Verhindert, dass der Job bei PRs läuft
+    runs-on: ubuntu-latest
+
+    # GitHub benötigt Schreibrechte, um ein Release erstellen zu können
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download PDF Artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: instructions-pdf
+          path: ./V2
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          files: ./V2/Instructions.pdf
+          name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
