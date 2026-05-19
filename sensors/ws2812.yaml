@@ -8,6 +8,11 @@ light:
     name: ${label_status_led}
     effects:
       - pulse:
+          name: "Fast Pulse"
+          transition_length: 0.5s
+          update_interval: 0.5s
+          min_brightness: 0%
+          max_brightness: 100%
       - pulse:
           transition_length: 2s
           update_interval: 2s
@@ -17,109 +22,39 @@ light:
       - random:
       - flicker:
 
-switch:
-  - platform: template
-    id: air_quality_led_automation
-    name: ${label_air_quality_led_automation}
-    entity_category: config
-    restore_mode: RESTORE_DEFAULT_ON
-    optimistic: True
-
-globals:
-  - id: air_quality_status_led_active
-    type: bool
-    restore_value: no
-    initial_value: "false"
-
-binary_sensor:
-  - platform: template
-    id: voc_warning_active
-    # WARNUNG: TVOC > 660 ppb for 5 min
-    lambda: "return id(tvoc).state > 660;"
-    filters:
-      - delayed_on: 5min
-      - delayed_off: 5min
-
-  - platform: template
-    id: voc_critical_active
-    # KRITISCH: TVOC > 2200 ppb for 5 min
-    lambda: "return id(tvoc).state > 2200;"
-    filters:
-      - delayed_on: 5min
-      - delayed_off: 5min
-
-interval:
-  - interval: 1min
+script:
+  - id: control_leds_improv_ble_state
     then:
-      - if:
-          condition:
-            lambda: "return id(air_quality_led_automation).state;"
-          then:
-            - lambda: |-
-                float current_tvoc = id(tvoc).state;
-                float current_co2 = id(co2).state;
-                bool voc_warn_delayed = id(voc_warning_active).state;
-                bool voc_crit_delayed = id(voc_critical_active).state;
-
-                bool led_activated_by_automation = id(air_quality_status_led_active);
-                bool led_is_on = id(status_led).current_values.is_on();
-
-                // 1. Check for external override
-                if (led_is_on && !led_activated_by_automation) return;
-
-                // 2. IMMEDIATE RESET (Lüften-Erkennung)
-                // If values are currently good, turn off immediately, 
-                // ignoring the delayed sensors.
-                if (current_tvoc < 220 && current_co2 < 1000) {
-                  auto call = id(status_led).make_call();
-                  call.set_state(false);
-                  call.perform();
-                  id(air_quality_status_led_active) = false;
-                } 
-                // 3. CRITICAL State (Red)
-                else if (voc_crit_delayed || current_co2 > 2000) {
-                  auto call = id(status_led).make_call();
-                  call.set_rgb(1.0, 0.0, 0.0);
-                  call.set_effect("Slow Pulse");
-                  call.set_state(true);
-                  call.perform();
-                  id(air_quality_status_led_active) = true;
-                } 
-                // 4. WARNING State (Yellow)
-                else if (voc_warn_delayed || current_co2 > 1250) {
-                  auto call = id(status_led).make_call();
-                  call.set_rgb(1.0, 0.7, 0.0);
-                  call.set_effect("Slow Pulse");
-                  call.set_state(true);
-                  call.perform();
-                  id(air_quality_status_led_active) = true;
-                }
-
-text_sensor:
-  - platform: template
-    name: ${label_air_quality}
-    icon: "mdi:air-purifier"
-    update_interval: 1min
-    lambda: |-
-      float current_tvoc = id(tvoc).state;
-      float current_co2 = id(co2).state;
-      bool is_warn_delayed = id(voc_warning_active).state;
-      bool is_crit_delayed = id(voc_critical_active).state;
-
-      // 1. CRITICAL
-      if (is_crit_delayed || current_co2 > 2000) {
-        return {"${label_aq_351}"}; 
-      }
-
-      // 2. WARNING
-      if (is_warn_delayed || current_co2 > 1250) {
-        return {"${label_aq_200}"};
-      }
-
-      // 3. EXCELLENT
-      if (current_tvoc < 220 && current_co2 < 1000) {
-        return {"${label_aq_50}"};
-      }
-
-      // 4. GOOD
-      return {"${label_aq_100}"};
+      - light.turn_on:
+          brightness: 100%
+          red: 0%
+          green: 0%
+          blue: 100%
+          id: status_led
+          effect: "Fast Pulse"
+  - id: control_leds_turn_off
+    then:
+      - light.turn_off:
+          id: status_led
+  # Master script controlling the LEDs, based on different conditions : initialization in progress, wifi and api connected and voice assistant phase.
+  # For the sake of simplicity and re-usability, the script calls child scripts defined below.
+  # This script will be called every time one of these conditions is changing.
+  - id: control_leds
+    then:
+      - lambda: |
+          if (id(improv_ble_in_progress)) {
+            id(control_leds_improv_ble_state).execute();
+          } else if (!id(wifi_id).is_connected() || !id(api_id).is_connected()){
+            id(control_leds_no_ha_connection_state).execute();
+          } else {
+            id(control_leds_turn_off).execute();
+          }
+  - id: control_leds_no_ha_connection_state
+    then:
+      - light.turn_on:
+          brightness: 100%
+          red: 1
+          green: 0
+          blue: 0
+          id: status_led
+          effect: "Fast Pulse"
