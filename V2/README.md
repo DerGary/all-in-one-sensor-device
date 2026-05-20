@@ -1,5 +1,7 @@
 # All-In-One Smart Home Sensor Case V2
 
+[Makerworld](https://makerworld.com/de/models/2180710-all-in-one-smart-home-sensor-case-v2#profileId-2381634)
+
 ## Please read the disclaimer at the bottom before printing
 
 Hello everyone 👋, this has been one of my biggest projects so far. If you have any questions about the project please ask them in the comments then I can answer them and everyone can learn from that.

@@ -18,21 +18,12 @@ bluetooth_proxy:
 # logger:
 #   level: DEBUG
 
-## should be disabled when BT Proxy is on due to memory consumption, may be necessary to debug issues
 web_server:
-  version: 3
   port: 80
   auth:
     username: ${username}
     password: ${password}
   local: true
-  sorting_groups:
-    - id: ld2450_group
-      name: "LD2450"
-      sorting_weight: 10
-    - id: c4001_group
-      name: "C4001"
-      sorting_weight: 20
 
 ## Enables the Home Assistant API
 api:
