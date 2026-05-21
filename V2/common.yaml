@@ -3,27 +3,11 @@ esp32:
   framework:
     type: esp-idf
 
-## Remove this if you don't want to track bluetooth device presence.
-esp32_ble_tracker:
-  scan_parameters:
-    active: True # Whether to send scan-request packets to devices to gather more info (like devicename)
-    interval: 211ms # suggested 211ms # default 320ms
-    window: 30ms # suggested 120ms # default 30ms
-
-## Remove this if you don't need to expand your home assistants bluetooth range
-bluetooth_proxy:
-  active: true
 
 ## Enables logging, eats ram, only enable if necessary.
 # logger:
 #   level: DEBUG
 
-web_server:
-  port: 80
-  auth:
-    username: ${username}
-    password: ${password}
-  local: true
 
 ## Enables the Home Assistant API
 api:
@@ -35,16 +19,6 @@ ota:
   - platform: esphome
     password: ${password}
 
-wifi:
-  output_power: ${wifi_output_power}
-  ssid: ${wifi_ssid}
-  password: ${wifi_password}
-  ap:
-    ssid: ESP Fallback Hotspot
-    password: ${password}
-
-## adds support to choose your wifi through the esp fallback hotspot
-captive_portal:
 
 sensor:
   ## this will report the uptime of the device. If your device reboots unexpectedly you can see it in this value.
@@ -65,13 +39,6 @@ sensor:
     update_interval: 60s
     disabled_by_default: true
 
-  ## this reports the wifi signal strength of your wifi access point. If you want to reduce or increase your wifi output power of your access point you can use this value for reference. This value does not reflect the output power of the esp device, but the output power of the wifi access point.
-  - platform: wifi_signal # Reports the WiFi signal strength/RSSI in dB
-    disabled_by_default: true
-    name: ${label_wifi_signal}
-    id: wifi_signal_db
-    update_interval: 1s
-    entity_category: "diagnostic"
 
 binary_sensor:
   ## this reports whether the device is online.
