@@ -68,3 +68,4 @@ substitutions:
   label_save_config: Konfiguration speichern
   label_status_led: Status-LED
   label_air_quality_led_automation: Luftqualität über LED anzeigen
+  label_wifi_strength: WiFi Sendeleistung"

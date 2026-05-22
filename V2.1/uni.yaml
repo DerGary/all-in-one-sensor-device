@@ -1,28 +1,29 @@
+substitutions:
+  lang: de
+  temp: bme680
+  variant: esp32
+
 packages:
   common: !include
     file: ./common.yaml
     vars:
-      variant: esp32c6
+      variant: "${variant}"
 
-  ## choose which language you are using by uncommenting the correct line
-  # lang: !include ../lang/de.yaml
-  lang: !include ../lang/en.yaml
+  lang: !include "../lang/${lang}.yaml"
 
-  ## choose which sensor you are using by uncommenting the correct line
   temperature: !include
-    file: ../sensors/bme680.yaml
-    # file: ../sensors/bme280.yaml
+    file: "../sensors/${temp}.yaml"
 
   motion: !include
     file: ../sensors/hc-sr501.yaml
     vars:
-      pin: GPIO7
+      pin: "${ 'GPIO27' if variant == 'esp32' else 'GPIO7'}"
   illuminance: !include ../sensors/bh1750.yaml
   presence: !include
     file: ../sensors/ld2410.yaml
     vars:
-      tx_pin: GPIO16
-      rx_pin: GPIO17
+      tx_pin: GPIO17
+      rx_pin: GPIO16
   led: !include
     file: ../sensors/ws2812.yaml
     vars:
@@ -30,6 +31,6 @@ packages:
 
 ## setup the i2c bus and define the pins to use.
 i2c:
-  sda: GPIO20
-  scl: GPIO19
+  sda: "${ 'GPIO21' if variant == 'esp32' else 'GPIO20'}"
+  scl: "${ 'GPIO20' if variant == 'esp32' else 'GPIO19'}"
   scan: true
