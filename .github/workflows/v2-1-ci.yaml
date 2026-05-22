@@ -1,0 +1,95 @@
+name: V2.1
+
+on:
+  pull_request:
+    branches: ["main"]
+    paths:
+      - 'V2.1/**'
+  push:
+    tags:
+      - "v2.1*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        lang: [de, en]
+        temp: [bme680, bme280]
+        variant: [esp32, esp32c6]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Cache PlatformIO & ESPHome
+        uses: actions/cache@v5
+        with:
+          path: |
+            ~/.platformio
+            ~/.cache/pip
+            .esphome
+          key: ${{ runner.os }}-esphome-${{ matrix.variant }}-${{ hashFiles('V2.1/uni.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-esphome-${{ matrix.variant }}-
+
+      - name: Install ESPHome
+        run: pip install esphome
+
+      - name: Compile firmware
+        run: |
+          esphome -s lang ${{ matrix.lang }} -s temp ${{ matrix.temp }} -s variant ${{ matrix.variant }} compile V2.1/uni.yaml
+
+      - name: Collect and rename binaries
+        run: |
+          mkdir -p output
+          
+          # Generate a unique base name (e.g., firmware_esp32c6_bme680_de)
+          BASE_NAME="firmware_${{ matrix.variant }}_${{ matrix.temp }}_${{ matrix.lang }}_${{ github.ref_name }}"
+          
+          # 1. Locate and copy the standard OTA file
+          OTA_PATH=$(find .esphome/build/ -name "firmware.bin" | head -n 1)
+          cp "$OTA_PATH" "output/${BASE_NAME}_ota.bin"
+          
+          # 2. Locate and copy the factory file (PlatformIO uses *-factory.bin, ESP-IDF uses *.factory.bin)
+          FACTORY_PATH=$(find .esphome/build/ -name "*factory*.bin" | head -n 1)
+          if [ -n "$FACTORY_PATH" ]; then
+            cp "$FACTORY_PATH" "output/${BASE_NAME}_factory.bin"
+          else
+            # Fallback if the framework structure matches OTA
+            cp "$OTA_PATH" "output/${BASE_NAME}_factory.bin"
+          fi
+
+      - name: Upload artifacts for this matrix run
+        uses: actions/upload-artifact@v7
+        with:
+          name: binaries-${{ matrix.variant }}-${{ matrix.temp }}-${{ matrix.lang }}
+          path: output/*.bin
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v2.1')
+    
+    permissions:
+      contents: write
+    steps:
+      - name: Download all binaries from matrix jobs
+        uses: actions/download-artifact@v8
+        with:
+          path: all-binaries
+          merge-multiple: true # Flattens all 8 artifact sets into a single folder
+
+      - name: Create GitHub Release and attach assets
+        uses: softprops/action-gh-release@v3
+        with:
+          files: all-binaries/*.bin
+          name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true

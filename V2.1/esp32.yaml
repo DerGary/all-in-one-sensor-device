@@ -2,9 +2,6 @@ packages:
   common: !include
     file: ./common.yaml
     vars:
-      wifi_output_power: 8.5dB ## you may need to increase this if the esp is far away from your wifi access point. This is the minimal output power and improves the reliability of the motion sensor.
-      temperature_offset_initial_value: 0.0
-      humidity_offset_initial_value: 0.0
       variant: esp32
 
   ## choose which language you are using by uncommenting the correct line
@@ -12,11 +9,9 @@ packages:
   # lang: !include ../lang/en.yaml
 
   ## choose which sensor you are using by uncommenting the correct line
-  # bme680: !include
-  #   file: ../sensors/bme680.yaml
-  #   vars:
-  #     bme680_temperature_offset: 0.0 # this can be changed to calibrate the sensor.
-  bme280: !include ../sensors/bme280.yaml
+  temperature: !include
+    file: ../sensors/bme680.yaml
+    # file: ../sensors/bme280.yaml
 
   motion: !include
     file: ../sensors/hc-sr501.yaml
