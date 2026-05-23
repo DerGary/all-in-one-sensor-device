@@ -39,7 +39,7 @@ packages:
       rx_pin: GPIO4
       components_path: ../components
   air_quality_indicator: !include
-    file: ../sensors/sgp_scd_air_quality_indicator.yaml
+    file: ../automations/sgp_scd_air_quality_indicator.yaml
 
 ## setup the i2c bus and define the pins to use.
 i2c:

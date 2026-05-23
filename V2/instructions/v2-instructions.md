@@ -97,7 +97,7 @@ You also need:
     - Remove the pin spacers with pliers.
     - Clamp the motion sensor in a vise.
     - Desolder and remove the pins. It’s also possible to heat the solder and pull the pins with pliers without a desoldering pump.
-1. Break a **2×3** matrix from the proto board — for **motion** and **presence** sensors.
+1. Break a **2×3** *(2x4 for Super Mini)* matrix from the proto board — for **motion** and **presence** sensors.
 1. Break a **4×3** matrix from the proto board — for **brightness** and **temperature** sensors.
 1. Cut wires to length. I wrote the length of the cables in mm into the connection drawings. I show the two distribution boards separately to make things easier to follow. (There are further steps below on soldering order.) Pick the Connection Drawing that matches the ESP32 Version that you are using. The cable lengths and pinout slightly differs depending on the version.
     - I only got 5 colors of cables
