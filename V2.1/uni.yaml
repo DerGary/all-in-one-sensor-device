@@ -32,5 +32,5 @@ packages:
 ## setup the i2c bus and define the pins to use.
 i2c:
   sda: "${ 'GPIO21' if variant == 'esp32' else 'GPIO20'}"
-  scl: "${ 'GPIO20' if variant == 'esp32' else 'GPIO19'}"
+  scl: "${ 'GPIO22' if variant == 'esp32' else 'GPIO19'}"
   scan: true
