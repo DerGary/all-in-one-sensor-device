@@ -22,4 +22,5 @@ My goal with this project was to create **the ultimate DIY smart home sensor dev
 
 - [All-In-One Smart Home Sensor Case V1](./V1/README.md) - [Makerworld](https://makerworld.com/de/models/1744429-all-in-one-smart-home-sensor-case-v1#profileId-1854007)
 - [All-In-One Smart Home Sensor Case V2](./V2/README.md) - [Makerworld](https://makerworld.com/de/models/2180710-all-in-one-smart-home-sensor-case-v2#profileId-2381634)
+- [All-In-One Smart Home Sensor Case V2.1](./V2.1/README.md) - [Makerworld](https://makerworld.com/de/models/2180710-all-in-one-smart-home-sensor-case-v2#profileId-2381634)
 - [Ultimate Smart Home Sensor Case](./Ultimate/README.md) - TODO
