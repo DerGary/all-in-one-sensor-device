@@ -1,25 +1,3 @@
-# All-In-One Smart Home Sensor Case V2
-
-## Please read the disclaimer at the bottom before printing
-
-Hello everyone 👋, this has been one of my biggest projects so far. If you have any questions about the project please ask them in the comments then I can answer them and everyone can learn from that.
-
-When I started building my smart home, I realized that most devices only cover very specific use cases. To get full functionality in each room, you usually need to buy multiple different devices.
-
-My goal with this project was to create **the ultimate DIY smart home sensor device** that integrates all the essential sensors needed to achieve the following:
-
-## 🎯 Goals
-
-1. Control the lighting in a room by turning it on when motion is detected and keeping it on as long as someone is present (even if the person is not moving).
-1. Monitor the brightness in the room and only turn lights on if needed (and off again when no longer required).
-1. Measure air quality, humidity, and temperature.
-1. Use Bluetooth to track a person’s smartphone and thereby determine which room they are in, so the smart home can react accordingly.
-1. Keep the footprint as small as possible.
-1. Powered by a single cable. USB-C in particular.
-1. Ensure the design is unobtrusive and blends seamlessly into the living room.
-1. Integrate with Home Assistant.
-1. No cloud dependency.
-
 ## 🔢 Steps
 
 1. Source all the parts from the shopping list
@@ -39,12 +17,12 @@ You can also buy the parts from other sites. If you don’t mind waiting, AliExp
 | ----- | ------ | ------ |
 | ESP32 | This case features several variants that fit different ESP form factors. <br> I would recommend the D1 Mini or Super Mini Variants | D1 Mini [Amazon](https://www.amazon.de/dp/B0FP2N2YNL) <br> D1 Mini [AliExpress](https://de.aliexpress.com/item/1005006414001036.html?spm=a2g0o.order_list.order_list_main.27.2d3b5c5fHxAbjl&gatewayAdapt=glo2deu) <br> ESP32 Large [Amazon](https://www.amazon.de/dp/B0D9BSKR16?ref_=ppx_hzsearch_conn_dt_b_fed_asin_title_2&th=1) <br> ESP32 C6 Super Mini [Aliexpress](https://de.aliexpress.com/item/1005009089500839.html?spm=a2g0o.order_list.order_list_main.11.1ab05c5f8xuanX&gatewayAdapt=glo2deu) (you need to choose the correct version manually) |
 | Power Supply (PSU) | Any low-power PSU you already have should work. Otherwise, buy a simple one. | [Amazon](https://www.amazon.de/dp/B0D7MD5BJ3?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1) |
-| Temperatur Sensor BME280 or BME680 | BME680 air quality readings may not be reliable (see Disclaimer). | [BME280](https://www.amazon.de/dp/B0CYH34X3P?ref=ppx_yo2ov_dt_b_fed_asin_title) <br> [BME680](https://www.amazon.de/dp/B0CYH34X3P?ref=ppx_yo2ov_dt_b_fed_asin_title) |
+| Temperatur Sensor BME280 or BME680 | BME680 air quality readings may not be reliable (see Disclaimer). | [BME280](https://amzn.eu/d/06HNHzUl) <br> [BME680](https://www.amazon.de/dp/B0CYH34X3P?ref=ppx_yo2ov_dt_b_fed_asin_title) |
 | Screws | <ul><li>BME280/BME680 = 1x M2.5x3mm</li><li>Presence Sensor Shield = 3x M2x3mm</li><li>Motion Sensor HC-SR501 = 2x M2x3mm</li><li>Brightness Sensor BH170 = 2x M2x3mm</li></ul><br>You can try to use M2 for all the sensors but the BME280 sensor cutouts are too big for M2 head and might fall through. | [Amazon](https://www.amazon.de/dp/B0CZNT5YXV?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1)|
 | Brightness Sensor BH1750 | Works flawlessly for me, no hints necessary. | [Amazon](https://www.amazon.de/dp/B0D3WN41FS?ref=ppx_yo2ov_dt_b_fed_asin_title)|
 | Motion Sensor HC-SR501 | The sensor case is specifically designed for a motion sensor with this form factor. I know they are not the best, but they are reasonably cheap, see Disclaimer for more details | [Amazon](https://www.amazon.de/dp/B0939XMBXJ?ref=ppx_yo2ov_dt_b_fed_asin_title) |
-| Presence Sensor LD2410B | <ul><li>The sensor case is specifically designed for a presence sensor with this form factor. I experienced that they are not the best, but they are reasonably cheap, see Disclaimer for more details. </li><li>The soldering points of this sensor are smaller than the ones of the other sensor and the esp. It is very hard to remove the pins. I would advise to buy the variant without the pins. </li><li>It might be possible to use jumper wires here so you don't have to solder, but the pins are smaller than the standard jumper wire ones and need the appropriate smaller jumper wires. </li><li>An alternative is to solder the wires directly to the pin headers, although this might be janky, it works and is way less hassle.</li></ul> | [Aliexpress](https://de.aliexpress.com/item/1005004920357733.html?spm=a2g0o.order_list.order_list_main.232.23775c5f0Fhk0S&gatewayAdapt=glo2deu) |
-| LED | One segment of a WS2812 5V RGB LED  | [Amazon](https://amzn.eu/d/0iexLtnJ) |
+| Presence Sensor LD2410B | <ul><li>The sensor case is specifically designed for a presence sensor with this form factor. I experienced that they are not the best, but they are reasonably cheap, see Disclaimer for more details. </li><li>I recommend buying the sensor with pins and also buy the appropriate cable with it. Soldering these small pins is extremely hard and can even damage the sensor. Therefore I recommend attaching the cable using the plug and soldering only the side that must be attached to the ESP.</li></ul> | [Aliexpress](https://de.aliexpress.com/item/1005004920357733.html?spm=a2g0o.order_list.order_list_main.232.23775c5f0Fhk0S&gatewayAdapt=glo2deu) |
+| LED | One segment of a WS2812 5V RGB LED. If you are like me you may have them already lying around at home 😄. | [Amazon](https://amzn.eu/d/0iexLtnJ) |
 | Cables | I used 22 AWG wire | [Aliexpress](https://de.aliexpress.com/item/1005007671008743.html?spm=a2g0o.order_list.order_list_main.227.23775c5f0Fhk0S&gatewayAdapt=glo2deu) |
 | Long USB Cable | Choose length to fit your setup. | [Aliexpress](https://de.aliexpress.com/item/1005007053181899.html?spm=a2g0o.order_list.order_list_main.262.23775c5fsHIXLm&gatewayAdapt=glo2deu) |
 | Filament | I printed my case in Kingroon White PLA and with Kingroon White PETG. You can use bambu labs filament of course. I printed the brightness sensor cover out of translucent PLA/PETG. | [Kingroon White PLA](https://de.aliexpress.com/item/1005007226921275.html?spm=a2g0o.order_list.order_list_main.29.51fa5c5fMbjQzg&gatewayAdapt=glo2deu) <br> [Elegoo Transparent PLA](https://www.amazon.de/dp/B0CD7BS7B1?ref_=ppx_hzsearch_conn_dt_b_fed_asin_title_8) |
@@ -61,21 +39,11 @@ You also need:
 - Desoldering pump (optional)
 - Multimeter (optional if you trust your soldering skills)
 
-### 🖨️ Print Instructions
-
-- **Material:** PLA/PETG
-- **Layer Height:** 0.20 mm
-- **Nozzle:** 0.4 mm
-- **Infill:** 15 %
-- **Walls:** 2
-- **Divider:** print **upright** with a **brim**, flat side on the build plate. If you orient it differently, it won’t print correctly.
-- **Brightness sensor shield:** print with **transparent** material, or omit it entirely. It’s not required but hides the sensor a bit and improves the look.
-
 ### 🔢 Assembly Instructions
 
 1. If you are using the ESP32 Large version you need to desolder the pins
     - Cut the black spacers into chunks of 4–5 pins and remove them with pliers.
-    - Clamp the ESP in a vise (I use a printable vise from Thingiverse).
+    - Clamp the ESP in a vise [(I use a printable vise from Thingiverse)](https://www.thingiverse.com/thing:4764937).
     - Desolder the pins and pull them out with pliers. It’s also possible to heat the solder and pull the pins with pliers **without** a desoldering pump.
 1. **Desolder Motion sensor (HC-SR501) pins:**
     - Remove the pin spacers with pliers.
@@ -83,14 +51,15 @@ You also need:
     - Desolder and remove the pins. It’s also possible to heat the solder and pull the pins with pliers without a desoldering pump.
 1. Break a **2×4** *(2x5 for Super Mini)* matrix from the proto board — for **motion** and **presence** sensors.
 1. Break a **4×3** matrix from the proto board — for **brightness** and **temperature** sensors.
-1. Cut wires to length. I wrote the length of the cables in mm into the connection drawings. I show the two distribution boards separately to make things easier to follow. (There are further steps below on soldering order.) Pick the Connection Drawing that matches the ESP32 Version that you are using. The cable lengths and pinout slightly differs depending on the version.
-    - I only got 5 colors of cables
+1. Cut wires to length. I wrote the length of the cables in mm into the connection drawings below. I show the two distribution boards separately to make things easier to follow. (There are further steps below on soldering order.) Pick the Connection Drawing that matches the ESP32 Version that you are using. The cable lengths and pinout slightly differs depending on the version.
+    - I only a limited number of different colored cables. In the connection drawings I used the following colors:
         - red = 3.3V (BME/BH1750)
         - white/grey 5V(LD2410/HC-SR501/LED)
         - black = Ground
         - Green = I2C SCL/UART (If you have more colors you can use different colors for UART and I2C)
         - Blue = I2C SDA/UART (If you have more colors you can use different colors for UART and I2C)
         - Yellow = Motion Out
+    - In the photos below I also used red for 5V, but make sure you don't mix 5V and 3.3V.
 
    #### D1 Mini
 
@@ -102,7 +71,7 @@ You also need:
 
    #### Super Mini
 
-    the Ground of the two distribution boards are connected as the board only has one ground pin
+    The Ground of the two distribution boards are connected as the board only has one ground pin
     ![Super Mini Pinout](images/SuperMiniPinout.png)
 
 1. Make sure to tin the wire ends
@@ -153,7 +122,7 @@ You also need:
 
     | D1 Mini | Super Mini |
     | --- | --- |
-    | <img src="images/D1MiniRails.jpg" height="400" alt="D1 Mini Rails"> | <img src="images/SuperMiniRails.jpg" height="400" alt="Super Mini Rails"> |
+    | <img src="images/D1MiniRails.jpg" height="250" alt="D1 Mini Rails"> | <img src="images/SuperMiniRails.jpg" height="250" alt="Super Mini Rails"> |
 
 1. Slide the distribution boards into the rails on the backplate.
 
@@ -171,43 +140,63 @@ Post a picture and a comment to this model — I’d love to see your results �
 
 ### 💾 Software
 
-TODO: Software überarbeiten
-
-This project uses [ESPHome](https://esphome.io/) as the underlying software. It’s easy to set up and flash. You need a single YAML file that defines the sensors connected to the device and their properties. I won’t provide general ESPHome flashing instructions — the official documentation is excellent:
+This project uses [ESPHome](https://esphome.io/) as the underlying software. It’s easy to set up and flash. It uses YAML files that define the sensors connected to the device and their properties. You can either checkout my code and compile it yourself or you can pick one of my precompiled firmware binaries and flash it. I won’t provide general ESPHome compilation instructions — the official documentation is excellent:
 Guide: <https://esphome.io/guides/installing_esphome/>
 
-1. Download the source code from [my GitHub](https://github.com/DerGary/all-in-one-sensor-device/archive/refs/heads/main.zip)
-1. Extract the zip file
-1. Navigate to the V2 Folder
-1. There is an esp32.yaml (for the D1 Mini and the ESP32 Large Version) and an esp32supermini.yaml (for the supermini version, with another pinout). Choose the one that matches your ESP version. You can copy the file multiple times and name it differently if you want to create multiple devices.
-1. Change the **friendly name, name**, and optionally the **area** to your liking.
-1. Also uncomment/comment out the includes for the language package and the sensor that you are using.
-1. In **secrets.yaml**, set **wifi-password** and **wifi-ssid** to your Wi-Fi credentials.
-1. Set the **esp-password** and **esp-username** to any values you like. If you create multiple devices you should set unique values for each of the device and rename the secrets to reflect that.
-1. Set the **esp-api-key** to a value generated via the website: <https://esphome.io/components/api/#configuration-variables> This value is used to add the device to home assistant. If you create multiple devices you should set unique values for each of the device and rename the secrets to reflect that.
-1. Run ``esphome run device.yaml`` to flash the device.
-1. Test whether all sensors work as expected.
+#### Flash my precompiled binaries
+
+##### Initial installation
+
+1. Navigate to [my Github](https://github.com/DerGary/all-in-one-sensor-device/releases?q=v2.1&expanded=true) and find the latest Release.
+1. In the assets section find the binary that fits your setup. The variations are:
+    - variant = ``esp32``/`esp32c6`
+    - language = `de`/`en`
+    - temperature sensor: `bme280`/`bme680`
+    - Pick the `factory` version for initial setup.
+1. Navigate to [web.esphome.io](https://web.esphome.io/).
+1. Click connect and choose the Serial Port (probably there is only one).
+1. Click install, choose the `factory` binary file that you downloaded earlier
+1. Click install and wait.
+1. The LED will flash blue after a successful install.
+1. Open the Home Assistant app on your smartphone. Make sure that Bluetooth is turned on.
+1. Open the ``integration and devices`` view. Home Assistant should pick up the sensor and you can click add.
+1. Define WiFi Credentials and click ok.
+1. After that you can add the ESPHome integration. Check your router for the ip address of the sensor.
 1. Once deployed in its final location, proceed with calibration.
+
+##### Update
+
+1. Navigate to [my Github](https://github.com/DerGary/all-in-one-sensor-device/releases?q=v2.1&expanded=true) and find the latest Release.
+1. In the assets section find the binary that fits your setup. The variations are:
+    - variant = ``esp32``/`esp32c6`
+    - language = `de`/`en`
+    - temperature sensor: `bme280`/`bme680`
+    - Pick the ``ota`` version to update an existing sensor.
+1. Navigate to the web page of the sensor by typing its IP address in your browser.
+1. At the bottom of the page you will find the OTA update section.
+1. Choose the previously downloaded file and click update.
+
+#### Flash code directly
+
+1. Install esphome
+1. Checkout my [Github Repository](https://github.com/DerGary/all-in-one-sensor-device)
+1. Navigate into the V2.1 folder in a terminal
+1. execute `esphome -s variant esp32 -s temp bme280 -s lang de run uni.yaml`
+    - You can change ``esp32`` to any esphome compatible esp variant. Although you have to adhere to the **super mini** pinout when anything other than `esp32` is chosen here.
+    - For ``temp`` you can choose between ``bme280`` and ``bme680``
+    - For ``lang`` you can choose between ``de`` and ``en``
+1. After flashing proceed with adding the sensor to your home assistant instance as described in [initial installation](#initial-installation) section above.
 
 ### 🎯 Calibration
 
 Calibration is **non-trivial** and may take time and multiple iterations. I mainly use **offset calibration**, which is the easiest approach, though there are more accurate methods also available.
 
-#### BME680
+#### BME680 / BME280
 
 I only calibrated **temperature** and **humidity**. I don’t use air pressure, and air quality is meant to auto-calibrate.
 
 1. Let the device sit in its final location for **5–10 minutes** to saturate with heat from the ESP.
 1. Place a **trusted temperature & humidity sensor** nearby.
-1. In the **parameters** section of your ESPHome file, set ``bme680_temperature_offset`` to the difference between your device and the trusted sensor. Flash the new values — this also changes humidity readings.
-1. Additionally you can calibrate humidity and temperature further using the input components **Temperature Offset** and **Humidity Offset** directly in Home Assistant.
-
-#### BME280
-
-Again, I only calibrated temperature and humidity; I don’t use air pressure.
-
-1. Let the device sit for **5–10 minutes** to heat-soak.
-1. Place a trusted sensor nearby.
 1. Calibrate humidity and temperature using the input components **Temperature Offset** and **Humidity Offset** directly in Home Assistant.
 
 #### Motion Sensor
@@ -228,9 +217,9 @@ The sensor has **two potentiometers**: one for **trigger time** and one for **se
 1. Set **sensitivity** just high enough to trigger where needed, but as low as possible to reduce false positives.
 I set it to about there:
 
-    <img src="images/HC-SR501Knobs.jpg" height="400" alt="HC-SR501 Knobs">
+    <img src="images/HC-SR501Knobs.jpg" height="300" alt="HC-SR501 Knobs">
 
-Presence Sensor:
+#### Presence Sensor
 
 This sensor is the most challenging to calibrate. The g0-g8 values depict the different distances from the sensor.
 
@@ -238,7 +227,8 @@ This sensor is the most challenging to calibrate. The g0-g8 values depict the di
 1. Ensure **no one is in the room** while calibrating.
 1. Let the sensor sit for **10 minutes** while Home Assistant gathers **g0–g8 move/still** energy values.
 1. Review the history of each **g0–g8** value in Home Assistant. Find the **highest** value each.
-1. Set the **g0–g8 thresholds** to **5–10 % higher** than the highest observed value for this distance.
+1. Set the **g0–g8 still thresholds** to **10 % higher** than the highest observed value for this distance.
+1. Set the **g0–g8 move thresholds** to **20 % higher** than the highest observed value for this distance.
 1. **Disable engineering mode**
 
 ### 🚫 Don'ts
@@ -254,16 +244,3 @@ This sensor is the most challenging to calibrate. The g0-g8 values depict the di
 - You can use [my collection of ball head mounts](https://makerworld.com/de/collections/9129741-ball-head-mounts) to mount the device to cabinets, tubes, walls, desks etc.
 - It’s preferable to position the device **facing the area where you stay** rather than just facing the door. The motion sensor has a wide field of view and covers most of the room, while the presence sensor works best when pointed directly at the target.
 - You can test all sensors with **jumper wires** before committing to soldering.
-
-### ⚠️ Disclaimer
-
-This project is **not easy**: you have to solder a lot, including **very small** pins. You have been warned — but I’d love to see people try it 😊
-
-The finished product is not perfect — that’s why the title is not *“Ultimate Smart Home Sensor Device”* 😅. I plan to release a revised version with other sensors when I have time and when the sensors I want become more accessible. Since I don’t know when that will be, I’m sharing this version for now.
-
-**Things that bug me on the current version:**
-
-1. **(This got a lot better on the V2 version, to a point where its not really an issue anymore, but it might happen and therefore is still listed here)** The motion sensor is very cheap and sometimes triggers when no one is in the room. (This can be minimized by **reducing the ESP’s Wi-Fi signal strength**, as cheap motion sensors are prone to misfire due to Wi-Fi interference.)
-1. The motion sensor can trigger when you **air the room**, as it detects heat changes.
-1. The presence sensor uses **24 GHz**. While it can detect mostly stationary humans, it cannot detect **very small movements** or someone under a blanket. (This mostly applies to my girlfriend — somehow I am tracked a bit better 😅).
-1. The presence sensor is **extremely hard to solder**. I actually broke a sensor by accidentally desoldering the resistor right next to the pins. I now solder the wires directly to the pins which is janky but it works and is a lot easier.
