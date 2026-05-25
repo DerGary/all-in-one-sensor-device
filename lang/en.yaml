@@ -69,3 +69,6 @@ substitutions:
   label_status_led: Status-LED
   label_air_quality_led_automation: Show air quality through LED
   label_wifi_strength: WiFi TX Power"
+  label_occupied: Occupied
+  label_occupancy_automation: Show occupancy through LED
+  label_air_quality_state: Air Quality State

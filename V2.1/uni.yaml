@@ -28,6 +28,8 @@ packages:
     file: ../sensors/ws2812.yaml
     vars:
       pin: GPIO18
+  control_leds: !include
+    file: ../automations/control_leds.yaml
 
 ## setup the i2c bus and define the pins to use.
 i2c:

@@ -69,3 +69,6 @@ substitutions:
   label_status_led: Status-LED
   label_air_quality_led_automation: Luftqualität über LED anzeigen
   label_wifi_strength: WiFi Sendeleistung"
+  label_occupied: Belegt
+  label_occupancy_automation: Belegung über LED anzeigen
+  label_air_quality_state: Luftqualitätsstatus

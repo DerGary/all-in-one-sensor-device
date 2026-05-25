@@ -53,3 +53,7 @@ binary_sensor:
     lambda: return id(c4001_presence).state || id(ld2450_presence).state;
     icon: mdi:account-eye-outline
     device_class: presence
+    id: presence
+    on_state:
+      then:
+        - script.execute: set_occupied

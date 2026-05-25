@@ -85,6 +85,10 @@ binary_sensor:
     has_target:
       name: ${label_presence}
       icon: mdi:account-eye-outline
+      id: presence
+      on_state:
+        then:
+          - script.execute: set_occupied
     has_moving_target:
       disabled_by_default: true
       name: ${label_moving_target}
