@@ -14,7 +14,16 @@ binary_sensor:
     icon: mdi:motion-sensor
     on_state:
       then:
-        - script.execute: control_leds
+        - lambda: |
+            if(id(occupancy_led_automation).state){
+              id(control_leds).execute();
+            }
+    filters:
+      - lambda: |
+          if(x == id(occupied).state){
+            return {};
+          }
+          return x;
 
 switch:
   - platform: template
