@@ -187,6 +187,16 @@ Guide: <https://esphome.io/guides/installing_esphome/>
     - For ``lang`` you can choose between ``de`` and ``en``
 1. After flashing proceed with adding the sensor to your home assistant instance as described in [initial installation](#initial-installation) section above.
 
+#### Status LED
+
+| Color | Pattern | Meaning |
+| --- | --- | --- |
+| Green | Fast Pulse | Sensor is waiting to be paired via Improv BLE |
+| Pink | Fast Pulse | Sensor is not connected to wifi or home assistant |
+| Green | Steady | When the occupancy automation is enabled, indicates that the area is occupied. |
+| Orange | Fast Pulse | When the air quality automation is enabled, indicates that the air quality level is warning. |
+| Red | Fast Pulse | When the air quality automation is enabled, indicates that the air quality level is critical. |
+
 ### 🎯 Calibration
 
 Calibration is **non-trivial** and may take time and multiple iterations. I mainly use **offset calibration**, which is the easiest approach, though there are more accurate methods also available.
