@@ -5,7 +5,7 @@ bme68x_bsec2_i2c:
   operating_age: 28d
   sample_rate: LP
   supply_voltage: 3.3V
-  temperature_offset: 6.0
+  temperature_offset: ${bme680_temperature_offset}
 
 sensor:
   ## adds the bme680 sensors. see: https://esphome.io/components/sensor/bme68x_bsec2/
@@ -31,6 +31,9 @@ sensor:
       icon: mdi:check-decagram-outline
       name: ${label_iaq}
       id: iaq
+      on_value:
+        then:
+          - script.execute: set_air_quality_status
     co2_equivalent:
       icon: mdi:molecule-co2
       name: ${label_co2_approx}
@@ -48,34 +51,26 @@ text_sensor:
     icon: "mdi:air-purifier"
     lambda: |-
       if ( int(id(iaq).state) <= 50) {
-        id(air_quality_status).publish_state("");
         return {"${label_aq_50}"};
       }
       else if (int(id(iaq).state) >= 51 && int(id(iaq).state) <= 100) {
-        id(air_quality_status).publish_state("");
         return {"${label_aq_100}"};
       }
       else if (int(id(iaq).state) >= 101 && int(id(iaq).state) <= 150) {
-        id(air_quality_status).publish_state("");
         return {"${label_aq_150}"};
       }
       else if (int(id(iaq).state) >= 151 && int(id(iaq).state) <= 200) {
-        id(air_quality_status).publish_state("warning");
         return {"${label_aq_200}"};
       }
       else if (int(id(iaq).state) >= 201 && int(id(iaq).state) <= 250) {
-        id(air_quality_status).publish_state("warning");
         return {"${label_aq_250}"};
       }
       else if (int(id(iaq).state) >= 251 && int(id(iaq).state) <= 350) {
-        id(air_quality_status).publish_state("warning");
         return {"${label_aq_350}"};
       }
       else if (int(id(iaq).state) >= 351) {
-        id(air_quality_status).publish_state("critical");
         return {"${label_aq_351}"};
       }
       else {
-        id(air_quality_status).publish_state("");
         return {"${label_error}"};
       }

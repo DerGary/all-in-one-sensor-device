@@ -1,0 +1,75 @@
+packages:
+  control_leds: !include "${ './control_leds_air_quality.yaml' if temp == 'bme680' else './control_leds.yaml'}"
+
+globals:
+  - id: improv_ble_in_progress
+    type: bool
+    restore_value: no
+    initial_value: "false"
+
+binary_sensor:
+  - platform: template
+    name: ${label_occupied}
+    id: occupied
+    icon: mdi:motion-sensor
+    on_state:
+      then:
+        - script.execute: control_leds
+
+switch:
+  - platform: template
+    id: occupancy_led_automation
+    name: ${label_occupancy_automation}
+    entity_category: config
+    restore_mode: RESTORE_DEFAULT_OFF
+    optimistic: True
+    on_state:
+      then:
+        - script.execute: control_leds
+
+script:
+  - id: control_leds_no_ha_connection_state
+    then:
+      - light.turn_on:
+          brightness: 100%
+          red: 1
+          green: 0
+          blue: 0
+          id: status_led
+          effect: "Fast Pulse"
+  - id: control_leds_improv_ble_state
+    then:
+      - light.turn_on:
+          brightness: 100%
+          red: 0%
+          green: 0%
+          blue: 100%
+          id: status_led
+          effect: "Fast Pulse"
+  - id: control_leds_occupancy
+    then:
+      - lambda: |
+          ESP_LOGI("occupied", "Turn on light");
+          auto call = id(status_led).turn_on();
+          call.set_brightness(1.0);
+          call.set_rgb(0.0, 0.0, 1.0);
+          call.set_transition_length(0);
+          call.perform();
+  - id: control_leds_turn_off
+    then:
+      - light.turn_off:
+          id: status_led
+          transition_length:
+            milliseconds: 0
+  - id: set_occupied
+    then:
+      - lambda: |-
+          ESP_LOGI("occupied", "set occupied called");
+          if(id(motion).state == true){
+            ESP_LOGI("occupied", "set occupied to true");
+            id(occupied).publish_state(true);
+          }
+          if(id(motion).state == false && id(presence).state == false){
+            ESP_LOGI("occupied", "set occupied to false");
+            id(occupied).publish_state(false);
+          }
