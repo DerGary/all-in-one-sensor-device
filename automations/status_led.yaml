@@ -34,7 +34,7 @@ script:
           brightness: 100%
           red: 1
           green: 0
-          blue: 0
+          blue: 1
           id: status_led
           effect: "Fast Pulse"
   - id: control_leds_improv_ble_state
@@ -42,8 +42,8 @@ script:
       - light.turn_on:
           brightness: 100%
           red: 0%
-          green: 0%
-          blue: 100%
+          green: 100%
+          blue: 0%
           id: status_led
           effect: "Fast Pulse"
   - id: control_leds_occupancy
@@ -52,7 +52,7 @@ script:
           ESP_LOGI("occupied", "Turn on light");
           auto call = id(status_led).turn_on();
           call.set_brightness(1.0);
-          call.set_rgb(0.0, 0.0, 1.0);
+          call.set_rgb(0.0, 1.0, 0.0);
           call.set_transition_length(0);
           call.perform();
   - id: control_leds_turn_off
