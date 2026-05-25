@@ -157,7 +157,7 @@ Guide: <https://esphome.io/guides/installing_esphome/>
 1. Click connect and choose the Serial Port (probably there is only one).
 1. Click install, choose the `factory` binary file that you downloaded earlier
 1. Click install and wait.
-1. The LED will flash blue after a successful install.
+1. The LED will flash green after a successful install.
 1. Open the Home Assistant app on your smartphone. Make sure that Bluetooth is turned on.
 1. Open the ``integration and devices`` view. Home Assistant should pick up the sensor and you can click add.
 1. Define WiFi Credentials and click ok.
@@ -194,8 +194,8 @@ Guide: <https://esphome.io/guides/installing_esphome/>
 | Green | Fast Pulse | Sensor is waiting to be paired via Improv BLE |
 | Pink | Fast Pulse | Sensor is not connected to wifi or home assistant |
 | Green | Steady | When the occupancy automation is enabled, indicates that the area is occupied. |
-| Orange | Fast Pulse | When the air quality automation is enabled, indicates that the air quality level is warning. |
-| Red | Fast Pulse | When the air quality automation is enabled, indicates that the air quality level is critical. |
+| Orange | Slow Pulse | When the air quality automation is enabled, indicates that the air quality level is warning. |
+| Red | Slow Pulse | When the air quality automation is enabled, indicates that the air quality level is critical. |
 
 ### 🎯 Calibration
 

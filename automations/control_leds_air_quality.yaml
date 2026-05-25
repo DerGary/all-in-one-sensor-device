@@ -5,7 +5,16 @@ text_sensor:
     disabled_by_default: true
     on_value:
       then:
-        - script.execute: control_leds
+        - lambda: |
+            if(id(air_quality_led_automation).state){
+              id(control_leds).execute();
+            }
+    filters:
+      - lambda: |
+          if(x == id(air_quality_status).state){
+            return {};
+          }
+          return x;
 
 switch:
   - platform: template
