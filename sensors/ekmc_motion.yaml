@@ -7,8 +7,12 @@ binary_sensor:
         pulldown: true
       inverted: false
     name: ${label_motion_sensor}
+    id: motion
     device_class: motion
     icon: mdi:motion-sensor
     filters:
       - delayed_on: 100ms
       - delayed_off: 5000ms
+    on_state:
+      then:
+        - script.execute: set_occupied

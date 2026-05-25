@@ -28,11 +28,7 @@ globals:
   - id: wifi_tx_power_dbm
     type: float
     restore_value: True
-    initial_value: "20"
-  - id: improv_ble_in_progress
-    type: bool
-    restore_value: no
-    initial_value: "false"
+    initial_value: "8.5"
 
 esp32:
   variant: ${variant}
@@ -70,6 +66,7 @@ api:
 ## Enables to update the firmware over the air
 ota:
   - platform: esphome
+  - platform: web_server
 
 wifi:
   id: wifi_id
@@ -82,6 +79,7 @@ wifi:
 
 esp32_improv:
   authorizer: none
+  # next_url: https://my.home-assistant.io/redirect/config_flow_start?domain=esphome&ip_address={{ip_address}}
   on_start:
     - lambda: id(improv_ble_in_progress) = true;
     - script.execute: control_leds
