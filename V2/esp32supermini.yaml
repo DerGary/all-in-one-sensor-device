@@ -1,5 +1,6 @@
 substitutions:
   friendly_name: CHANGEME # the friendly name of your device, can be anything.
+  apikey: !secret api-key
 
 esphome:
   name: changeme # the name of your device. It should not contain any special characters or whitespaces. the device can be found in the network by this name.
@@ -15,7 +16,7 @@ packages:
       humidity_offset_initial_value: 0.0
       username: !secret username
       password: !secret password
-      api_key: !secret api-key
+      api_key: ${apikey}
       wifi_ssid: !secret wifi-ssid
       wifi_password: !secret wifi-password
       variant: esp32c6
@@ -32,16 +33,17 @@ packages:
 
   bme280: !include ../sensors/bme280.yaml
 
-  hc-sr501: !include
+  motion: !include
     file: ../sensors/hc-sr501.yaml
     vars:
       pin: GPIO7
-  bh1750: !include ../sensors/bh1750.yaml
-  ld2410: !include
+  illuminance: !include ../sensors/bh1750.yaml
+  presence: !include
     file: ../sensors/ld2410.yaml
     vars:
       tx_pin: GPIO16
       rx_pin: GPIO17
+  script_dummies: !include ../automations/script_dummies.yaml
 
 ## setup the i2c bus and define the pins to use.
 i2c:

@@ -13,6 +13,8 @@ packages:
 
   temperature: !include
     file: "../sensors/${temp}.yaml"
+    vars:
+      bme680_temperature_offset: 5.8
 
   motion: !include
     file: ../sensors/hc-sr501.yaml
@@ -28,8 +30,8 @@ packages:
     file: ../sensors/ws2812.yaml
     vars:
       pin: GPIO18
-  control_leds: !include
-    file: ../automations/control_leds.yaml
+  status_led: !include
+    file: ../automations/status_led.yaml
 
 ## setup the i2c bus and define the pins to use.
 i2c:
