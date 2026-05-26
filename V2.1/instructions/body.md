@@ -154,6 +154,7 @@ Guide: <https://esphome.io/guides/installing_esphome/>
     - temperature sensor: `bme280`/`bme680`
     - Pick the `factory` version for initial setup.
 1. Navigate to [web.esphome.io](https://web.esphome.io/).
+1. Connect the esp to your computer.
 1. Click connect and choose the Serial Port (probably there is only one).
 1. Click install, choose the `factory` binary file that you downloaded earlier
 1. Click install and wait.
