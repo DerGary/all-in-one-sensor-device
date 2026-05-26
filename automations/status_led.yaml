@@ -63,6 +63,7 @@ script:
           call.set_brightness(1.0);
           call.set_rgb(0.0, 1.0, 0.0);
           call.set_transition_length(0);
+          call.set_effect("none");
           call.perform();
   - id: control_leds_turn_off
     then:

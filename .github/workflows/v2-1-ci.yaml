@@ -66,21 +66,19 @@ jobs:
         run: |
           mkdir -p output
           
-          # Generate a unique base name (e.g., firmware_esp32c6_bme680_de)
-          BASE_NAME="firmware_${{ matrix.variant }}_${{ matrix.temp }}_${{ matrix.lang }}_V2.1.${{ github.run_number }}"
+          if [[ "${{ github.ref_type }}" == "tag" && "${{ github.ref_name }}" == v2.1* ]]; then
+            VERSION="${{ github.ref_name }}"
+          else
+            VERSION="v2.1-dev.${{ github.run_number }}"
+          fi
           
-          # 1. Locate and copy the standard OTA file
-          OTA_PATH=$(find V2.1/.esphome/build/ -name "firmware.bin" | head -n 1)
+          BASE_NAME="firmware_${{ matrix.variant }}_${{ matrix.temp }}_${{ matrix.lang }}_${VERSION}"
+          
+          OTA_PATH=$(find V2.1/.esphome/build/ -name "firmware.ota.bin" | head -n 1)
           cp "$OTA_PATH" "output/${BASE_NAME}_ota.bin"
           
-          # 2. Locate and copy the factory file (PlatformIO uses *-factory.bin, ESP-IDF uses *.factory.bin)
-          FACTORY_PATH=$(find V2.1/.esphome/build/ -name "*factory*.bin" | head -n 1)
-          if [ -n "$FACTORY_PATH" ]; then
-            cp "$FACTORY_PATH" "output/${BASE_NAME}_factory.bin"
-          else
-            # Fallback if the framework structure matches OTA
-            cp "$OTA_PATH" "output/${BASE_NAME}_factory.bin"
-          fi
+          FACTORY_PATH=$(find V2.1/.esphome/build/ -name "firmware.factory.bin" | head -n 1)
+          cp "$FACTORY_PATH" "output/${BASE_NAME}_factory.bin"
 
       - name: Upload artifacts for this matrix run
         uses: actions/upload-artifact@v7
@@ -103,6 +101,10 @@ jobs:
         with:
           path: all-artifacts
           merge-multiple: true # Flattens all artifacts into a single folder
+
+      - name: Rename Instructions
+        working-directory: all-artifacts
+        run: mv v2.1-instructions.pdf ${{ github.ref_name }}-instructions.pdf
 
       - name: Create GitHub Release and attach assets
         uses: softprops/action-gh-release@v3
