@@ -19,7 +19,6 @@ packages:
       wifi_password: !secret wifi-password
       variant: esp32
 
-  ## choose your connectivity by uncommenting the correct block (only one at a time).
   ## WiFi: includes BLE tracker and Bluetooth proxy. Set credentials in secrets.yaml.
   connectivity: !include
     file: ../connectivity/wifi.yaml
@@ -30,11 +29,6 @@ packages:
       username: !secret username
       password: !secret password
 
-  ## OpenThread (Thread/Matter): no WiFi or BLE proxy. Set your OTBR dataset TLV in secrets.yaml.
-  # connectivity: !include
-  #   file: ../connectivity/thread.yaml
-  #   vars:
-  #     openthread_tlv: !secret openthread-tlv
 
   ## choose which language you are using by uncommenting the correct line
   # lang: !include ../lang/de.yaml
