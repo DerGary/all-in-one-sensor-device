@@ -194,7 +194,7 @@ Guide: <https://esphome.io/guides/installing_esphome/>
 | --- | --- | --- |
 | Green | Fast Pulse | Sensor is waiting to be paired via Improv BLE |
 | Pink | Fast Pulse | Sensor is not connected to wifi or home assistant |
-| Green | Steady | When the occupancy automation is enabled, indicates that the area is occupied. |
+| Warm White | Steady | When the occupancy automation is enabled, indicates that the area is occupied. |
 | Orange | Slow Pulse | When the air quality automation is enabled, indicates that the air quality level is warning. |
 | Red | Slow Pulse | When the air quality automation is enabled, indicates that the air quality level is critical. |
 
@@ -229,6 +229,7 @@ The sensor has **two potentiometers**: one for **trigger time** and one for **se
 I set it to about there:
 
     <img src="images/HC-SR501Knobs.jpg" height="300" alt="HC-SR501 Knobs">
+    <img src="images/HC-SR501Settings.jpg" height="300" alt="HC-SR501 Knobs">
 
 #### Presence Sensor
 
