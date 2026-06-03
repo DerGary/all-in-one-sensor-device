@@ -1,5 +1,16 @@
 ## 🆕 Changelog
 
+### V2.1.1
+
+1. Changed LD2410B seat to reduce reflections.
+    - If you had any problems with the ld2410b detecting very high values while no one is in the room, this will fix it.
+    - I now got idle values of 3-5%.
+    - It makes such a huge difference, that I even upgraded all fronts of my sensors to this new version
+2. Changed LED automation colors slightly
+    - Color for occupancy is now warm white
+    - effect of occupancy is now explicitly "none"
+3. Updated Instructions accordingly
+
 ### V2.1.0
 
 1. Add an LED to show status for e.g. Improv BLE
