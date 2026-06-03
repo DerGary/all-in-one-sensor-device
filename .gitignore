@@ -3,3 +3,4 @@ __pycache__
 **/__pycache__/
 .esphome
 secrets.yaml
+V2.1/compileAndUpdate.sh

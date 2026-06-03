@@ -31,6 +31,9 @@ sensor:
       icon: mdi:check-decagram-outline
       name: ${label_iaq}
       id: iaq
+      on_value:
+        then:
+          - script.execute: set_air_quality_status
     co2_equivalent:
       icon: mdi:molecule-co2
       name: ${label_co2_approx}

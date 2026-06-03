@@ -1,0 +1,76 @@
+text_sensor:
+  - platform: template
+    name: ${label_air_quality_state}
+    id: air_quality_status
+    disabled_by_default: true
+    on_value:
+      then:
+        - lambda: |
+            if(id(air_quality_led_automation).state){
+              id(control_leds).execute();
+            }
+    filters:
+      - lambda: |
+          if(x == id(air_quality_status).state){
+            return {};
+          }
+          return x;
+
+switch:
+  - platform: template
+    id: air_quality_led_automation
+    name: ${label_air_quality_led_automation}
+    entity_category: config
+    restore_mode: RESTORE_DEFAULT_OFF
+    optimistic: True
+    on_state:
+      then:
+        - script.execute: control_leds
+
+script:
+  - id: control_leds
+    then:
+      - lambda: |
+          if (id(improv_ble_in_progress)) {
+            id(control_leds_improv_ble_state).execute();
+          } else if (!id(wifi_id).is_connected() || !id(api_id).is_connected()){
+            id(control_leds_no_ha_connection_state).execute();
+          } else if (id(air_quality_led_automation).state && id(air_quality_status).state != ""){
+            id(control_leds_air_quality).execute();
+          } else if (id(occupancy_led_automation).state && id(occupied).state){
+            id(control_leds_occupancy).execute();
+          } else {
+            id(control_leds_turn_off).execute();
+          }
+  - id: control_leds_air_quality
+    then:
+      - lambda: |
+          if (id(air_quality_status).state == "critical"){
+            ESP_LOGI("air_quality", "Turn on critical light");
+            auto call = id(status_led).turn_on();
+            call.set_brightness(1.0);
+            call.set_rgb(1.0, 0.0, 0.0);
+            call.set_effect("Slow Pulse");
+            call.perform();
+          }else if (id(air_quality_status).state == "warning"){
+            ESP_LOGI("air_quality", "Turn on warning light");
+            auto call = id(status_led).turn_on();
+            call.set_brightness(1.0);
+            call.set_rgb(1.0, 0.7, 0.0);
+            call.set_effect("Slow Pulse");
+            call.perform();
+          }
+  - id: set_air_quality_status
+    then:
+      - lambda: |-
+          ESP_LOGI("air_quality", "set air_quality status called");
+          if (int(id(iaq).state) >= 200) {
+            ESP_LOGI("air_quality", "set air quality status to critical");
+            id(air_quality_status).publish_state("critical");
+          }else if(int(id(iaq).state) >= 150){
+            ESP_LOGI("air_quality", "set air quality status to warning");
+            id(air_quality_status).publish_state("warning");
+          }else{
+            ESP_LOGI("air_quality", "set air quality status to none");
+            id(air_quality_status).publish_state("");
+          }

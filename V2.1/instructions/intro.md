@@ -1,6 +1,10 @@
-# All-In-One Smart Home Sensor Device
+# All-In-One Smart Home Sensor Case V2.1
 
-This is a project containing multiple sensors, an esp32 with esphome as well as a 3d printed enclosure to create a DIY Smart Home Sensor Device.
+[Makerworld](https://makerworld.com/de/models/2180710-all-in-one-smart-home-sensor-case-v2#profileId-2381634)
+
+## Please read the disclaimer at the bottom before printing
+
+Hello everyone 👋, this has been one of my biggest projects so far. If you have any questions about the project please ask them in the comments then I can answer them and everyone can learn from that.
 
 When I started building my smart home, I realized that most devices only cover very specific use cases. To get full functionality in each room, you usually need to buy multiple different devices.
 
@@ -18,9 +22,12 @@ My goal with this project was to create **the ultimate DIY smart home sensor dev
 1. Integrate with Home Assistant.
 1. No cloud dependency.
 
-## Device Types and Revisions
+## 🖨️ Print Instructions
 
-- [All-In-One Smart Home Sensor Case V1](./V1/README.md) - [Makerworld](https://makerworld.com/de/models/1744429-all-in-one-smart-home-sensor-case-v1#profileId-1854007)
-- [All-In-One Smart Home Sensor Case V2](./V2/README.md) - [Makerworld](https://makerworld.com/de/models/2180710-all-in-one-smart-home-sensor-case-v2#profileId-2381634)
-- [All-In-One Smart Home Sensor Case V2.1](./V2.1/README.md) - [Makerworld](https://makerworld.com/de/models/2180710-all-in-one-smart-home-sensor-case-v2#profileId-2381634)
-- [Ultimate Smart Home Sensor Case](./Ultimate/README.md) - TODO
+- **Material:** PLA/PETG
+- **Layer Height:** 0.20 mm
+- **Nozzle:** 0.4 mm
+- **Infill:** 15 %
+- **Walls:** 2
+- **Divider:** print **upright** with a **brim**, flat side on the build plate. If you orient it differently, it won’t print correctly.
+- **Brightness sensor shield:** print with **transparent** material, or omit it entirely. It’s not required but hides the sensor a bit and improves the look.

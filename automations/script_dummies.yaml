@@ -1,0 +1,5 @@
+script:
+  - id: set_occupied
+    then:
+  - id: set_air_quality_status
+    then:

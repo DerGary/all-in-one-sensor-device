@@ -1,14 +1,17 @@
-name: CI & Release Pipeline
+name: V2.0
 
 on:
   pull_request:
     branches: ["main"]
+    paths:
+      - 'V2/**'
+      - .github/workflows/v2-0-ci.yml
   push:
     tags:
-      - "v*"
+      - "v2.0*"
 
 jobs:
-  build:
+  build-pdf:
     runs-on: ubuntu-latest
     container:
       image: node:26
@@ -37,13 +40,29 @@ jobs:
           path: ./V2/instructions/v2-instructions.pdf
           if-no-files-found: error
 
-  release:
-    needs: build
-    # Verhindert, dass der Job bei PRs läuft
+  build-bin:
+    runs-on: ubuntu-latest
+    container:
+      image: esphome/esphome:stable
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [esp32, esp32supermini]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Compile firmware
+        run: | 
+          esphome -s apikey "0HkBGFr/oAHaBGVJue84kroMi9UUI+9x/R7dBaUF354=" compile V2/${{ matrix.variant }}.yaml
+
+
+  release-pdf:
+    needs: build-pdf
     if: startsWith(github.ref, 'refs/tags/v2.0') 
     runs-on: ubuntu-latest
 
-    # GitHub benötigt Schreibrechte, um ein Release erstellen zu können
     permissions:
       contents: write
     steps:
@@ -65,3 +84,4 @@ jobs:
           draft: false
           prerelease: false
           generate_release_notes: true
+
