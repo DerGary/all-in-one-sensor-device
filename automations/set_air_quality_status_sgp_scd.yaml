@@ -1,0 +1,14 @@
+script:
+  - id: set_air_quality_status
+    then:
+      - lambda: |-
+          float current_tvoc = id(tvoc).state;
+          float current_co2 = id(co2).state;
+
+          if (current_co2 > 2000 || current_tvoc > 2200) {
+            id(air_quality_status).publish_state("critical");
+          } else if (current_co2 > 1250 || current_tvoc > 660) {
+            id(air_quality_status).publish_state("warning");
+          } else {
+            id(air_quality_status).publish_state("");
+          }

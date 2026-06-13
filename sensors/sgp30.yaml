@@ -4,6 +4,9 @@ sensor:
       name: ${label_tvoc}
       icon: mdi:air-filter
       id: tvoc
+      on_value:
+        then:
+          - script.execute: set_air_quality_status
     compensation:
       humidity_source: humidity
       temperature_source: temperature

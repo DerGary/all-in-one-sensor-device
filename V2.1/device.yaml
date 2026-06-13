@@ -5,9 +5,10 @@ substitutions:
 
 packages:
   common: !include
-    file: ./common.yaml
+    file: ../common.yaml
     vars:
-      variant: "${variant}"
+      device_name: all-in-one-sensor # the name of your device. It should not contain any special characters or whitespaces. the device can be found in the network by this name.
+      friendly_name: All in One Sensor # the friendly name of your device, can be anything.
 
   lang: !include "../lang/${lang}.yaml"
 
@@ -32,6 +33,12 @@ packages:
       pin: GPIO18
   status_led: !include
     file: ../automations/status_led.yaml
+    vars:
+      sensor: "${temp}"
+
+web_server:
+  port: 80
+  local: true
 
 ## setup the i2c bus and define the pins to use.
 i2c:

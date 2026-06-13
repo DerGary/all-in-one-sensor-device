@@ -41,9 +41,7 @@ substitutions:
   label_presence_sensor: Präsenzsensor
   label_factory_defaults: Werkseinstellungen
   label_distance_resolution: Entfernungsauflösung
-  label_voc_index: VOC Index
   label_tvoc: TVOC
-  label_nox_index: NOx Index
   label_co2: CO²
   label_count: Anzahl
   label_target: Ziel
@@ -52,7 +50,6 @@ substitutions:
   label_distance: Abstand
   label_resolution: Auflösung
   label_zone: Zone
-  label_all: Alle
   label_multi_target_tracking: Mehrzielverfolgung
   label_firmware: Firmware
   label_direction: Richtung
@@ -68,7 +65,7 @@ substitutions:
   label_save_config: Konfiguration speichern
   label_status_led: Status-LED
   label_air_quality_led_automation: Luftqualität über LED anzeigen
-  label_wifi_strength: WiFi Sendeleistung"
+  label_wifi_strength: WiFi Sendeleistung
   label_occupied: Belegung
   label_occupancy_automation: Belegung über LED anzeigen
   label_air_quality_state: Luftqualitätsstatus

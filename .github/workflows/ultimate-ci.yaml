@@ -1,17 +1,18 @@
-name: V2.1
+name: Ultimate
 
 on:
   pull_request:
     branches: ["main"]
     paths:
-      - 'V2.1/**'
+      - 'Ultimate/**'
       - 'sensors/**'
       - 'lang/**'
       - 'automations/**'
-      - .github/workflows/v2-1-ci.yaml
+      - 'components/**'
+      - .github/workflows/ultimate-ci.yaml
   push:
     tags:
-      - "v2.1*"
+      - "ultimate*"
 
 jobs:
   build-pdf:
@@ -26,12 +27,12 @@ jobs:
         run: |
             apt-get update
             apt-get install -y chromium fonts-noto-color-emoji
-            
+
       - name: Install md-to-pdf globally
         run: npm i -g md-to-pdf
 
       - name: Run PDF render script
-        working-directory: V2.1/instructions
+        working-directory: Ultimate/instructions
         run: |
           chmod +x ./renderPdf.sh
           ./renderPdf.sh
@@ -39,8 +40,8 @@ jobs:
       - name: Upload PDF Artifact
         uses: actions/upload-artifact@v7
         with:
-          name: v2.1-instructions-pdf
-          path: ./V2.1/instructions/v2.1-instructions.pdf
+          name: ultimate-instructions-pdf
+          path: ./Ultimate/instructions/ultimate-instructions.pdf
           if-no-files-found: error
 
   build-bin:
@@ -51,8 +52,7 @@ jobs:
       fail-fast: false
       matrix:
         lang: [de, en]
-        temp: [bme680, bme280]
-        variant: [esp32, esp32c6]
+        temp: [sht4x, bme280]
 
     steps:
       - name: Checkout code
@@ -60,39 +60,39 @@ jobs:
 
       - name: Compile firmware
         run: |
-          esphome -s lang ${{ matrix.lang }} -s temp ${{ matrix.temp }} -s variant ${{ matrix.variant }} compile V2.1/device.yaml
+          esphome -s lang ${{ matrix.lang }} -s temp ${{ matrix.temp }} compile Ultimate/device.yaml
 
       - name: Collect and rename binaries
         run: |
           mkdir -p output
-          
-          if [[ "${{ github.ref_type }}" == "tag" && "${{ github.ref_name }}" == v2.1* ]]; then
+
+          if [[ "${{ github.ref_type }}" == "tag" && "${{ github.ref_name }}" == ultimate* ]]; then
             VERSION="${{ github.ref_name }}"
           else
-            VERSION="v2.1-dev.${{ github.run_number }}"
+            VERSION="ultimate-dev.${{ github.run_number }}"
           fi
-          
-          BASE_NAME="firmware_${{ matrix.variant }}_${{ matrix.temp }}_${{ matrix.lang }}_${VERSION}"
-          
-          OTA_PATH=$(find V2.1/.esphome/build/ -name "firmware.ota.bin" | head -n 1)
+
+          BASE_NAME="firmware_${{ matrix.temp }}_${{ matrix.lang }}_${VERSION}"
+
+          OTA_PATH=$(find Ultimate/.esphome/build/ -name "firmware.ota.bin" | head -n 1)
           cp "$OTA_PATH" "output/${BASE_NAME}_ota.bin"
-          
-          FACTORY_PATH=$(find V2.1/.esphome/build/ -name "firmware.factory.bin" | head -n 1)
+
+          FACTORY_PATH=$(find Ultimate/.esphome/build/ -name "firmware.factory.bin" | head -n 1)
           cp "$FACTORY_PATH" "output/${BASE_NAME}_factory.bin"
 
       - name: Upload artifacts for this matrix run
         uses: actions/upload-artifact@v7
         with:
-          name: binaries-${{ matrix.variant }}-${{ matrix.temp }}-${{ matrix.lang }}
+          name: binaries-${{ matrix.temp }}-${{ matrix.lang }}
           path: output/*.bin
 
   release:
-    needs: 
+    needs:
       - build-bin
       - build-pdf
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v2.1')
-    
+    if: startsWith(github.ref, 'refs/tags/ultimate')
+
     permissions:
       contents: write
     steps:
@@ -100,11 +100,11 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           path: all-artifacts
-          merge-multiple: true # Flattens all artifacts into a single folder
+          merge-multiple: true
 
       - name: Rename Instructions
         working-directory: all-artifacts
-        run: mv v2.1-instructions.pdf ${{ github.ref_name }}-instructions.pdf
+        run: mv ultimate-instructions.pdf ${{ github.ref_name }}-instructions.pdf
 
       - name: Create GitHub Release and attach assets
         uses: softprops/action-gh-release@v3

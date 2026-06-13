@@ -182,7 +182,7 @@ Guide: <https://esphome.io/guides/installing_esphome/>
 1. Install esphome
 1. Checkout my [Github Repository](https://github.com/DerGary/all-in-one-sensor-device)
 1. Navigate into the V2.1 folder in a terminal
-1. execute `esphome -s variant esp32 -s temp bme280 -s lang de run uni.yaml`
+1. execute `esphome -s variant esp32 -s temp bme280 -s lang de run device.yaml`
     - You can change ``esp32`` to any esphome compatible esp variant. Although you have to adhere to the **super mini** pinout when anything other than `esp32` is chosen here.
     - For ``temp`` you can choose between ``bme280`` and ``bme680``
     - For ``lang`` you can choose between ``de`` and ``en``

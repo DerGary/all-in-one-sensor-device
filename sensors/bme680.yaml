@@ -1,3 +1,6 @@
+packages:
+  set_air_quality: !include ../automations/set_air_quality_status_bme680.yaml
+
 ## adds the bme680 to the configuration. For information about the properties see: https://esphome.io/components/sensor/bme68x_bsec2/
 bme68x_bsec2_i2c:
   address: 0x77
