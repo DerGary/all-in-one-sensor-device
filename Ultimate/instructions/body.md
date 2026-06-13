@@ -1,4 +1,4 @@
-## 🔢 Steps
+﻿## 🔢 Steps
 
 1. Source all the parts from the shopping list
 1. Print the enclosure
@@ -24,7 +24,7 @@ You can also buy the parts from other sites. If you don’t mind waiting, AliExp
 | VOC Sensor SGP30 | Measures volatile organic compounds (air quality). | [Aliexpress](https://de.aliexpress.com/item/1005012034193686.html?spm=a2g0o.productlist.main.4.1c1aSxPKSxPKMY&aem_p4p_detail=20260613002921441686255127900000780498&algo_pvid=7f56b5d1-73c5-410d-8384-c001793e7138&algo_exp_id=7f56b5d1-73c5-410d-8384-c001793e7138-3&pdp_ext_f=%7B%22order%22%3A%2215%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21EUR%215.72%214.29%21%21%216.46%214.84%21%40211b81a317813357609628201e5315%2112000057352428823%21sea%21DE%216147561042%21X%211%210%21n_tag%3A-29919%3Bd%3A856b28b5%3Bm03_new_user%3A-29895&curPageLogUid=rZAOF2Lp1cfd&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005012034193686%7C_p_origin_prod%3A&search_p4p_id=20260613002921441686255127900000780498_1) |
 | Motion Sensor Panasonic EKMC 1603111 | Theoretically other Panasonic PIRs would be also compatible if they have the same form factor. | [Aliexpress](https://de.aliexpress.com/item/1005006704410099.html?spm=a2g0o.order_list.order_list_main.11.51e45c5fZesJEf&gatewayAdapt=glo2deu) |
 | Presence Sensor LD2450 | Handles multi-person, zone-based tracking. Pay attention that the one you buy includes the cable as it is easier to work with. | [Amazon](https://www.amazon.de/dp/B0FMRQ6DWJ?ref_=ppx_hzod_title_dt_b_fed_asin_title_0_0) |
-| Presence Sensor C4001 | Handles still-presence detection (detecting a stationary person). Both sensors are needed; they complement each other. Unfortunately this sensor is sometimes hard to source in Germany. | [DigiKey](https://www.digikey.de/de/products/detail/dfrobot/SEN0609/23028638) |
+| Presence Sensor C4001 | Handles still-presence detection (detecting a stationary person). Both sensors are needed; they complement each other. Unfortunately this sensor is hard to source — import taxes may apply depending on the supplier. | [DigiKey](https://www.digikey.de/de/products/detail/dfrobot/SEN0609/23028638) <br> [RobotShop](https://eu.robotshop.com/de/products/dfrobot-mmwave-c4001-24ghz-sensor-zur-erkennung-menschlicher-prasenz-25-meter-uart) <br> [Mouser](https://www.mouser.de/ProductDetail/DFRobot/SEN0609?qs=HFfMDpzxxd21aKNJkzimmg%3D%3D) <br> [OpenELAB](https://openelab.io/de/products/dfrobot-mmwavec400124ghz-humanpresencedetectionsensor-25meters) <br> [DFRobot](https://www.dfrobot.com/product-2793.html) |
 | Cables | I used 22 AWG wire | [Aliexpress](https://de.aliexpress.com/item/1005007671008743.html?spm=a2g0o.order_list.order_list_main.227.23775c5f0Fhk0S&gatewayAdapt=glo2deu)<br>[Amazon](https://www.amazon.de/dp/B0FDKT9XPV?ref_=ppx_hzsearch_conn_dt_b_fed_asin_title_1&th=1) |
 | Long USB Cable | Choose length to fit your setup. | [Aliexpress](https://de.aliexpress.com/item/1005007053181899.html?spm=a2g0o.order_list.order_list_main.262.23775c5fsHIXLm&gatewayAdapt=glo2deu) |
 | Filament | I printed my case in Kingroon White PLA and with Kingroon White PETG. You can use bambu labs filament of course. I printed the brightness sensor cover out of translucent PLA/PETG. | [Kingroon Filament](https://de.aliexpress.com/item/1005007226921275.html?spm=a2g0o.order_list.order_list_main.29.51fa5c5fMbjQzg&gatewayAdapt=glo2deu)<br>[Elegoo Transparent PLA](https://www.amazon.de/dp/B0CD7BS7B1?ref_=ppx_hzsearch_conn_dt_b_fed_asin_title_8)<br>[eSUN Clear PETG](https://www.3djake.de/esun/petg-clear-5) |
@@ -136,27 +136,50 @@ Post a picture and a comment to this model — I’d love to see your results �
 
 ### 💾 Software
 
-This project uses [ESPHome](https://esphome.io/) as the underlying software. It’s easy to set up and flash. You need a single YAML file that defines the sensors connected to the device and their properties. I won’t provide general ESPHome flashing instructions — the official documentation is excellent:
-Guide: <https://esphome.io/guides/installing_esphome/>
+This project uses [ESPHome](https://esphome.io/) as the underlying software. It's easy to set up and flash. It uses YAML files that define the sensors connected to the device and their properties. You can either checkout my code and compile it yourself or you can pick one of my precompiled firmware binaries and flash it. I won't provide general ESPHome compilation instructions — the official documentation is excellent:
+Guide: <https://esphome.io/guides/installing_esphome/>
 
-1. Download the source code from [my GitHub](https://github.com/DerGary/all-in-one-sensor-device/archive/refs/heads/main.zip)
-1. Extract the zip file
-1. Navigate to the Ultimate Folder
-1. There is a device.yaml. You can copy the file multiple times and name it differently if you want to create multiple devices.
-1. Adapt **device.yaml** as needed:
-    - If you are not using the ESP32-C6, change the `variant` value. Supported values: `ESP32`, `ESP32C2`, `ESP32C3`, `ESP32C5`, `ESP32C6`, `ESP32C61`, `ESP32H2`, `ESP32P4`, `ESP32S2`, `ESP32S3`.
-    - Uncomment/comment out the sensor includes based on which sensors you have installed, and select your language by uncommenting the correct `lang` line.
+#### Flash my precompiled binaries
 
-    <img src="images/software_changes.png" width="50%">
+##### Initial installation
 
-1. Adapt **common.yaml** as needed:
-    - Change `friendly_name` to whatever you want your device to be called in Home Assistant.
-    - Change `name` (under `esphome:`) to a unique hostname for the device (lowercase, no spaces). If you build multiple devices, give each one a unique name.
-1. Connect the device via USB to your computer.
-1. Run `esphome run device.yaml` to flash the device.
-1. **Provision Wi-Fi:** After flashing, the device advertises itself via Bluetooth. Use the [ESPHome app](https://esphome.io/guides/getting_started_hassio.html) on your phone or a Bluetooth-capable browser to enter your Wi-Fi credentials wirelessly. No credentials need to be stored in any file. The Home Assistant API encryption key is negotiated automatically.
-1. Test whether all sensors work as expected.
-1. Once deployed in its final location, proceed with calibration.
+1. Navigate to [my Github](https://github.com/DerGary/all-in-one-sensor-device/releases?q=ultimate&expanded=true) and find the latest Release.
+1. In the assets section find the binary that fits your setup. The variations are:
+    - language = `de`/`en`
+    - temperature sensor: `sht4x`/`bme280`
+    - Pick the `factory` version for initial setup.
+1. Navigate to [web.esphome.io](https://web.esphome.io/).
+1. Connect the esp to your computer.
+1. Click connect and choose the Serial Port (probably there is only one).
+1. Click install, choose the `factory` binary file that you downloaded earlier
+1. Click install and wait.
+1. The LED will flash green after a successful install.
+1. Open the Home Assistant app on your smartphone. Make sure that Bluetooth is turned on.
+1. Open the ``integration and devices`` view. Home Assistant should pick up the sensor and you can click add.
+1. Define WiFi Credentials and click ok.
+1. After that you can add the ESPHome integration. Check your router for the ip address of the sensor.
+1. Once deployed in its final location, proceed with calibration.
+
+##### Update
+
+1. Navigate to [my Github](https://github.com/DerGary/all-in-one-sensor-device/releases?q=ultimate&expanded=true) and find the latest Release.
+1. In the assets section find the binary that fits your setup. The variations are:
+    - language = `de`/`en`
+    - temperature sensor: `sht4x`/`bme280`
+    - Pick the ``ota`` version to update an existing sensor.
+1. Navigate to the web page of the sensor by typing its IP address in your browser.
+1. At the bottom of the page you will find the OTA update section.
+1. Choose the previously downloaded file and click update.
+
+#### Flash code directly
+
+1. Install esphome
+1. Checkout my [Github Repository](https://github.com/DerGary/all-in-one-sensor-device)
+1. Navigate into the Ultimate folder in a terminal
+1. execute `esphome -s lang en -s temp sht4x run device.yaml`
+    - For ``temp`` you can choose between ``sht4x`` and ``bme280``
+    - For ``lang`` you can choose between ``de`` and ``en``
+1. After flashing proceed with adding the sensor to your home assistant instance as described in [initial installation](#initial-installation) section above.
 
 ### 🎯 Calibration
 

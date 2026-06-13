@@ -1,5 +1,5 @@
 packages:
-  control_leds: !include "${ './control_leds_air_quality.yaml' if temp == 'bme680' else './control_leds.yaml'}"
+  control_leds: !include "${ './control_leds_air_quality.yaml' if sensor in ('bme680', 'sgp_scd') else './control_leds.yaml'}"
 
 globals:
   - id: improv_ble_in_progress

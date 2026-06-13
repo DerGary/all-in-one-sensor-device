@@ -1,0 +1,11 @@
+script:
+  - id: set_air_quality_status
+    then:
+      - lambda: |-
+          if (int(id(iaq).state) >= 200) {
+            id(air_quality_status).publish_state("critical");
+          } else if (int(id(iaq).state) >= 150) {
+            id(air_quality_status).publish_state("warning");
+          } else {
+            id(air_quality_status).publish_state("");
+          }

@@ -60,17 +60,3 @@ script:
             call.set_effect("Slow Pulse");
             call.perform();
           }
-  - id: set_air_quality_status
-    then:
-      - lambda: |-
-          ESP_LOGI("air_quality", "set air_quality status called");
-          if (int(id(iaq).state) >= 200) {
-            ESP_LOGI("air_quality", "set air quality status to critical");
-            id(air_quality_status).publish_state("critical");
-          }else if(int(id(iaq).state) >= 150){
-            ESP_LOGI("air_quality", "set air quality status to warning");
-            id(air_quality_status).publish_state("warning");
-          }else{
-            ESP_LOGI("air_quality", "set air quality status to none");
-            id(air_quality_status).publish_state("");
-          }

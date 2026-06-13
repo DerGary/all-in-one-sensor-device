@@ -4,6 +4,9 @@ sensor:
       id: co2
       name: ${label_co2}
       icon: mdi:molecule-co2
+      on_value:
+        then:
+          - script.execute: set_air_quality_status
     temperature:
       name: "${label_temperature} SCD"
       icon: mdi:thermometer

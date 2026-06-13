@@ -42,8 +42,6 @@ substitutions:
   label_factory_defaults: Factory Defaults
   label_distance_resolution: Distance Resolution
   label_tvoc: TVOC
-  label_voc_index: VOC Index
-  label_nox_index: NOx Index
   label_co2: CO²
   label_count: Count
   label_target: Target
@@ -52,7 +50,6 @@ substitutions:
   label_distance: Distance
   label_resolution: Resolution
   label_zone: Zone
-  label_all: All
   label_multi_target_tracking: Multi Target Tracking
   label_firmware: Firmware
   label_direction: Direction
@@ -68,7 +65,7 @@ substitutions:
   label_save_config: Save Configuration
   label_status_led: Status-LED
   label_air_quality_led_automation: Show air quality through LED
-  label_wifi_strength: WiFi TX Power"
+  label_wifi_strength: WiFi TX Power
   label_occupied: Occupancy
   label_occupancy_automation: Show occupancy through LED
   label_air_quality_state: Air Quality State
