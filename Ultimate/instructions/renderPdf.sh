@@ -1,0 +1,2 @@
+#!/bin/bash
+cat ./intro.md ./changelog.md ./body.md ./disclaimer.md | md-to-pdf --pdf-options '{"format": "A4", "margin":"15mm", "outline":true}' --launch-options '{ "args": ["--no-sandbox"] }' > ultimate-instructions.pdf

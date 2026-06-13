@@ -12,6 +12,7 @@ binary_sensor:
     name: ${label_occupied}
     id: occupied
     icon: mdi:motion-sensor
+    device_class: occupancy
     on_state:
       then:
         - lambda: |
