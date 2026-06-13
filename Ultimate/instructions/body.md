@@ -2,7 +2,7 @@
 
 1. Source all the parts from the shopping list
 1. Print the enclosure
-1. Solder all sensors to the ESP
+1. Solder and wire all sensors to the distribution boards and ESP
 1. Flash the ESP with the software and verify that all sensors work (connect it to your Home Assistant instance to monitor them).
 1. Assemble the sensors and ESP into the enclosure.
 1. Place the device in its designated spot.
@@ -17,17 +17,19 @@ You can also buy the parts from other sites. If you don’t mind waiting, AliExp
 | ----- | ------ | ------ |
 | ESP32 Super Mini | You can use ESP32-C6 or S3 (it is not advisable to use the C3) | [DFRobot ESP32-C6](https://www.berrybase.de/en/dfrobot-beetle-esp32-c6-wifi-6-bluetooth-5-zigbee-3.0-thread-risc-v-13-io-ports-3.3v) <br> [ESP32-C6 Super Mini](https://de.aliexpress.com/item/1005009089500839.html?spm=a2g0o.order_list.order_list_main.17.51e45c5fZesJEf&gatewayAdapt=glo2deu) (you must choose the correct variant, as the link does not include the choice) |
 | Power Supply (PSU) | Any low-power PSU you already have should work. Otherwise, buy a simple one. | [Amazon](https://www.amazon.de/dp/B0D7MD5BJ3?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1) |
-| Temperatur Sensor SHT4x or BME280 | I decided to use the SHT41 as it's temperature sensor is more accurate. <br> The BME280 is also supported when you need to measure air pressure. | [BME280](https://amzn.eu/d/04BAvHum) <br> [SHT4x](https://de.aliexpress.com/item/1005008518326181.html?spm=a2g0o.order_list.order_list_main.29.51e45c5fZesJEf&gatewayAdapt=glo2deu) |
+| Temperature Sensor SHT4x or BME280 | I decided to use the SHT41 as its temperature sensor is more accurate. <br> The BME280 is also supported when you need to measure air pressure. | [BME280](https://amzn.eu/d/04BAvHum) <br> [SHT4x](https://de.aliexpress.com/item/1005008518326181.html?spm=a2g0o.order_list.order_list_main.29.51e45c5fZesJEf&gatewayAdapt=glo2deu) |
 | Screws | 8x M2x3mm | [Amazon](https://www.amazon.de/dp/B0CZNT5YXV?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1) |
-| Brightness Sensor BH1750 | Worked flawlessly for me in V1 and V2 so it is back in the Ultimate | [Amazon](https://www.amazon.de/dp/B0D3WN41FS?ref=ppx_yo2ov_dt_b_fed_asin_title) |
-| Motion Sensor Panasonic EKMC 1603111 | Theoretically other Panasonic PIRs would be also compatible if they have the same form factor. | [Aliexpress](https://de.aliexpress.com/item/1005006704410099.html?spm=a2g0o.order_list.order_list_main.11.51e45c5fZesJEf&gatewayAdapt=glo2deu) |
-| Presence Sensor LD2450 | Pay attention that the one you buy includes the cable as it easier to work with. | [Amazon](https://www.amazon.de/dp/B0FMRQ6DWJ?ref_=ppx_hzod_title_dt_b_fed_asin_title_0_0) |
-| Presence Sensor C4001 | Unfortunately this sensor is sometimes hard to source in germany. | [DigiKey](https://www.digikey.de/de/products/detail/dfrobot/SEN0609/23028638) |
+| Brightness Sensor BH1750 | Worked flawlessly for me in V1 and V2 so it is back in the Ultimate | [Amazon](https://www.amazon.de/dp/B0D3WN41FS?ref=ppx_yo2ov_dt_b_fed_asin_title) |
+| CO2 Sensor SCD4x | Measures actual CO2 concentration. Both SCD40 and SCD41 are supported. | [Aliexpress](https://de.aliexpress.com/item/1005008696769890.html?spm=a2g0o.order_list.order_list_main.29.24765c5fbAhbJz&gatewayAdapt=glo2deu) |
+| VOC Sensor SGP30 | Measures volatile organic compounds (air quality). | [Aliexpress](https://de.aliexpress.com/item/1005012034193686.html?spm=a2g0o.productlist.main.4.1c1aSxPKSxPKMY&aem_p4p_detail=20260613002921441686255127900000780498&algo_pvid=7f56b5d1-73c5-410d-8384-c001793e7138&algo_exp_id=7f56b5d1-73c5-410d-8384-c001793e7138-3&pdp_ext_f=%7B%22order%22%3A%2215%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21EUR%215.72%214.29%21%21%216.46%214.84%21%40211b81a317813357609628201e5315%2112000057352428823%21sea%21DE%216147561042%21X%211%210%21n_tag%3A-29919%3Bd%3A856b28b5%3Bm03_new_user%3A-29895&curPageLogUid=rZAOF2Lp1cfd&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005012034193686%7C_p_origin_prod%3A&search_p4p_id=20260613002921441686255127900000780498_1) |
+| Motion Sensor Panasonic EKMC 1603111 | Theoretically other Panasonic PIRs would be also compatible if they have the same form factor. | [Aliexpress](https://de.aliexpress.com/item/1005006704410099.html?spm=a2g0o.order_list.order_list_main.11.51e45c5fZesJEf&gatewayAdapt=glo2deu) |
+| Presence Sensor LD2450 | Handles multi-person, zone-based tracking. Pay attention that the one you buy includes the cable as it is easier to work with. | [Amazon](https://www.amazon.de/dp/B0FMRQ6DWJ?ref_=ppx_hzod_title_dt_b_fed_asin_title_0_0) |
+| Presence Sensor C4001 | Handles still-presence detection (detecting a stationary person). Both sensors are needed; they complement each other. Unfortunately this sensor is sometimes hard to source in Germany. | [DigiKey](https://www.digikey.de/de/products/detail/dfrobot/SEN0609/23028638) |
 | Cables | I used 22 AWG wire | [Aliexpress](https://de.aliexpress.com/item/1005007671008743.html?spm=a2g0o.order_list.order_list_main.227.23775c5f0Fhk0S&gatewayAdapt=glo2deu)<br>[Amazon](https://www.amazon.de/dp/B0FDKT9XPV?ref_=ppx_hzsearch_conn_dt_b_fed_asin_title_1&th=1) |
 | Long USB Cable | Choose length to fit your setup. | [Aliexpress](https://de.aliexpress.com/item/1005007053181899.html?spm=a2g0o.order_list.order_list_main.262.23775c5fsHIXLm&gatewayAdapt=glo2deu) |
 | Filament | I printed my case in Kingroon White PLA and with Kingroon White PETG. You can use bambu labs filament of course. I printed the brightness sensor cover out of translucent PLA/PETG. | [Kingroon Filament](https://de.aliexpress.com/item/1005007226921275.html?spm=a2g0o.order_list.order_list_main.29.51fa5c5fMbjQzg&gatewayAdapt=glo2deu)<br>[Elegoo Transparent PLA](https://www.amazon.de/dp/B0CD7BS7B1?ref_=ppx_hzsearch_conn_dt_b_fed_asin_title_8)<br>[eSUN Clear PETG](https://www.3djake.de/esun/petg-clear-5) |
 | Cable Distribution (Proto Boards) | I broke something off proto boards and used that to distribute the cables which needed to go to multiple sensors. | [Amazon](https://amzn.eu/d/0a2D7E1M) |
-| Status LED | I used an LED from leftovers of an WS2812 LED strip with 5V that I got laying around | [Amazon](https://amzn.eu/d/04rXpC34) |
+| Status LED | I used an LED from leftovers of a WS2812 LED strip with 5V that I got lying around | [Amazon](https://amzn.eu/d/04rXpC34) |
 | 100µF 16V Electrolytic Capacitor<br>100nF (104) Ceramic Capacitor | The capacitors are used to suppress interferences that may be injected by the ESP32 into the power rails.<br> This measure was taken to improve the reliability of the PIR sensor and remove false positives as much as possible. It is recommended by Panasonic to do so. I got pretty good results without them but I wanted the best possible experience and your mileage may vary if you omit them. | [Amazon](https://www.amazon.de/dp/B0DXC7MX53) |
 
 You also need:
@@ -48,7 +50,7 @@ You also need:
     - Clamp the sensor in a vise.
     - Desolder and remove the pins. It’s also possible to heat the solder and pull the pins with pliers without a desoldering pump.
 1. Break a **7x4** matrix from the proto board
-    I used carpet knife to cut around the matrix on the proto board on both sides and used pliers to carefully break the proto board at the cut.
+    I used a carpet knife to cut around the matrix on the proto board on both sides and used pliers to carefully break the proto board at the cut.
 
     <img src="images/BreakoutBoard1.jpg" height="300">
     <img src="images/BreakoutBoard2.jpg" height="300">
@@ -59,8 +61,8 @@ You also need:
 
 1. Break a **5×2** matrix from the proto board
     Using the same technique as above.
-1. Cut wires to length. I wrote the length of the cables in mm into the connection drawings. I show the two distribution boards separately to make things easier to follow. (There are further steps below on soldering order.) For the generic ESP32-C6 Super Mini the wiring differs in one aspect from the DFRobot Beetle as it only got one ground pin.
-    - I only got 5 colors of cables
+1. Cut wires to length. I wrote the length of the cables in mm into the connection drawings. I show the two distribution boards separately to make things easier to follow. (There are further steps below on soldering order.) For the generic ESP32-C6 Super Mini the wiring differs in one aspect from the DFRobot Beetle as it only has one ground pin.
+    - I only had 5 colors of wire
         - red = Voltage (If you have more colors use different colors for 3.3V (BME280/BH1750/SGP4x/SHT4x/SCD4x/PIR) and 5V(LD2450/C4001/LED), It is important to never mix them up)
         - black = Ground
         - Green = I2C SCL/UART (If you have more colors you can use different colors for UART and I2C)
@@ -83,7 +85,7 @@ You also need:
     | ---------- | ---------------- | ------ |
     | <img src="images/PIR.jpg" height="200"> | <img src="images/Presence.jpg" height="200"> | <img src="images/BH1750.jpg" height="200"> |
 
-    | SHT41 | SCD41 | SGP40 |
+    | SHT41 | SCD41 | SGP30 |
     | ----- | ----- | ----- |
     | <img src="images/SHT41.jpg" height="200"> | <img src="images/SCD41.jpg" height="200"> | <img src="images/SGP.jpg" height="200"> |
 
@@ -95,6 +97,8 @@ You also need:
     <img src="images/4x2_1.jpg" height="300">
     <img src="images/4x2_2.jpg" height="300">
     <img src="images/4x2_3.jpg" height="300">
+
+    Also solder the **100µF electrolytic capacitor** across the 3.3V and GND rails on the distribution proto board, as shown in the Connection Drawings above. Observe polarity — the negative lead (shorter leg / marked stripe) connects to GND.
 
 1. **Solder the wires to the ESP pins** as described in the connection drawings above. You need to attach the cables from the back side (because the wifi antenna is on the front and we want that to be facing away from the motion sensor) — attach them as shown in the photos.
 
@@ -139,18 +143,18 @@ Guide: <https://esphome.io/guides/installing_esphome/>
 1. Extract the zip file
 1. Navigate to the Ultimate Folder
 1. There is a device.yaml. You can copy the file multiple times and name it differently if you want to create multiple devices.
-1. Adapt the device.yaml file as needed.
-    - Change the friendly name, name, and optionally the area to your liking.
-    - When you are using the S3 or another variant you have to change the variant. Possible values are: 'ESP32', 'ESP32C2', 'ESP32C3', 'ESP32C5', 'ESP32C6', 'ESP32C61', 'ESP32H2', 'ESP32P4', 'ESP32S2', 'ESP32S3'.
-    - Uncomment/comment out the includes for the language package and the sensor that you are using.
+1. Adapt **device.yaml** as needed:
+    - If you are not using the ESP32-C6, change the `variant` value. Supported values: `ESP32`, `ESP32C2`, `ESP32C3`, `ESP32C5`, `ESP32C6`, `ESP32C61`, `ESP32H2`, `ESP32P4`, `ESP32S2`, `ESP32S3`.
+    - Uncomment/comment out the sensor includes based on which sensors you have installed, and select your language by uncommenting the correct `lang` line.
 
     <img src="images/software_changes.png" width="50%">
 
-1. In **secrets.yaml**, set wifi-password and wifi-ssid to your Wi-Fi credentials.
-1. Set the password and username to any values you like. If you create multiple devices you should set unique values for each of the device and rename the secrets to reflect that.
-1. Set the api-key to a value generated via the website: <https://esphome.io/components/api/#configuration-variables>. This value is used to add the device to home assistant. If you create multiple devices you should set unique values for each of the device and rename the secrets to reflect that.
+1. Adapt **common.yaml** as needed:
+    - Change `friendly_name` to whatever you want your device to be called in Home Assistant.
+    - Change `name` (under `esphome:`) to a unique hostname for the device (lowercase, no spaces). If you build multiple devices, give each one a unique name.
 1. Connect the device via USB to your computer.
-1. Run ‘esphome run device.yaml’ to flash the device.
+1. Run `esphome run device.yaml` to flash the device.
+1. **Provision Wi-Fi:** After flashing, the device advertises itself via Bluetooth. Use the [ESPHome app](https://esphome.io/guides/getting_started_hassio.html) on your phone or a Bluetooth-capable browser to enter your Wi-Fi credentials wirelessly. No credentials need to be stored in any file. The Home Assistant API encryption key is negotiated automatically.
 1. Test whether all sensors work as expected.
 1. Once deployed in its final location, proceed with calibration.
 
@@ -160,7 +164,7 @@ Calibration is **non-trivial** and may take time and multiple iterations. I ma
 
 **BME280 / SHT4X**:
 
-I only calibrated **temperature** and **humidity**. I don’t use air pressure
+Only **temperature** and **humidity** calibration is covered here. Air pressure calibration is not required for typical smart home use.
 
 Let the device sit for **5–10 minutes** to heat-soak.
 

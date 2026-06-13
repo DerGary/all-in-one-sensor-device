@@ -11,7 +11,7 @@ After releasing my first All-In-One Smart Home Sensor Case and [a subsequent Ver
 
 This effort took more than a year and involved testing multiple sensor combinations, iterating on the enclosure design, and continuously refining the software stack. The result of that work is what I am releasing now: **the Ultimate Smart Home Sensor Case.**
 
-My goals with this project were the same as with the previous case but make every aspect of it better to create the ultimate DIY smart home sensor device that integrates all the essential sensors needed to achieve the following:
+My goals were the same as with the previous case, but to improve every aspect of it — creating the ultimate DIY smart home sensor device that integrates all the essential sensors needed to achieve the following:
 
 ## 🎯 Goals
 
