@@ -43,6 +43,7 @@ You also need:
 - Pliers
 - Desoldering pump (optional)
 - Multimeter (optional if you trust your soldering skills)
+- Electrical tape (optional, to cover LEDs on the C4001 and ESP)
 
 ### 🔢 Assembly Instructions
 
@@ -123,6 +124,11 @@ You also need:
 
 1. Use a **multimeter** to verify that solder joints of different colors do not bridge. Any short can damage components and may cause smoke or even fire.
 1. Now it's time to check whether all the soldering has worked out. Flash the software onto the ESP. It can be found in the software section. Verify that all sensors are detected and reporting, then return here to complete assembly.
+1. Optionally cover the LEDs on the **C4001** and the **ESP** with a small piece of electrical tape to prevent them from lighting up inside the enclosure.
+
+    <img src="images/C4001_LED_Blackout.jpg" height="300">
+    <img src="images/ESP_LED_Blackout.jpg" height="300">
+
 1. Attach the ball head mount to the back of the case
 
     <img src="images/BackBallHead_1.jpg" height="300">
