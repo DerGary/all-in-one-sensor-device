@@ -1,4 +1,5 @@
-﻿## 🔢 Steps
+
+## 🔢 Steps
 
 1. Source all the parts from the shopping list
 1. Print the enclosure
@@ -15,13 +16,13 @@ You can also buy the parts from other sites. If you don’t mind waiting, AliExp
 
 | Name | Hint | Link |
 | ----- | ------ | ------ |
-| ESP32 Super Mini | You can use ESP32-C6 or S3 (it is not advisable to use the C3) | [DFRobot ESP32-C6](https://www.berrybase.de/en/dfrobot-beetle-esp32-c6-wifi-6-bluetooth-5-zigbee-3.0-thread-risc-v-13-io-ports-3.3v) <br> [ESP32-C6 Super Mini](https://de.aliexpress.com/item/1005009089500839.html?spm=a2g0o.order_list.order_list_main.17.51e45c5fZesJEf&gatewayAdapt=glo2deu) (you must choose the correct variant, as the link does not include the choice) |
+| ESP32 Super Mini | My prebuilt binaries use the C6, you can also use other variants if you build it yourself. | [DFRobot ESP32-C6](https://www.berrybase.de/en/dfrobot-beetle-esp32-c6-wifi-6-bluetooth-5-zigbee-3.0-thread-risc-v-13-io-ports-3.3v) <br> [ESP32-C6 Super Mini](https://de.aliexpress.com/item/1005009089500839.html?spm=a2g0o.order_list.order_list_main.17.51e45c5fZesJEf&gatewayAdapt=glo2deu) (you must choose the correct variant, as the link does not include the choice) |
 | Power Supply (PSU) | Any low-power PSU you already have should work. Otherwise, buy a simple one. | [Amazon](https://www.amazon.de/dp/B0D7MD5BJ3?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1) |
 | Temperature Sensor SHT4x or BME280 | I decided to use the SHT41 as its temperature sensor is more accurate. <br> The BME280 is also supported when you need to measure air pressure. | [BME280](https://amzn.eu/d/04BAvHum) <br> [SHT4x](https://de.aliexpress.com/item/1005008518326181.html?spm=a2g0o.order_list.order_list_main.29.51e45c5fZesJEf&gatewayAdapt=glo2deu) |
 | Screws | 8x M2x3mm | [Amazon](https://www.amazon.de/dp/B0CZNT5YXV?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1) |
 | Brightness Sensor BH1750 | Worked flawlessly for me in V1 and V2 so it is back in the Ultimate | [Amazon](https://www.amazon.de/dp/B0D3WN41FS?ref=ppx_yo2ov_dt_b_fed_asin_title) |
 | CO2 Sensor SCD4x | Measures actual CO2 concentration. Both SCD40 and SCD41 are supported. | [Aliexpress](https://de.aliexpress.com/item/1005008696769890.html?spm=a2g0o.order_list.order_list_main.29.24765c5fbAhbJz&gatewayAdapt=glo2deu) |
-| VOC Sensor SGP30 | Measures volatile organic compounds (air quality). | [Aliexpress](https://de.aliexpress.com/item/1005012034193686.html?spm=a2g0o.productlist.main.4.1c1aSxPKSxPKMY&aem_p4p_detail=20260613002921441686255127900000780498&algo_pvid=7f56b5d1-73c5-410d-8384-c001793e7138&algo_exp_id=7f56b5d1-73c5-410d-8384-c001793e7138-3&pdp_ext_f=%7B%22order%22%3A%2215%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21EUR%215.72%214.29%21%21%216.46%214.84%21%40211b81a317813357609628201e5315%2112000057352428823%21sea%21DE%216147561042%21X%211%210%21n_tag%3A-29919%3Bd%3A856b28b5%3Bm03_new_user%3A-29895&curPageLogUid=rZAOF2Lp1cfd&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005012034193686%7C_p_origin_prod%3A&search_p4p_id=20260613002921441686255127900000780498_1) |
+| VOC Sensor SGP30 | Measures volatile organic compounds (air quality). I am using the blue module also called GY-SGP30. | [Aliexpress](https://de.aliexpress.com/item/1005012034193686.html?spm=a2g0o.productlist.main.4.1c1aSxPKSxPKMY&aem_p4p_detail=20260613002921441686255127900000780498&algo_pvid=7f56b5d1-73c5-410d-8384-c001793e7138&algo_exp_id=7f56b5d1-73c5-410d-8384-c001793e7138-3&pdp_ext_f=%7B%22order%22%3A%2215%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21EUR%215.72%214.29%21%21%216.46%214.84%21%40211b81a317813357609628201e5315%2112000057352428823%21sea%21DE%216147561042%21X%211%210%21n_tag%3A-29919%3Bd%3A856b28b5%3Bm03_new_user%3A-29895&curPageLogUid=rZAOF2Lp1cfd&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005012034193686%7C_p_origin_prod%3A&search_p4p_id=20260613002921441686255127900000780498_1) |
 | Motion Sensor Panasonic EKMC 1603111 | Theoretically other Panasonic PIRs would be also compatible if they have the same form factor. | [Aliexpress](https://de.aliexpress.com/item/1005006704410099.html?spm=a2g0o.order_list.order_list_main.11.51e45c5fZesJEf&gatewayAdapt=glo2deu) |
 | Presence Sensor LD2450 | Handles multi-person, zone-based tracking. Pay attention that the one you buy includes the cable as it is easier to work with. | [Amazon](https://www.amazon.de/dp/B0FMRQ6DWJ?ref_=ppx_hzod_title_dt_b_fed_asin_title_0_0) |
 | Presence Sensor C4001 | Handles still-presence detection (detecting a stationary person). Both sensors are needed; they complement each other. Unfortunately this sensor is hard to source — import taxes may apply depending on the supplier. | [DigiKey](https://www.digikey.de/de/products/detail/dfrobot/SEN0609/23028638) <br> [RobotShop](https://eu.robotshop.com/de/products/dfrobot-mmwave-c4001-24ghz-sensor-zur-erkennung-menschlicher-prasenz-25-meter-uart) <br> [Mouser](https://www.mouser.de/ProductDetail/DFRobot/SEN0609?qs=HFfMDpzxxd21aKNJkzimmg%3D%3D) <br> [OpenELAB](https://openelab.io/de/products/dfrobot-mmwavec400124ghz-humanpresencedetectionsensor-25meters) <br> [DFRobot](https://www.dfrobot.com/product-2793.html) |
@@ -72,6 +73,20 @@ You also need:
         <img src="images/ConnectionDrawingBeetle.png" width="100%">
     - **Generic ESP32-C6 Super Mini**
         <img src="images/ConnectionDrawingC6.png" width="100%">
+
+    **Pin Reference**
+
+    | Sensor / Function | GPIO |
+    | --- | --- |
+    | PIR Motion Out | GPIO7 |
+    | I2C SDA (BH1750 / SHT4x / SGP30 / SCD4x) | GPIO19 |
+    | I2C SCL (BH1750 / SHT4x / SGP30 / SCD4x) | GPIO20 |
+    | WS2812 LED Data | GPIO21 |
+    | LD2450 TX (ESP→Sensor) | GPIO16 |
+    | LD2450 RX (Sensor→ESP) | GPIO17 |
+    | C4001 TX (ESP→Sensor) | GPIO22 |
+    | C4001 RX (Sensor→ESP) | GPIO23 |
+
 1. Make sure to tin the wire ends
 1. Solder one end of each wire to the sensors as described in the Connection Drawings from Step 4
     - PIR Sensor:
@@ -149,7 +164,13 @@ Guide: <https://esphome.io/guides/installing_esphome/>
     - temperature sensor: `sht4x`/`bme280`
     - Pick the `factory` version for initial setup.
 1. Navigate to [web.esphome.io](https://web.esphome.io/).
-1. Connect the esp to your computer.
+1. Connect the ESP to your computer.
+    > **Troubleshooting: Serial port disconnects every few seconds**
+    > Factory-fresh ESP32-C6 boards bootloop out of the box, causing the serial port to disconnect before you can flash it. To fix this, put the ESP into boot mode so it stops rebooting:
+    > 1. Hold the **BOOT** button, then press and release **RESET**, then release **BOOT**.
+    > 2. The device should now stay connected as a stable serial port.
+    > 3. If Windows does not pick up the device or reports an error, try a different USB port — avoid ports that go through a hub (many laptop USB-A ports do). A USB-C port connected with a USB-C to USB-C cable worked on my machine.
+    > 4. If nothing works, flash it via the ESPHome CLI as described in the [Flash code directly](#flash-code-directly) section below — run the command repeatedly until it catches the device between reboots.
 1. Click connect and choose the Serial Port (probably there is only one).
 1. Click install, choose the `factory` binary file that you downloaded earlier
 1. Click install and wait.

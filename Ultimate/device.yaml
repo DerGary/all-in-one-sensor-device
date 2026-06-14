@@ -35,8 +35,8 @@ packages:
   c4001: !include
     file: ../sensors/c4001.yaml
     vars:
-      tx_pin: GPIO5
-      rx_pin: GPIO4
+      tx_pin: GPIO22
+      rx_pin: GPIO23
       components_path: ../components
   set_air_quality: !include ../automations/set_air_quality_status_sgp_scd.yaml
   status_led: !include

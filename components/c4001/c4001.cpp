@@ -205,13 +205,20 @@ namespace esphome::c4001
         return waitForResponse();
     }
 
-    std::vector<std::string> C4001Component::waitForResponse()
+    std::vector<std::string> C4001Component::waitForResponse(uint32_t timeout_ms)
     {
         bool done = false;
         bool response = false;
         std::vector<std::string> result;
+        uint32_t start = millis();
         do
         {
+            App.feed_wdt();
+            if (millis() - start > timeout_ms)
+            {
+                ESP_LOGE(TAG, "Timed out waiting for response from C4001 Sensor");
+                break;
+            }
             if (!readLine(read()))
             {
                 continue;
@@ -244,11 +251,18 @@ namespace esphome::c4001
         return result;
     }
 
-    void C4001Component::waitForDoneOr(bool error)
+    bool C4001Component::waitForDoneOr(bool error, uint32_t timeout_ms)
     {
         bool done = false;
+        uint32_t start = millis();
         do
         {
+            App.feed_wdt();
+            if (millis() - start > timeout_ms)
+            {
+                ESP_LOGE(TAG, "Timed out waiting for Done from C4001 Sensor");
+                return false;
+            }
             if (!readLine(read()))
             {
                 continue;
@@ -271,6 +285,7 @@ namespace esphome::c4001
                 }
             }
         } while (!done);
+        return true;
     }
 
     std::vector<std::string> C4001Component::split(const std::string &s, char delim)
