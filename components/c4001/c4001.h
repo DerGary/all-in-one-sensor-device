@@ -68,10 +68,10 @@ namespace esphome::c4001
     bool readLine(int readch);
     void interpretLine(std::string line);
     std::string getLineWithoutCRLF();
-    void waitForDoneOr(bool error);
+    bool waitForDoneOr(bool error, uint32_t timeout_ms = 2000);
     void setConfig(const char *config);
     std::vector<std::string> queryConfig(const char *config);
-    std::vector<std::string> waitForResponse();
+    std::vector<std::string> waitForResponse(uint32_t timeout_ms = 2000);
     std::vector<std::string> split(const std::string &s, char delim);
     void saveConfig();
     void readConfig();

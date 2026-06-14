@@ -1,3 +1,4 @@
+
 ## 🆕 Changelog
 
 ### What it does better than the All-In-One Smart Home Sensor Case V2
