@@ -171,12 +171,17 @@ Guide: <https://esphome.io/guides/installing_esphome/>
     - Pick the `factory` version for initial setup.
 1. Navigate to [web.esphome.io](https://web.esphome.io/).
 1. Connect the ESP to your computer.
-    > **Troubleshooting: Serial port disconnects every few seconds**
-    > Factory-fresh ESP32-C6 boards bootloop out of the box, causing the serial port to disconnect before you can flash it. To fix this, put the ESP into boot mode so it stops rebooting:
-    > 1. Hold the **BOOT** button, then press and release **RESET**, then release **BOOT**.
-    > 2. The device should now stay connected as a stable serial port.
-    > 3. If Windows does not pick up the device or reports an error, try a different USB port — avoid ports that go through a hub (many laptop USB-A ports do). A USB-C port connected with a USB-C to USB-C cable worked on my machine.
-    > 4. If nothing works, flash it via the ESPHome CLI as described in the [Flash code directly](#flash-code-directly) section below — run the command repeatedly until it catches the device between reboots.
+    > **Troubleshooting: Factory-fresh boards cannot be flashed via web.esphome.io**
+    > Factory-fresh ESP32-C6 boards bootloop out of the box and web.esphome.io cannot reliably connect to them. Use esptool or the ESPHome CLI instead:
+    >
+    > **Option 1 — esptool** (run repeatedly until it catches the device between reboots):
+    >    ```
+    >    esptool --chip esp32c6 --port COM3 write_flash 0x0 firmware.factory.bin
+    >    ```
+    >    Replace `COM3` with your actual port number and `firmware.factory.bin` with the file you downloaded.
+    >
+    > **Option 2 — ESPHome CLI** (as described in the [Flash code directly](#flash-code-directly) section below):
+    > Run the command repeatedly — it will catch the device in the brief window between reboots.
 1. Click connect and choose the Serial Port (probably there is only one).
 1. Click install, choose the `factory` binary file that you downloaded earlier
 1. Click install and wait.
