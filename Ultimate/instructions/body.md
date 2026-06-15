@@ -99,7 +99,7 @@ You also need:
 
     | PIR Sensor | Presence Sensors | BH1750 |
     | ---------- | ---------------- | ------ |
-    | <img src="images/PIR.jpg" height="200"> | <img src="images/Presence.jpg" height="200"> | <img src="images/BH1750.jpg" height="200"> |
+    | <img src="images/PIR.jpg" height="200"> | <img src="images/Presence.jpg" height="200"> | <img src="images/bh1750.jpg" height="200"> |
 
     | SHT41 | SCD41 | SGP30 |
     | ----- | ----- | ----- |
@@ -175,10 +175,12 @@ Guide: <https://esphome.io/guides/installing_esphome/>
     > Factory-fresh ESP32-C6 boards bootloop out of the box and web.esphome.io cannot reliably connect to them. Use esptool or the ESPHome CLI instead:
     >
     > **Option 1 — esptool** (run repeatedly until it catches the device between reboots):
+>
+    > ```
+    > esptool --chip esp32c6 --port COM3 write_flash 0x0 firmware.factory.bin
     >    ```
-    >    esptool --chip esp32c6 --port COM3 write_flash 0x0 firmware.factory.bin
-    >    ```
-    >    Replace `COM3` with your actual port number and `firmware.factory.bin` with the file you downloaded.
+>
+    > Replace `COM3` with your actual port number and `firmware.factory.bin` with the file you downloaded.
     >
     > **Option 2 — ESPHome CLI** (as described in the [Flash code directly](#flash-code-directly) section below):
     > Run the command repeatedly — it will catch the device in the brief window between reboots.
