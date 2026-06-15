@@ -71,9 +71,9 @@ You also need:
         - Blue = I2C SDA/UART (If you have more colors you can use different colors for UART and I2C)
         - Yellow = Motion Out / Status LED Data In
     - **DFRobot Beetle ESP32-C6**
-        <img src="images/ConnectionDrawingBeetle.png" width="100%">
+        <img src="images/ConnectionDrawingBeetle.jpg" width="100%">
     - **Generic ESP32-C6 Super Mini**
-        <img src="images/ConnectionDrawingC6.png" width="100%">
+        <img src="images/ConnectionDrawingC6.jpg" width="100%">
 
     **Pin Reference**
 
@@ -184,6 +184,7 @@ Guide: <https://esphome.io/guides/installing_esphome/>
     >
     > **Option 2 — ESPHome CLI** (as described in the [Flash code directly](#flash-code-directly) section below):
     > Run the command repeatedly — it will catch the device in the brief window between reboots.
+
 1. Click connect and choose the Serial Port (probably there is only one).
 1. Click install, choose the `factory` binary file that you downloaded earlier
 1. Click install and wait.
