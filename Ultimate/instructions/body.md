@@ -54,11 +54,11 @@ You also need:
 1. Break a **7x4** matrix from the proto board
     I used a carpet knife to cut around the matrix on the proto board on both sides and used pliers to carefully break the proto board at the cut.
 
-    <img src="images/BreakoutBoard1.jpg" height="300">
-    <img src="images/BreakoutBoard2.jpg" height="300">
-    <img src="images/BreakoutBoard3.jpg" height="300">
-    <img src="images/BreakoutBoard4.jpg" height="300">
-    <img src="images/BreakoutBoard5.jpg" height="300">
+    <img src="images/BreakoutBoard1.jpg" width="33%">
+    <img src="images/BreakoutBoard2.jpg" width="33%">
+    <img src="images/BreakoutBoard3.jpg" width="33%">
+    <img src="images/BreakoutBoard4.jpg" width="33%">
+    <img src="images/BreakoutBoard5.jpg" width="33%">
     <img src="images/BreakoutBoard6.jpg" height="300">
 
 1. Break a **5×2** matrix from the proto board
@@ -107,46 +107,46 @@ You also need:
 
 1. Solder the **other end** of the wires to the **distribution proto boards and ESP respectively. Connect wires of the same color together.** If you used a proto board where the lines are already connected via the board you don't need to do any extra step. My proto board has separated solder points so I had to bridge them.
 
-    <img src="images/8x4_1.jpg" height="300">
-    <img src="images/8x4_2.jpg" height="300">
-    <img src="images/8x4_3.jpg" height="300"><br>
-    <img src="images/4x2_1.jpg" height="300">
-    <img src="images/4x2_2.jpg" height="300">
-    <img src="images/4x2_3.jpg" height="300">
+    <img src="images/8x4_1.jpg" width="33%">
+    <img src="images/8x4_2.jpg" width="33%">
+    <img src="images/8x4_3.jpg" width="33%"><br>
+    <img src="images/4x2_1.jpg" width="33%">
+    <img src="images/4x2_2.jpg" width="33%">
+    <img src="images/4x2_3.jpg" width="33%">
 
     Also solder the **100µF electrolytic capacitor** across the 3.3V and GND rails on the distribution proto board, as shown in the Connection Drawings above. Observe polarity — the negative lead (shorter leg / marked stripe) connects to GND.
 
 1. **Solder the wires to the ESP pins** as described in the connection drawings above. You need to attach the cables from the back side (because the wifi antenna is on the front and we want that to be facing away from the motion sensor) — attach them as shown in the photos.
 
-    <img src="images/ESP_1.jpg" height="300">
-    <img src="images/ESP_2.jpg" height="300">
-    <img src="images/ESP_3.jpg" height="300">
+    <img src="images/ESP_1.jpg" width="33%">
+    <img src="images/ESP_2.jpg" width="33%">
+    <img src="images/ESP_3.jpg" width="33%">
 
 1. Use a **multimeter** to verify that solder joints of different colors do not bridge. Any short can damage components and may cause smoke or even fire.
 1. Now it's time to check whether all the soldering has worked out. Flash the software onto the ESP. It can be found in the software section. Verify that all sensors are detected and reporting, then return here to complete assembly.
 1. Optionally cover the LEDs on the **C4001** and the **ESP** with a small piece of electrical tape to prevent them from lighting up inside the enclosure.
 
-    <img src="images/C4001_LED_Blackout.jpg" height="300">
-    <img src="images/ESP_LED_Blackout.jpg" height="300">
+    <img src="images/C4001_LED_Blackout.jpg" width="33%">
+    <img src="images/ESP_LED_Blackout.jpg" width="33%">
 
 1. Attach the ball head mount to the back of the case
 
-    <img src="images/BackBallHead_1.jpg" height="300">
-    <img src="images/BackBallHead_2.jpg" height="300">
-    <img src="images/BackBallHead_3.jpg" height="300">
+    <img src="images/BackBallHead_1.jpg" width="45%">
+    <img src="images/BackBallHead_2.jpg" width="25%">
+    <img src="images/BackBallHead_3.jpg" width="25%">
 
 1. Place all the sensors, boards and ESP in place using M2x3mm screws
     The order does not really matter but it is easiest to do it in the order depicted in the photos here:
 
-    <img src="images/Assembly_1.jpg" height="300">
-    <img src="images/Assembly_2.jpg" height="300">
-    <img src="images/Assembly_3.jpg" height="300">
-    <img src="images/Assembly_4.jpg" height="300">
-    <img src="images/Assembly_5.jpg" height="300">
-    <img src="images/Assembly_6.jpg" height="300">
-    <img src="images/Assembly_7.jpg" height="300">
-    <img src="images/Assembly_8.jpg" height="300">
-    <img src="images/Assembly_9.jpg" height="300">
+    <img src="images/Assembly_1.jpg" width="25%">
+    <img src="images/Assembly_2.jpg" width="25%">
+    <img src="images/Assembly_3.jpg" width="45%">
+    <img src="images/Assembly_4.jpg" width="33%">
+    <img src="images/Assembly_5.jpg" width="33%">
+    <img src="images/Assembly_6.jpg" width="33%">
+    <img src="images/Assembly_7.jpg" width="45%">
+    <img src="images/Assembly_8.jpg" width="45%">
+    <img src="images/Assembly_9.jpg" width="45%">
 1. The case for the temperature sensor is used to hold it in place as well as shield it a bit from the heat produced by the other components
 1. The SGP30 and SCD4X sensors do have shields that slide on to secure them in place
 1. Attach the USB cable.
