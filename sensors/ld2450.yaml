@@ -24,7 +24,7 @@ LD2450:
   uart_id: ld2450_uart
   name: "LD2450"
   flip_x_axis: false
-  fast_off_detection: true
+  fast_off_detection: false
   max_distance_margin: 25cm
   max_detection_distance:
     name: LD2450 ${label_max} ${label_distance}
