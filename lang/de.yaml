@@ -52,8 +52,9 @@ substitutions:
   label_zone: Zone
   label_multi_target_tracking: Mehrzielverfolgung
   label_firmware: Firmware
-  label_direction: Richtung
-  label_zone_type: Zonen Typ
+  label_polygon: Polygon
+  label_margin: Toleranz
+  label_position: Position
   label_min: Minimum
   label_max: Maximum
   label_trigger: Auslöser
