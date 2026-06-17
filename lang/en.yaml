@@ -52,8 +52,9 @@ substitutions:
   label_zone: Zone
   label_multi_target_tracking: Multi Target Tracking
   label_firmware: Firmware
-  label_direction: Direction
-  label_zone_type: Zone Type
+  label_polygon: Polygon
+  label_margin: Margin
+  label_position: Position
   label_min: Minimum
   label_max: Maximum
   label_trigger: Trigger

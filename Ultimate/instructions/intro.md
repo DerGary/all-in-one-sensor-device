@@ -1,7 +1,7 @@
 
 # Ultimate Smart Home Sensor Case
 
-[Makerworld](tbd)
+<!-- [Makerworld](tbd) -->
 
 ## Please read the disclaimer at the bottom before printing
 
