@@ -232,7 +232,47 @@ Calibrate humidity and temperature using the input components **Temperature Off
 
 **LD2450 Presence Sensor:**
 
-The LD2450 can't be calibrated. But you can configure up to three zones. The zones can be configured in the HLKRadarTool Android / iOS App.
+The LD2450 itself can't be calibrated, and the main presence detection (used by the device's overall presence/occupancy sensor) works out of the box — it reports a person as present anywhere within the sensor's range, whether or not they're standing inside a configured zone.
+
+Zones are a separate, optional feature on top of that: they let you trigger automations based on a person being in a *specific* part of the room (e.g. "at the desk" or "on the couch"), rather than just "somewhere in range". You don't need to configure any zones for general presence detection to work. Zones are fully configurable from Home Assistant — no app and no reflashing required.
+
+*Coordinate system*
+
+- The sensor sits at the origin (`X = 0`, `Y = 0`).
+- `Y` is the distance straight out in front of the sensor, in meters.
+- `X` is the distance to the side, in meters — negative is to the left of the sensor, positive is to the right (as seen from behind the sensor, facing the same direction it does).
+
+*Finding coordinates*
+
+1. On the device page of your sensor in Home Assistant, enable the disabled-by-default entities **LD2450 Target-1 X Position** and **LD2450 Target-1 Y Position** (find the entity → click the cog icon → enable).
+1. Walk to each corner of the area you want to outline as a zone and note the `X`/`Y` values these entities report while you stand there.
+1. Once you have the coordinates you need, you can disable the target entities again — they update every second and add unnecessary load to the Home Assistant recorder, and aren't required for zone-based presence detection.
+
+*Setting up a zone*
+
+The firmware exposes 3 zones (`LD2450 Zone-1`, `LD2450 Zone-2`, `LD2450 Zone-3`). Each zone's shape is entered as a single text entity, e.g. `LD2450 Zone-1 Polygon`, found under the "Configuration" category. This means a zone isn't limited to a rectangle or a fixed number of corners — it can be any polygon, with as many corners as you need.
+
+1. Pick one of the 3 zones.
+1. In its `Polygon` text field, enter the corner coordinates you noted earlier as `x1,y1;x2,y2;x3,y3;...` — comma between X and Y of a point, semicolon between points, no spaces. Decimal values are supported using a **dot** as the decimal separator (e.g. `1.5`, never `1,5` — the comma is already the X/Y separator). For example, a 3×4m rectangle starting at the sensor would be `0,0;0,4;3,4;3,0`, and a narrower 1.5×3m zone offset to the right would be `0.5,0;0.5,3;2,3;2,0`.
+1. Use at least 3 points, and go around the shape in order (clockwise or counter-clockwise, doesn't matter — just don't skip across the shape) so the points form a simple, non-self-intersecting polygon.
+1. The shape must stay convex — picture a rectangle, a trapezoid, a diamond, or a hexagon, not a star, an arrow, or an L-shape. If you enter an invalid (too short, unparsable, self-intersecting, or non-convex) polygon, the sensor silently ignores the change and keeps the last valid shape, so you can't break anything by typing a half-finished value.
+1. Repeat for additional zones if you want to track multiple areas — see the tips below for ideas on using more than one zone.
+
+Zone polygons are re-evaluated every 30 seconds, so after editing the text field you may need to wait up to half a minute before the zone boundary takes effect. Once the new polygon is applied, the zone's target count will change from `unavailable` to `0` (or the current number of people inside). Note that entering an invalid polygon does not reset a zone — the previous valid shape stays active until a new valid one is accepted. To fully disable a zone, clear its text field to empty and reboot the sensor; the zone will then remain inactive until a valid polygon is entered again.
+
+*Reading zone state*
+
+- `LD2450 Zone-1`/`2`/`3` (binary sensor): on while at least one target is detected inside that zone. Use this in automations that should only react to a person being in that specific area.
+- `LD2450 Zone-1`/`2`/`3` (sensor): number of targets currently tracked inside that zone.
+- Both entities share the same default name and are only distinguished by their entity type (binary sensor vs. sensor) — rename them in the entity settings if you'd like clearer labels on your dashboard, e.g. "Zone 1 Occupancy" / "Zone 1 Target Count".
+- `LD2450 Presence` (binary sensor, disabled by default) and the main combined presence/occupancy sensor of the device are **not** affected by zones — they're on whenever any target is detected anywhere in range. Zones only add the extra, location-specific binary sensors described above.
+
+*Tips*
+
+- Zones are most useful for "only do X when someone is in this particular spot" automations — e.g. dim a light only when someone is at the desk, regardless of whether someone else is also present elsewhere in the room.
+- If you do want a stricter "anyone in the room" signal than the sensor's raw range provides (e.g. to ignore detections through a doorway into a neighboring room), you can create a zone outlining your room's walls and use its occupancy sensor in your own automations instead of the default presence sensor.
+- Zones can overlap, so the whole-room zone above can coexist with smaller, specific zones.
+- If you need more than 3 zones, edit `sensors/ld2450.yaml` and reflash — 3 already covers most use cases.
 
 **C4001 Presence Sensor:**
 

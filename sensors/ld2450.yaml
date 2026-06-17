@@ -1,3 +1,11 @@
+# Pinned to a contributor's fork branch instead of the official v1.0.6 release: upstream doesn't
+# compile against current ESPHome (removed `sensor::Sensor::unit_of_measurement_`, see
+# https://github.com/TillFleisch/ESPHome-HLK-LD2450/issues/41). This fork branch carries the fix
+# from the still-open https://github.com/TillFleisch/ESPHome-HLK-LD2450/pull/44. Switch back to
+# the official repo once that PR is merged and released.
+external_components:
+  - source: github://flo-rian/ESPHome-HLK-LD2450@pr/esphome-2026-compat
+
 uart:
   - id: ld2450_uart
     tx_pin: ${tx_pin}
@@ -6,345 +14,400 @@ uart:
     parity: NONE
     stop_bits: 1
 
-ld2450:
-  id: ld2450_radar
+# Each zone's polygon is entered as a single text entity in HA, formatted as "x1,y1;x2,y2;x3,y3;..."
+# (meters, at least 3 points). This allows arbitrary polygons - not just a fixed number of corners -
+# without needing a number entity per point. The polygon lambda re-parses the text every 30 seconds,
+# so editing it in HA reshapes the zone within half a minute. Unparsable or invalid
+# (non-convex/duplicate-point/too-short) polygons are ignored by the component and the previous
+# valid polygon is kept, so a zone can never end up in a broken state while typing.
+LD2450:
   uart_id: ld2450_uart
+  name: "LD2450"
+  flip_x_axis: false
+  fast_off_detection: true
+  max_distance_margin: 25cm
+  max_detection_distance:
+    name: LD2450 ${label_max} ${label_distance}
+    initial_value: 6.0m
+    step: 0.1m
+    restore_value: true
+    entity_category: config
+    web_server:
+      sorting_group_id: ld2450_group
+  max_detection_tilt_angle:
+    name: LD2450 ${label_max} ${label_angle}
+    initial_value: 90°
+    step: 1°
+    restore_value: true
+    entity_category: config
+    disabled_by_default: true
+    web_server:
+      sorting_group_id: ld2450_group
+  min_detection_tilt_angle:
+    name: LD2450 ${label_min} ${label_angle}
+    initial_value: -90°
+    step: 1°
+    restore_value: true
+    entity_category: config
+    disabled_by_default: true
+    web_server:
+      sorting_group_id: ld2450_group
+  occupancy:
+    id: ld2450_presence
+    name: LD2450 ${label_presence}
+    disabled_by_default: true
+    icon: mdi:account-eye-outline
+    web_server:
+      sorting_group_id: ld2450_group
+  target_count:
+    name: LD2450 ${label_presence_target} ${label_count}
+    disabled_by_default: true
+    web_server:
+      sorting_group_id: ld2450_group
+  restart_button:
+    name: LD2450 ${label_restart}
+    entity_category: diagnostic
+    disabled_by_default: true
+    icon: mdi:restart-alert
+    web_server:
+      sorting_group_id: ld2450_group
+  factory_reset_button:
+    name: LD2450 ${label_factory_defaults}
+    icon: mdi:factory
+    disabled_by_default: true
+    entity_category: diagnostic
+    web_server:
+      sorting_group_id: ld2450_group
+  tracking_mode_switch:
+    name: LD2450 ${label_multi_target_tracking}
+    web_server:
+      sorting_group_id: ld2450_group
+  bluetooth_switch:
+    name: LD2450 ${label_bluetooth_mode}
+    icon: mdi:bluetooth
+    disabled_by_default: true
+    entity_category: diagnostic
+    web_server:
+      sorting_group_id: ld2450_group
+  targets:
+    - target:
+        name: "LD2450"
+        x_position:
+          id: ld2450_target_1_x
+          name: "${label_target}-1 X ${label_position}"
+          disabled_by_default: true
+          web_server:
+            sorting_group_id: ld2450_group
+        y_position:
+          id: ld2450_target_1_y
+          name: "${label_target}-1 Y ${label_position}"
+          disabled_by_default: true
+          web_server:
+            sorting_group_id: ld2450_group
+        speed:
+          id: ld2450_target_1_speed
+          name: "${label_target}-1 ${label_speed}"
+          disabled_by_default: true
+          web_server:
+            sorting_group_id: ld2450_group
+        distance_resolution:
+          id: ld2450_target_1_resolution
+          name: "${label_target}-1 ${label_distance_resolution}"
+          disabled_by_default: true
+          web_server:
+            sorting_group_id: ld2450_group
+        angle:
+          id: ld2450_target_1_angle
+          name: "${label_target}-1 ${label_angle}"
+          disabled_by_default: true
+          web_server:
+            sorting_group_id: ld2450_group
+        distance:
+          id: ld2450_target_1_distance
+          name: "${label_target}-1 ${label_distance}"
+          disabled_by_default: true
+          web_server:
+            sorting_group_id: ld2450_group
+    - target:
+        name: "LD2450"
+        x_position:
+          id: ld2450_target_2_x
+          name: "${label_target}-2 X ${label_position}"
+          disabled_by_default: true
+          web_server:
+            sorting_group_id: ld2450_group
+        y_position:
+          id: ld2450_target_2_y
+          name: "${label_target}-2 Y ${label_position}"
+          disabled_by_default: true
+          web_server:
+            sorting_group_id: ld2450_group
+        speed:
+          id: ld2450_target_2_speed
+          name: "${label_target}-2 ${label_speed}"
+          disabled_by_default: true
+          web_server:
+            sorting_group_id: ld2450_group
+        distance_resolution:
+          id: ld2450_target_2_resolution
+          name: "${label_target}-2 ${label_distance_resolution}"
+          disabled_by_default: true
+          web_server:
+            sorting_group_id: ld2450_group
+        angle:
+          id: ld2450_target_2_angle
+          name: "${label_target}-2 ${label_angle}"
+          disabled_by_default: true
+          web_server:
+            sorting_group_id: ld2450_group
+        distance:
+          id: ld2450_target_2_distance
+          name: "${label_target}-2 ${label_distance}"
+          disabled_by_default: true
+          web_server:
+            sorting_group_id: ld2450_group
+    - target:
+        name: "LD2450"
+        x_position:
+          id: ld2450_target_3_x
+          name: "${label_target}-3 X ${label_position}"
+          disabled_by_default: true
+          web_server:
+            sorting_group_id: ld2450_group
+        y_position:
+          id: ld2450_target_3_y
+          name: "${label_target}-3 Y ${label_position}"
+          disabled_by_default: true
+          web_server:
+            sorting_group_id: ld2450_group
+        speed:
+          id: ld2450_target_3_speed
+          name: "${label_target}-3 ${label_speed}"
+          disabled_by_default: true
+          web_server:
+            sorting_group_id: ld2450_group
+        distance_resolution:
+          id: ld2450_target_3_resolution
+          name: "${label_target}-3 ${label_distance_resolution}"
+          disabled_by_default: true
+          web_server:
+            sorting_group_id: ld2450_group
+        angle:
+          id: ld2450_target_3_angle
+          name: "${label_target}-3 ${label_angle}"
+          disabled_by_default: true
+          web_server:
+            sorting_group_id: ld2450_group
+        distance:
+          id: ld2450_target_3_distance
+          name: "${label_target}-3 ${label_distance}"
+          disabled_by_default: true
+          web_server:
+            sorting_group_id: ld2450_group
+  zones:
+    - zone:
+        id: ld2450_zone_1
+        name: "LD2450"
+        polygon:
+          update_interval: 30s
+          lambda: !lambda |-
+            std::vector<ld2450::Point> points;
+            std::string s = id(ld2450_zone1_polygon).state;
+            size_t pos = 0;
+            while (pos < s.size()) {
+              size_t semi = s.find(';', pos);
+              std::string token = s.substr(pos, semi == std::string::npos ? std::string::npos : semi - pos);
+              size_t comma = token.find(',');
+              if (comma == std::string::npos) { points.clear(); break; }
+              const char *xstr = token.c_str();
+              char *end;
+              float x = strtof(xstr, &end);
+              if (end == xstr) { points.clear(); break; }
+              const char *ystr = token.c_str() + comma + 1;
+              float y = strtof(ystr, &end);
+              if (end == ystr) { points.clear(); break; }
+              points.push_back(ld2450::Point((int)(x * 1000), (int)(y * 1000)));
+              if (semi == std::string::npos) break;
+              pos = semi + 1;
+            }
+            return points;
+        occupancy:
+          id: ld2450_zone_1_occupancy
+          name: "${label_zone}-1 ${label_occupied}"
+          web_server:
+            sorting_group_id: ld2450_group
+        target_count:
+          id: ld2450_zone_1_target_count
+          name: "${label_zone}-1 ${label_count}"
+          accuracy_decimals: 0
+          web_server:
+            sorting_group_id: ld2450_group
+    - zone:
+        id: ld2450_zone_2
+        name: "LD2450"
+        polygon:
+          update_interval: 30s
+          lambda: !lambda |-
+            std::vector<ld2450::Point> points;
+            std::string s = id(ld2450_zone2_polygon).state;
+            size_t pos = 0;
+            while (pos < s.size()) {
+              size_t semi = s.find(';', pos);
+              std::string token = s.substr(pos, semi == std::string::npos ? std::string::npos : semi - pos);
+              size_t comma = token.find(',');
+              if (comma == std::string::npos) { points.clear(); break; }
+              const char *xstr = token.c_str();
+              char *end;
+              float x = strtof(xstr, &end);
+              if (end == xstr) { points.clear(); break; }
+              const char *ystr = token.c_str() + comma + 1;
+              float y = strtof(ystr, &end);
+              if (end == ystr) { points.clear(); break; }
+              points.push_back(ld2450::Point((int)(x * 1000), (int)(y * 1000)));
+              if (semi == std::string::npos) break;
+              pos = semi + 1;
+            }
+            return points;
+        occupancy:
+          id: ld2450_zone_2_occupancy
+          name: "${label_zone}-2 ${label_occupied}"
+          web_server:
+            sorting_group_id: ld2450_group
+        target_count:
+          id: ld2450_zone_2_target_count
+          name: "${label_zone}-2 ${label_count}"
+          accuracy_decimals: 0
+          web_server:
+            sorting_group_id: ld2450_group
+    - zone:
+        id: ld2450_zone_3
+        name: "LD2450"
+        polygon:
+          update_interval: 30s
+          lambda: !lambda |-
+            std::vector<ld2450::Point> points;
+            std::string s = id(ld2450_zone3_polygon).state;
+            size_t pos = 0;
+            while (pos < s.size()) {
+              size_t semi = s.find(';', pos);
+              std::string token = s.substr(pos, semi == std::string::npos ? std::string::npos : semi - pos);
+              size_t comma = token.find(',');
+              if (comma == std::string::npos) { points.clear(); break; }
+              const char *xstr = token.c_str();
+              char *end;
+              float x = strtof(xstr, &end);
+              if (end == xstr) { points.clear(); break; }
+              const char *ystr = token.c_str() + comma + 1;
+              float y = strtof(ystr, &end);
+              if (end == ystr) { points.clear(); break; }
+              points.push_back(ld2450::Point((int)(x * 1000), (int)(y * 1000)));
+              if (semi == std::string::npos) break;
+              pos = semi + 1;
+            }
+            return points;
+        occupancy:
+          id: ld2450_zone_3_occupancy
+          name: "${label_zone}-3 ${label_occupied}"
+          web_server:
+            sorting_group_id: ld2450_group
+        target_count:
+          id: ld2450_zone_3_target_count
+          name: "${label_zone}-3 ${label_count}"
+          accuracy_decimals: 0
+          web_server:
+            sorting_group_id: ld2450_group
 
-binary_sensor:
-  - platform: ld2450
-    ld2450_id: ld2450_radar
-    has_target:
-      disabled_by_default: true
-      id: ld2450_presence
-      name: LD2450 ${label_presence}
-      icon: mdi:account-eye-outline
-      web_server:
-        sorting_group_id: ld2450_group
-    has_moving_target:
-      disabled_by_default: true
-      name: LD2450 ${label_moving_target}
-      icon: mdi:run
-      web_server:
-        sorting_group_id: ld2450_group
-    has_still_target:
-      disabled_by_default: true
-      name: LD2450 ${label_still_target}
-      icon: mdi:human-handsdown
-      web_server:
-        sorting_group_id: ld2450_group
+# Zone polygons, editable from Home Assistant as a single text field per zone, formatted as
+# "x1,y1;x2,y2;x3,y3;..." in meters (at least 3 points, must describe a convex polygon). Defaults to
+# an empty string, i.e. an inert/empty zone, until configured. X is positive to the sensor's right, Y
+# is the distance in front of the sensor.
+text:
+  - platform: template
+    id: ld2450_zone1_polygon
+    name: LD2450 ${label_zone}-1 ${label_polygon}
+    entity_category: config
+    icon: mdi:vector-polygon
+    mode: text
+    optimistic: true
+    restore_value: true
+    initial_value: ""
+    min_length: 0
+    max_length: 255
+    web_server:
+      sorting_group_id: ld2450_group
+  - platform: template
+    id: ld2450_zone2_polygon
+    name: LD2450 ${label_zone}-2 ${label_polygon}
+    entity_category: config
+    icon: mdi:vector-polygon
+    mode: text
+    optimistic: true
+    restore_value: true
+    initial_value: ""
+    min_length: 0
+    max_length: 255
+    web_server:
+      sorting_group_id: ld2450_group
+  - platform: template
+    id: ld2450_zone3_polygon
+    name: LD2450 ${label_zone}-3 ${label_polygon}
+    entity_category: config
+    icon: mdi:vector-polygon
+    mode: text
+    optimistic: true
+    restore_value: true
+    initial_value: ""
+    min_length: 0
+    max_length: 255
+    web_server:
+      sorting_group_id: ld2450_group
 
-sensor:
-  - platform: ld2450
-    ld2450_id: ld2450_radar
-    target_count:
-      disabled_by_default: true
-      name: LD2450 ${label_presence_target} ${label_count}
-      web_server:
-        sorting_group_id: ld2450_group
-    still_target_count:
-      disabled_by_default: true
-      name: LD2450 ${label_still_target} ${label_count}
-      web_server:
-        sorting_group_id: ld2450_group
-    moving_target_count:
-      disabled_by_default: true
-      name: LD2450 ${label_moving_target} ${label_count}
-      web_server:
-        sorting_group_id: ld2450_group
-    target_1:
-      x:
-        disabled_by_default: true
-        name: LD2450 ${label_target}-1 X
-        web_server:
-          sorting_group_id: ld2450_group
-      y:
-        disabled_by_default: true
-        name: LD2450 ${label_target}-1 Y
-        web_server:
-          sorting_group_id: ld2450_group
-      speed:
-        disabled_by_default: true
-        name: LD2450 ${label_target}-1 ${label_speed}
-        web_server:
-          sorting_group_id: ld2450_group
-      angle:
-        disabled_by_default: true
-        name: LD2450 ${label_target}-1 ${label_angle}
-        web_server:
-          sorting_group_id: ld2450_group
-      distance:
-        disabled_by_default: true
-        name: LD2450 ${label_target}-1 ${label_distance}
-        web_server:
-          sorting_group_id: ld2450_group
-      resolution:
-        disabled_by_default: true
-        name: LD2450 ${label_target}-1 ${label_resolution}
-        web_server:
-          sorting_group_id: ld2450_group
-    target_2:
-      x:
-        disabled_by_default: true
-        name: LD2450 ${label_target}-2 X
-        web_server:
-          sorting_group_id: ld2450_group
-      y:
-        disabled_by_default: true
-        name: LD2450 ${label_target}-2 Y
-        web_server:
-          sorting_group_id: ld2450_group
-      speed:
-        disabled_by_default: true
-        name: LD2450 ${label_target}-2 ${label_speed}
-        web_server:
-          sorting_group_id: ld2450_group
-      angle:
-        disabled_by_default: true
-        name: LD2450 ${label_target}-2 ${label_angle}
-        web_server:
-          sorting_group_id: ld2450_group
-      distance:
-        disabled_by_default: true
-        name: LD2450 ${label_target}-2 ${label_distance}
-        web_server:
-          sorting_group_id: ld2450_group
-      resolution:
-        disabled_by_default: true
-        name: LD2450 ${label_target}-2 ${label_resolution}
-        web_server:
-          sorting_group_id: ld2450_group
-    target_3:
-      x:
-        disabled_by_default: true
-        name: LD2450 ${label_target}-3 X
-        web_server:
-          sorting_group_id: ld2450_group
-      y:
-        disabled_by_default: true
-        name: LD2450 ${label_target}-3 Y
-        web_server:
-          sorting_group_id: ld2450_group
-      speed:
-        disabled_by_default: true
-        name: LD2450 ${label_target}-3 ${label_speed}
-        web_server:
-          sorting_group_id: ld2450_group
-      angle:
-        disabled_by_default: true
-        name: LD2450 ${label_target}-3 ${label_angle}
-        web_server:
-          sorting_group_id: ld2450_group
-      distance:
-        disabled_by_default: true
-        name: LD2450 ${label_target}-3 ${label_distance}
-        web_server:
-          sorting_group_id: ld2450_group
-      resolution:
-        disabled_by_default: true
-        name: LD2450 ${label_target}-3 ${label_resolution}
-        web_server:
-          sorting_group_id: ld2450_group
-    zone_1:
-      target_count:
-        name: LD2450 ${label_zone}-1 ${label_target} ${label_count}
-        accuracy_decimals: 0
-        web_server:
-          sorting_group_id: ld2450_group
-      still_target_count:
-        name: LD2450 ${label_zone}-1 ${label_still_target} ${label_count}
-        disabled_by_default: true
-        accuracy_decimals: 0
-        web_server:
-          sorting_group_id: ld2450_group
-      moving_target_count:
-        name: LD2450 ${label_zone}-1 ${label_moving_target} ${label_count}
-        accuracy_decimals: 0
-        disabled_by_default: true
-        web_server:
-          sorting_group_id: ld2450_group
-    zone_2:
-      target_count:
-        name: LD2450 ${label_zone}-2 ${label_target} ${label_count}
-        accuracy_decimals: 0
-        web_server:
-          sorting_group_id: ld2450_group
-      still_target_count:
-        name: LD2450 ${label_zone}-2 ${label_still_target} ${label_count}
-        disabled_by_default: true
-        accuracy_decimals: 0
-        web_server:
-          sorting_group_id: ld2450_group
-      moving_target_count:
-        name: LD2450 ${label_zone}-2 ${label_moving_target} ${label_count}
-        disabled_by_default: true
-        accuracy_decimals: 0
-        web_server:
-          sorting_group_id: ld2450_group
-    zone_3:
-      target_count:
-        name: LD2450 ${label_zone}-3 ${label_target} ${label_count}
-        accuracy_decimals: 0
-        web_server:
-          sorting_group_id: ld2450_group
-      still_target_count:
-        name: LD2450 ${label_zone}-3 ${label_still_target} ${label_count}
-        disabled_by_default: true
-        accuracy_decimals: 0
-        web_server:
-          sorting_group_id: ld2450_group
-      moving_target_count:
-        name: LD2450 ${label_zone}-3 ${label_moving_target} ${label_count}
-        disabled_by_default: true
-        accuracy_decimals: 0
-        web_server:
-          sorting_group_id: ld2450_group
-
-switch:
-  - platform: ld2450
-    ld2450_id: ld2450_radar
-    bluetooth:
-      disabled_by_default: true
-      entity_category: diagnostic
-      name: "LD2450 ${label_bluetooth_mode}"
-      icon: mdi:bluetooth
-      web_server:
-        sorting_group_id: ld2450_group
-    multi_target:
-      name: LD2450 ${label_multi_target_tracking}
-      web_server:
-        sorting_group_id: ld2450_group
-
+# Zone margins, editable from Home Assistant. The component only accepts margin at compile time, but
+# set_margin() is a public method so we call it at runtime from on_value. Zone IDs are required for
+# the lambda references. Value is in meters; 0.25m matches the component's built-in default (250mm).
 number:
-  - platform: ld2450
-    ld2450_id: ld2450_radar
-    presence_timeout:
-      disabled_by_default: true
-      name: LD2450 ${label_timeout}
-      icon: mdi:timer-cog-outline
-      entity_category: config
-      web_server:
-        sorting_group_id: ld2450_group
-    zone_1:
-      x1:
-        entity_category: config
-        name: LD2450 ${label_zone}-1 X1
-        web_server:
-          sorting_group_id: ld2450_group
-      y1:
-        entity_category: config
-        name: LD2450 ${label_zone}-1 Y1
-        web_server:
-          sorting_group_id: ld2450_group
-      x2:
-        entity_category: config
-        name: LD2450 ${label_zone}-1 X2
-        web_server:
-          sorting_group_id: ld2450_group
-      y2:
-        entity_category: config
-        name: LD2450 ${label_zone}-1 Y2
-        web_server:
-          sorting_group_id: ld2450_group
-    zone_2:
-      x1:
-        entity_category: config
-        name: LD2450 ${label_zone}-2 X1
-        web_server:
-          sorting_group_id: ld2450_group
-      y1:
-        entity_category: config
-        name: LD2450 ${label_zone}-2 Y1
-        web_server:
-          sorting_group_id: ld2450_group
-      x2:
-        entity_category: config
-        name: LD2450 ${label_zone}-2 X2
-        web_server:
-          sorting_group_id: ld2450_group
-      y2:
-        entity_category: config
-        name: LD2450 ${label_zone}-2 Y2
-        web_server:
-          sorting_group_id: ld2450_group
-    zone_3:
-      x1:
-        entity_category: config
-        name: LD2450 ${label_zone}-3 X1
-        web_server:
-          sorting_group_id: ld2450_group
-      y1:
-        entity_category: config
-        name: LD2450 ${label_zone}-3 Y1
-        web_server:
-          sorting_group_id: ld2450_group
-      x2:
-        entity_category: config
-        name: LD2450 ${label_zone}-3 X2
-        web_server:
-          sorting_group_id: ld2450_group
-      y2:
-        entity_category: config
-        name: LD2450 ${label_zone}-3 Y2
-        web_server:
-          sorting_group_id: ld2450_group
-
-button:
-  - platform: ld2450
-    ld2450_id: ld2450_radar
-    factory_reset:
-      name: "LD2450 ${label_factory_defaults}"
-      icon: mdi:factory
-      disabled_by_default: true
-      entity_category: diagnostic
-      web_server:
-        sorting_group_id: ld2450_group
-    restart:
-      name: "LD2450 ${label_restart}"
-      entity_category: diagnostic
-      disabled_by_default: true
-      icon: mdi:restart-alert
-      web_server:
-        sorting_group_id: ld2450_group
-
-text_sensor:
-  - platform: ld2450
-    ld2450_id: ld2450_radar
-    version:
-      name: "LD2450 ${label_firmware}"
-      entity_category: diagnostic
-      disabled_by_default: true
-      web_server:
-        sorting_group_id: ld2450_group
-    mac_address:
-      name: "LD2450 BT MAC"
-      entity_category: diagnostic
-      disabled_by_default: true
-      web_server:
-        sorting_group_id: ld2450_group
-    target_1:
-      direction:
-        disabled_by_default: true
-        name: LD2450 ${label_target}-1 ${label_direction}
-        web_server:
-          sorting_group_id: ld2450_group
-    target_2:
-      direction:
-        disabled_by_default: true
-        name: LD2450 ${label_target}-2 ${label_direction}
-        web_server:
-          sorting_group_id: ld2450_group
-    target_3:
-      direction:
-        disabled_by_default: true
-        name: LD2450 ${label_target}-3 ${label_direction}
-        web_server:
-          sorting_group_id: ld2450_group
-
-select:
-  - platform: ld2450
-    ld2450_id: ld2450_radar
-    zone_type:
-      name: LD2450 ${label_zone_type}
-      entity_category: config
-      web_server:
-        sorting_group_id: ld2450_group
+  - platform: template
+    name: LD2450 ${label_zone}-1 ${label_margin}
+    entity_category: config
+    icon: mdi:arrow-expand
+    unit_of_measurement: m
+    initial_value: 0.25
+    min_value: 0.0
+    max_value: 1.0
+    step: 0.05
+    optimistic: true
+    restore_value: true
+    on_value:
+      - lambda: "id(ld2450_zone_1).set_margin(x);"
+    web_server:
+      sorting_group_id: ld2450_group
+  - platform: template
+    name: LD2450 ${label_zone}-2 ${label_margin}
+    entity_category: config
+    icon: mdi:arrow-expand
+    unit_of_measurement: m
+    initial_value: 0.25
+    min_value: 0.0
+    max_value: 1.0
+    step: 0.05
+    optimistic: true
+    restore_value: true
+    on_value:
+      - lambda: "id(ld2450_zone_2).set_margin(x);"
+    web_server:
+      sorting_group_id: ld2450_group
+  - platform: template
+    name: LD2450 ${label_zone}-3 ${label_margin}
+    entity_category: config
+    icon: mdi:arrow-expand
+    unit_of_measurement: m
+    initial_value: 0.25
+    min_value: 0.0
+    max_value: 1.0
+    step: 0.05
+    optimistic: true
+    restore_value: true
+    on_value:
+      - lambda: "id(ld2450_zone_3).set_margin(x);"
+    web_server:
+      sorting_group_id: ld2450_group
