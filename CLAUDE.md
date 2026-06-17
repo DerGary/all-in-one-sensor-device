@@ -78,6 +78,18 @@ cd Ultimate/instructions && bash renderPdf.sh   # or V2.1/instructions
 
 See `TODO.md` for tracked follow-ups (currently: changelog cleanup, adding OpenThread as a connectivity alternative to WiFi for V2.1/Ultimate).
 
+## Releases and release notes
+
+Releases are triggered by pushing a tag matching `ultimate*` (e.g. `ultimate-v1.2.0`) or `v2.1*` / `v2.0*` for the other revisions. CI then builds the full matrix, renders the PDF, and creates a GitHub Release with all binaries and the PDF attached.
+
+**Release notes are auto-generated from PR titles** (`generate_release_notes: true` in the workflow). GitHub groups merged PRs between the previous tag and the new one — the PR *title* is what appears in the public changelog, not commit messages.
+
+Guidelines so that release notes are meaningful to end users:
+- **PR titles** should describe the user-visible change in plain language, not internal implementation details. Prefer "Add polygon-based zone configuration for LD2450" over "refactor ld2450.yaml to use external component". Feature additions → "Add …", bug fixes → "Fix …", improvements → "Improve …".
+- **Commit messages** within a PR can be more technical — they don't surface in release notes directly.
+- **Squash or clean up** noisy fixup commits before merging so the PR title is the single meaningful entry in the log, rather than a pile of "wip", "fix typo", "try again" commits.
+- When creating a PR, write the title as if it will be read by someone deciding whether to update their firmware — because it will be.
+
 ## CI
 
 GitHub Actions workflows (`.github/workflows/{ultimate-ci,v2-1-ci,v2-0-ci}.yaml`) trigger on PRs touching their device folder (plus the shared `sensors/`, `lang/`, `automations/`, `components/` for Ultimate/V2.1) and on version-prefixed tag pushes (`ultimate*`, `v2.1*`, `v2.0*`). Each compiles the full build matrix (language × temperature sensor × board variant, where applicable) using the `esphome/esphome:stable` container image, renders the instructions PDF, and on a tag push attaches binaries + the PDF to a GitHub Release. There is no separate lint/test step — successful `esphome compile` across the matrix *is* the correctness check.
