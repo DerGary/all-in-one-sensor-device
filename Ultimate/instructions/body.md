@@ -54,11 +54,11 @@ You also need:
 1. Break a **7x4** matrix from the proto board
     I used a carpet knife to cut around the matrix on the proto board on both sides and used pliers to carefully break the proto board at the cut.
 
-    <img src="images/BreakoutBoard1.jpg" width="33%">
-    <img src="images/BreakoutBoard2.jpg" width="33%">
-    <img src="images/BreakoutBoard3.jpg" width="33%">
-    <img src="images/BreakoutBoard4.jpg" width="33%">
-    <img src="images/BreakoutBoard5.jpg" width="33%">
+    <img src="images/BreakoutBoard1.jpg" width="31%">
+    <img src="images/BreakoutBoard2.jpg" width="31%">
+    <img src="images/BreakoutBoard3.jpg" width="31%">
+    <img src="images/BreakoutBoard4.jpg" width="31%">
+    <img src="images/BreakoutBoard5.jpg" width="31%">
     <img src="images/BreakoutBoard6.jpg" height="300">
 
 1. Break a **5×2** matrix from the proto board
@@ -107,20 +107,20 @@ You also need:
 
 1. Solder the **other end** of the wires to the **distribution proto boards and ESP respectively. Connect wires of the same color together.** If you used a proto board where the lines are already connected via the board you don't need to do any extra step. My proto board has separated solder points so I had to bridge them.
 
-    <img src="images/8x4_1.jpg" width="33%">
-    <img src="images/8x4_2.jpg" width="33%">
-    <img src="images/8x4_3.jpg" width="33%"><br>
-    <img src="images/4x2_1.jpg" width="33%">
-    <img src="images/4x2_2.jpg" width="33%">
-    <img src="images/4x2_3.jpg" width="33%">
+    <img src="images/8x4_1.jpg" width="31%">
+    <img src="images/8x4_2.jpg" width="31%">
+    <img src="images/8x4_3.jpg" width="31%"><br>
+    <img src="images/4x2_1.jpg" width="31%">
+    <img src="images/4x2_2.jpg" width="31%">
+    <img src="images/4x2_3.jpg" width="31%">
 
     Also solder the **100µF electrolytic capacitor** across the 3.3V and GND rails on the distribution proto board, as shown in the Connection Drawings above. Observe polarity — the negative lead (shorter leg / marked stripe) connects to GND.
 
 1. **Solder the wires to the ESP pins** as described in the connection drawings above. You need to attach the cables from the back side (because the wifi antenna is on the front and we want that to be facing away from the motion sensor) — attach them as shown in the photos.
 
-    <img src="images/ESP_1.jpg" width="33%">
-    <img src="images/ESP_2.jpg" width="33%">
-    <img src="images/ESP_3.jpg" width="33%">
+    <img src="images/ESP_1.jpg" width="31%">
+    <img src="images/ESP_2.jpg" width="31%">
+    <img src="images/ESP_3.jpg" width="31%">
 
 1. Use a **multimeter** to verify that solder joints of different colors do not bridge. Any short can damage components and may cause smoke or even fire.
 1. Now it's time to check whether all the soldering has worked out. Flash the software onto the ESP. It can be found in the software section. Verify that all sensors are detected and reporting, then return here to complete assembly.
