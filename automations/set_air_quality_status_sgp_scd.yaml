@@ -6,9 +6,9 @@ script:
           float current_co2 = id(co2).state;
 
           if (current_co2 > 2000 || current_tvoc > 2200) {
-            id(air_quality_status).publish_state("critical");
+            id(air_quality_status).publish_state("${label_air_quality_critical}");
           } else if (current_co2 > 1250 || current_tvoc > 660) {
-            id(air_quality_status).publish_state("warning");
+            id(air_quality_status).publish_state("${label_air_quality_warning}");
           } else {
-            id(air_quality_status).publish_state("");
+            id(air_quality_status).publish_state("${label_air_quality_good}");
           }

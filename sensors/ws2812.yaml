@@ -6,6 +6,7 @@ light:
     pin: ${pin}
     num_leds: 1
     name: ${label_status_led}
+    icon: mdi:led-on
     effects:
       - pulse:
           name: "Fast Pulse"

@@ -1,6 +1,12 @@
 packages:
   control_leds: !include "${ './control_leds_air_quality.yaml' if sensor in ('bme680', 'sgp_scd') else './control_leds.yaml'}"
 
+esphome:
+  on_boot:
+    priority: -100.0
+    then:
+      - lambda: id(occupied).publish_state(false);
+
 globals:
   - id: improv_ble_in_progress
     type: bool
@@ -21,7 +27,7 @@ binary_sensor:
             }
     filters:
       - lambda: |
-          if(x == id(occupied).state){
+          if(id(occupied).has_state() && x == id(occupied).state){
             return {};
           }
           return x;
@@ -30,6 +36,7 @@ switch:
   - platform: template
     id: occupancy_led_automation
     name: ${label_occupancy_automation}
+    icon: mdi:lightbulb-auto
     entity_category: config
     restore_mode: RESTORE_DEFAULT_OFF
     optimistic: True

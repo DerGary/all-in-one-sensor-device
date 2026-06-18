@@ -15,3 +15,4 @@ sensor:
       name: "${label_humidity} SCD"
       icon: mdi:water-percent
       disabled_by_default: true
+

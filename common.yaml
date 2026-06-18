@@ -107,6 +107,7 @@ sensor:
     disabled_by_default: true
     name: ${label_wifi_signal}
     id: wifi_signal_db
+    icon: mdi:wifi
     update_interval: 1s
     entity_category: "diagnostic"
 

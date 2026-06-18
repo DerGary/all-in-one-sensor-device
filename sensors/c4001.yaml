@@ -20,6 +20,7 @@ binary_sensor:
     has_target:
       id: c4001_presence
       name: C4001 ${label_presence}
+      icon: mdi:radar
       disabled_by_default: true
       web_server:
         sorting_group_id: c4001_group
@@ -29,6 +30,7 @@ button:
   - platform: c4001
     save_config:
       name: C4001 ${label_save_config}
+      icon: mdi:content-save
       web_server:
         sorting_group_id: c4001_group
         sorting_weight: 99
