@@ -1,8 +1,14 @@
+esphome:
+  on_boot:
+    priority: -100.0
+    then:
+      - lambda: id(air_quality_status).publish_state("${label_air_quality_good}");
+
 text_sensor:
   - platform: template
     name: ${label_air_quality_state}
     id: air_quality_status
-    disabled_by_default: true
+    icon: mdi:air-filter
     on_value:
       then:
         - lambda: |
@@ -20,6 +26,7 @@ switch:
   - platform: template
     id: air_quality_led_automation
     name: ${label_air_quality_led_automation}
+    icon: mdi:lightbulb-auto
     entity_category: config
     restore_mode: RESTORE_DEFAULT_OFF
     optimistic: True
@@ -35,7 +42,7 @@ script:
             id(control_leds_improv_ble_state).execute();
           } else if (!id(wifi_id).is_connected() || !id(api_id).is_connected()){
             id(control_leds_no_ha_connection_state).execute();
-          } else if (id(air_quality_led_automation).state && id(air_quality_status).state != ""){
+          } else if (id(air_quality_led_automation).state && id(air_quality_status).state != "${label_air_quality_good}"){
             id(control_leds_air_quality).execute();
           } else if (id(occupancy_led_automation).state && id(occupied).state){
             id(control_leds_occupancy).execute();
@@ -45,14 +52,14 @@ script:
   - id: control_leds_air_quality
     then:
       - lambda: |
-          if (id(air_quality_status).state == "critical"){
+          if (id(air_quality_status).state == "${label_air_quality_critical}"){
             ESP_LOGI("air_quality", "Turn on critical light");
             auto call = id(status_led).turn_on();
             call.set_brightness(1.0);
             call.set_rgb(1.0, 0.0, 0.0);
             call.set_effect("Slow Pulse");
             call.perform();
-          }else if (id(air_quality_status).state == "warning"){
+          }else if (id(air_quality_status).state == "${label_air_quality_warning}"){
             ESP_LOGI("air_quality", "Turn on warning light");
             auto call = id(status_led).turn_on();
             call.set_brightness(1.0);

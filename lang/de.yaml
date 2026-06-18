@@ -70,3 +70,6 @@ substitutions:
   label_occupied: Belegung
   label_occupancy_automation: Belegung über LED anzeigen
   label_air_quality_state: Luftqualitätsstatus
+  label_air_quality_good: Gut
+  label_air_quality_warning: Warnung
+  label_air_quality_critical: Kritisch

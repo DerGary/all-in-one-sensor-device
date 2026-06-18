@@ -19,4 +19,7 @@ sensor:
       icon: mdi:water-percent
       filters:
         - offset: !lambda return id(humidity_offset).state;
+        - clamp:
+            min_value: 0.0
+            max_value: 100.0
     update_interval: 5s

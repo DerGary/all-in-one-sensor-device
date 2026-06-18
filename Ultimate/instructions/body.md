@@ -216,6 +216,112 @@ Guide: <https://esphome.io/guides/installing_esphome/>
     - For ``lang`` you can choose between ``de`` and ``en``
 1. After flashing proceed with adding the sensor to your home assistant instance as described in [initial installation](#initial-installation) section above.
 
+### 🏠 Home Assistant Entities
+
+Below is a reference of all entities this device exposes in Home Assistant. Entities marked **Hidden** in the *HA visibility* column are not shown by default — enable them via the entity settings (cog icon) when you need them.
+
+#### Combined Occupancy
+
+| Entity | Type | HA visibility | Default value | Description |
+| ------ | ---- | ------------- | ------------- | ----------- |
+| Occupancy | Binary sensor | Visible | — | The main signal for automations. Turns on when motion is detected and turns off only when both motion **and** presence are inactive simultaneously. PIR motion is required to trigger it; the radar presence sensors sustain it. |
+| Presence | Binary sensor | Visible | — | True when either the C4001 or the LD2450 detects a target anywhere in range. Radar sensors have higher trigger latency than the PIR, so this signal responds more slowly to someone entering the room. Its main role is to feed into the Occupancy logic above — without it, Occupancy would turn off shortly after the PIR stops seeing movement, even if someone is still sitting in the room. |
+
+#### Status LED
+
+| Entity | Type | HA visibility | Default value | Description |
+| ------ | ---- | ------------- | ------------- | ----------- |
+| Status-LED | Light | Visible | — | The WS2812 RGB status LED. Can be controlled manually from Home Assistant at any time, but will be overwritten by the automation whenever occupancy or air quality changes while the corresponding switch is on. |
+| Show air quality through LED | Switch (config) | Visible | Off | When on, the LED pulses orange (warning) or red (critical) when air quality thresholds are exceeded. |
+| Show occupancy through LED | Switch (config) | Visible | Off | When on, the LED glows warm white while the room is occupied. |
+| Air Quality State | Text sensor | Visible | — | Current air quality alarm level: `Good`, `Warning`, or `Critical` (translated to the selected language). Warning triggers when CO₂ exceeds ~1250 ppm or TVOC exceeds ~660 ppb; critical when CO₂ exceeds ~2000 ppm or TVOC exceeds ~2200 ppb. Useful for custom automations that need to react to the same thresholds the LED uses. |
+
+#### Temperature & Humidity
+
+| Entity | Type | HA visibility | Default value | Description |
+| ------ | ---- | ------------- | ------------- | ----------- |
+| Temperature | Sensor | Visible | — | Ambient temperature (°C), corrected by the offset below. |
+| Humidity | Sensor | Visible | — | Relative humidity (%), corrected by the offset below. |
+| Temperature Offset | Number (config) | Visible | 0.0 °C | Offset added to the raw temperature reading. Use to compensate for self-heating of the enclosure. |
+| Humidity Offset | Number (config) | Visible | 0.0 % | Offset added to the raw humidity reading. |
+| Air Pressure *(BME280 only)* | Sensor | Hidden | — | Barometric pressure (hPa). Only available when using the BME280 temperature sensor variant. |
+| Temperature SCD | Sensor | Hidden | — | Temperature (°C) as measured by the SCD4x's internal sensor. These values cannot be calibrated with the current software — use the dedicated temperature sensor (SHT4x/BME280) and its offset entities above for accurate readings. |
+| Humidity SCD | Sensor | Hidden | — | Relative humidity (%) as measured by the SCD4x's internal sensor. Same caveat as Temperature SCD — exposed for completeness only. |
+
+#### Air Quality
+
+| Entity | Type | HA visibility | Default value | Description |
+| ------ | ---- | ------------- | ------------- | ----------- |
+| CO² | Sensor | Visible | — | CO₂ concentration (ppm) measured by the SCD4x. |
+| TVOC | Sensor | Visible | — | Total volatile organic compounds (ppb) measured by the SGP30. |
+
+#### Illuminance
+
+| Entity | Type | HA visibility | Default value | Description |
+| ------ | ---- | ------------- | ------------- | ----------- |
+| Illuminance | Sensor | Visible | — | Ambient light level (lux) from the BH1750. |
+
+#### LD2450 Presence Sensor
+
+| Entity | Type | HA visibility | Default value | Description |
+| ------ | ---- | ------------- | ------------- | ----------- |
+| LD2450 Presence | Binary sensor | Hidden | — | True when the LD2450 alone detects at least one target. The combined **Presence** entity above is usually more useful. |
+| LD2450 Presence Target Count | Sensor | Hidden | — | Number of targets currently tracked by the LD2450 (0–3). |
+| LD2450 Multi Target Tracking | Switch | Hidden | On | When on, the LD2450 tracks up to 3 targets at once. When off, only the nearest target is reported. Leave on for zone-based detection. |
+| LD2450 Max Distance | Number (config) | Hidden | 6.0 m | Maximum detection range (m). Targets beyond this distance are ignored. |
+| LD2450 Max Angle | Number (config) | Hidden | 90° | Upper horizontal tilt angle limit (°). Lets you exclude targets above this elevation angle. |
+| LD2450 Min Angle | Number (config) | Hidden | −90° | Lower horizontal tilt angle limit (°). |
+| LD2450 Restart | Button | Hidden | — | Restarts the LD2450 sensor module (not the ESP). |
+| LD2450 Factory Defaults | Button | Hidden | — | Resets the LD2450 to factory defaults. |
+| LD2450 Bluetooth Mode | Switch | Hidden | Off | Enables Bluetooth on the LD2450 (for use with the vendor app). Disable when not needed to avoid interference. |
+
+**Per-target diagnostics** (all hidden by default — enable Target 1 when mapping zone coordinates):
+
+| Entity | Type | Default value | Description |
+| ------ | ---- | ------------- | ----------- |
+| LD2450 Target-N X Position | Sensor | — | Horizontal position (m). Negative = left of sensor, positive = right. Enable to map zone corner coordinates. |
+| LD2450 Target-N Y Position | Sensor | — | Distance in front of the sensor (m). Enable together with X Position to map coordinates. |
+| LD2450 Target-N Distance | Sensor | — | Euclidean distance to the target (m). |
+| LD2450 Target-N Speed | Sensor | — | Radial speed of the target (m/s). |
+| LD2450 Target-N Angle | Sensor | — | Horizontal angle to the target (°). |
+| LD2450 Target-N Distance Resolution | Sensor | — | Distance resolution reported by the sensor for this target. |
+
+**Zone entities** — Zone 1 is visible by default. Zones 2 and 3 are fully hidden by default; enable them in Home Assistant when you need to track additional areas.
+
+| Entity | Type | HA visibility | Default value | Description |
+| ------ | ---- | ------------- | ------------- | ----------- |
+| LD2450 Zone-1 Occupancy | Binary sensor | Visible | — | True when at least one target is inside Zone 1's polygon. |
+| LD2450 Zone-1 Count | Sensor | Visible | — | Number of targets currently inside Zone 1. |
+| LD2450 Zone-1 Polygon | Text (config) | Visible | *(empty)* | Zone shape as `x1,y1;x2,y2;...` in meters. Zone is inactive until a valid polygon is entered. See [Calibration → LD2450](#-calibration) for the format. |
+| LD2450 Zone-1 Margin | Number (config) | Visible | 0.25 m | Extra margin added around the polygon edges when testing whether a target is inside. |
+| LD2450 Zone-2 / Zone-3 | (same set) | Hidden | (same) | Enable these in Home Assistant when you need to track a second or third area. |
+
+#### C4001 Presence Sensor
+
+| Entity | Type | HA visibility | Default value | Description |
+| ------ | ---- | ------------- | ------------- | ----------- |
+| C4001 Presence | Binary sensor | Hidden | — | True when the C4001 detects a person. The combined **Presence** entity above is usually more useful. |
+| C4001 Sustain Sensitivity | Number (config) | Visible | 7 | How sensitive the sensor is to keeping a detected person tracked (0–9). Lower = requires more movement to maintain presence. I found a value of 4 to work well. |
+| C4001 Trigger Sensitivity | Number (config) | Visible | 7 | How sensitive the sensor is to initially detecting a person (0–9). Recommended range: 2–6. I found a value of 1 to work well. |
+| C4001 Min Detection Distance | Number (config) | Visible | Sensor default | Minimum detection range (m). 0.6 m is a sensible starting value. |
+| C4001 Max Detection Distance | Number (config) | Visible | Sensor default | Maximum detection range (m, up to 25 m). 6 m covers most rooms well. |
+| C4001 Trigger Distance | Number (config) | Visible | 6 m | A person must enter within this distance to trigger the initial "occupied" state. Useful for ignoring distant, incidental movement at the edge of the detection zone. |
+| C4001 Confirmation Latency | Number (config) | Hidden | Sensor default | Delay (s) before a newly detected presence is confirmed. |
+| C4001 Disappearance Latency | Number (config) | Hidden | Sensor default | Delay (s) after the last detection before presence is cleared. |
+| C4001 Blocking Time | Number (config) | Hidden | Sensor default | Minimum time (s) between consecutive trigger events. |
+| **C4001 Save Configuration** | **Button** | **Visible** | **—** | **Changes to any C4001 setting above have no effect until this button is pressed. The driver does not send updated values to the sensor until you trigger a save.** |
+
+#### Diagnostics & System
+
+| Entity | Type | HA visibility | Default value | Description |
+| ------ | ---- | ------------- | ------------- | ----------- |
+| [Device Name] Status | Binary sensor | Visible | — | True when the device is connected to Home Assistant. |
+| Restart | Button | Visible | — | Restarts the ESP. |
+| Uptime | Sensor | Visible | — | Time since last reboot (seconds). Unexpectedly low values indicate unplanned reboots. |
+| Available Memory | Sensor | Hidden | — | Free heap memory (bytes). Should stay above ~40–50 kB for stable operation; lower values can cause unexpected reboots. |
+| WiFi Signal Strength dB | Sensor | Hidden | — | RSSI of the connected access point (dB). Useful for debugging connectivity issues — values below −80 dB indicate a weak signal that may cause interruptions. This reflects the transmit power and distance of the access point only; it is not affected by the WiFi TX Power setting of this device. |
+| WiFi TX Power | Number | Hidden | 8.5 dBm | WiFi transmit power of the ESP (dBm, 8.5–20). The default of 8.5 dBm is sufficient for most setups and minimises RF interference with the PIR sensor. Increase only if the device is far from the router and connectivity is unreliable. |
+
 ### 🎯 Calibration
 
 Calibration is **non-trivial** and may take time and multiple iterations. I mainly use **offset calibration**, which is the easiest approach, though there are more accurate methods also available. If you mount the sensor high in the room (which improves presence detection) it will decrease the accuracy of the temperature sensor as hot air rises up. When you mount it high in the room you should use linear calibration to calibrate the temperature sensor.
@@ -262,8 +368,8 @@ Zone polygons are re-evaluated every 30 seconds, so after editing the text field
 
 *Reading zone state*
 
-- `LD2450 Zone-1`/`2`/`3` (binary sensor): on while at least one target is detected inside that zone. Use this in automations that should only react to a person being in that specific area.
-- `LD2450 Zone-1`/`2`/`3` (sensor): number of targets currently tracked inside that zone.
+- `LD2450 Zone-1 Occupancy`/`Zone-2 Occupancy`/`Zone-3 Occupancy` (binary sensor): on while at least one target is detected inside that zone. Use this in automations that should only react to a person being in that specific area.
+- `LD2450 Zone-1 Count`/`Zone-2 Count`/`Zone-3 Count` (sensor): number of targets currently tracked inside that zone.
 - Both entities share the same default name and are only distinguished by their entity type (binary sensor vs. sensor) — rename them in the entity settings if you'd like clearer labels on your dashboard, e.g. "Zone 1 Occupancy" / "Zone 1 Target Count".
 - `LD2450 Presence` (binary sensor, disabled by default) and the main combined presence/occupancy sensor of the device are **not** affected by zones — they're on whenever any target is detected anywhere in range. Zones only add the extra, location-specific binary sensors described above.
 
@@ -286,6 +392,8 @@ The C4001 Sensor got a couple of settings that can be changed. You can find the 
 - Trigger Distance
   - The trigger distance of the C4001 millimeter wave presence sensor refers to the distance at which it can trigger from no one to someone. For example, if the maximum detection distance is configured as 10 meters, and the trigger distance is set to 6 meters, the sensor will only display "someone" when someone is within 6 meters. If someone is between 6-10 meters, it will not be triggered as "someone". The trigger distance can be set within the range of 0-25m, with a default of 6m.
   - Note: Configuring the trigger distance can optimize the problem of false triggering caused by slight movements at the edge. The smaller the trigger distance, the closer you need to be to the center axis of the sensor to trigger it. The trigger distance value cannot be greater than the difference between the maximum and minimum detection distances
+
+> **⚠️ After changing any C4001 setting, press the C4001 Save Configuration button.** The driver does not send updated values to the sensor until you trigger a save — nothing changes in its behavior until you press this button.
 
 ### 🎯 Placement Considerations
 

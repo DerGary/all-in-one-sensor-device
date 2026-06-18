@@ -32,6 +32,8 @@ LD2450:
     step: 0.1m
     restore_value: true
     entity_category: config
+    icon: mdi:map-marker-distance
+    disabled_by_default: true
     web_server:
       sorting_group_id: ld2450_group
   max_detection_tilt_angle:
@@ -40,6 +42,7 @@ LD2450:
     step: 1°
     restore_value: true
     entity_category: config
+    icon: mdi:angle-acute
     disabled_by_default: true
     web_server:
       sorting_group_id: ld2450_group
@@ -49,6 +52,7 @@ LD2450:
     step: 1°
     restore_value: true
     entity_category: config
+    icon: mdi:angle-acute
     disabled_by_default: true
     web_server:
       sorting_group_id: ld2450_group
@@ -61,6 +65,7 @@ LD2450:
       sorting_group_id: ld2450_group
   target_count:
     name: LD2450 ${label_presence_target} ${label_count}
+    icon: mdi:counter
     disabled_by_default: true
     web_server:
       sorting_group_id: ld2450_group
@@ -80,11 +85,15 @@ LD2450:
       sorting_group_id: ld2450_group
   tracking_mode_switch:
     name: LD2450 ${label_multi_target_tracking}
+    icon: mdi:account-multiple
+    restore_mode: RESTORE_DEFAULT_ON
+    disabled_by_default: true
     web_server:
       sorting_group_id: ld2450_group
   bluetooth_switch:
     name: LD2450 ${label_bluetooth_mode}
     icon: mdi:bluetooth
+    restore_mode: RESTORE_DEFAULT_OFF
     disabled_by_default: true
     entity_category: diagnostic
     web_server:
@@ -95,36 +104,42 @@ LD2450:
         x_position:
           id: ld2450_target_1_x
           name: "${label_target}-1 X ${label_position}"
+          icon: mdi:axis-x-arrow
           disabled_by_default: true
           web_server:
             sorting_group_id: ld2450_group
         y_position:
           id: ld2450_target_1_y
           name: "${label_target}-1 Y ${label_position}"
+          icon: mdi:axis-y-arrow
           disabled_by_default: true
           web_server:
             sorting_group_id: ld2450_group
         speed:
           id: ld2450_target_1_speed
           name: "${label_target}-1 ${label_speed}"
+          icon: mdi:speedometer
           disabled_by_default: true
           web_server:
             sorting_group_id: ld2450_group
         distance_resolution:
           id: ld2450_target_1_resolution
           name: "${label_target}-1 ${label_distance_resolution}"
+          icon: mdi:ruler
           disabled_by_default: true
           web_server:
             sorting_group_id: ld2450_group
         angle:
           id: ld2450_target_1_angle
           name: "${label_target}-1 ${label_angle}"
+          icon: mdi:angle-acute
           disabled_by_default: true
           web_server:
             sorting_group_id: ld2450_group
         distance:
           id: ld2450_target_1_distance
           name: "${label_target}-1 ${label_distance}"
+          icon: mdi:map-marker-distance
           disabled_by_default: true
           web_server:
             sorting_group_id: ld2450_group
@@ -133,36 +148,42 @@ LD2450:
         x_position:
           id: ld2450_target_2_x
           name: "${label_target}-2 X ${label_position}"
+          icon: mdi:axis-x-arrow
           disabled_by_default: true
           web_server:
             sorting_group_id: ld2450_group
         y_position:
           id: ld2450_target_2_y
           name: "${label_target}-2 Y ${label_position}"
+          icon: mdi:axis-y-arrow
           disabled_by_default: true
           web_server:
             sorting_group_id: ld2450_group
         speed:
           id: ld2450_target_2_speed
           name: "${label_target}-2 ${label_speed}"
+          icon: mdi:speedometer
           disabled_by_default: true
           web_server:
             sorting_group_id: ld2450_group
         distance_resolution:
           id: ld2450_target_2_resolution
           name: "${label_target}-2 ${label_distance_resolution}"
+          icon: mdi:ruler
           disabled_by_default: true
           web_server:
             sorting_group_id: ld2450_group
         angle:
           id: ld2450_target_2_angle
           name: "${label_target}-2 ${label_angle}"
+          icon: mdi:angle-acute
           disabled_by_default: true
           web_server:
             sorting_group_id: ld2450_group
         distance:
           id: ld2450_target_2_distance
           name: "${label_target}-2 ${label_distance}"
+          icon: mdi:map-marker-distance
           disabled_by_default: true
           web_server:
             sorting_group_id: ld2450_group
@@ -171,36 +192,42 @@ LD2450:
         x_position:
           id: ld2450_target_3_x
           name: "${label_target}-3 X ${label_position}"
+          icon: mdi:axis-x-arrow
           disabled_by_default: true
           web_server:
             sorting_group_id: ld2450_group
         y_position:
           id: ld2450_target_3_y
           name: "${label_target}-3 Y ${label_position}"
+          icon: mdi:axis-y-arrow
           disabled_by_default: true
           web_server:
             sorting_group_id: ld2450_group
         speed:
           id: ld2450_target_3_speed
           name: "${label_target}-3 ${label_speed}"
+          icon: mdi:speedometer
           disabled_by_default: true
           web_server:
             sorting_group_id: ld2450_group
         distance_resolution:
           id: ld2450_target_3_resolution
           name: "${label_target}-3 ${label_distance_resolution}"
+          icon: mdi:ruler
           disabled_by_default: true
           web_server:
             sorting_group_id: ld2450_group
         angle:
           id: ld2450_target_3_angle
           name: "${label_target}-3 ${label_angle}"
+          icon: mdi:angle-acute
           disabled_by_default: true
           web_server:
             sorting_group_id: ld2450_group
         distance:
           id: ld2450_target_3_distance
           name: "${label_target}-3 ${label_distance}"
+          icon: mdi:map-marker-distance
           disabled_by_default: true
           web_server:
             sorting_group_id: ld2450_group
@@ -234,12 +261,14 @@ LD2450:
         occupancy:
           id: ld2450_zone_1_occupancy
           name: "${label_zone}-1 ${label_occupied}"
+          icon: mdi:account-check
           web_server:
             sorting_group_id: ld2450_group
         target_count:
           id: ld2450_zone_1_target_count
           name: "${label_zone}-1 ${label_count}"
           accuracy_decimals: 0
+          icon: mdi:counter
           web_server:
             sorting_group_id: ld2450_group
     - zone:
@@ -271,12 +300,16 @@ LD2450:
         occupancy:
           id: ld2450_zone_2_occupancy
           name: "${label_zone}-2 ${label_occupied}"
+          icon: mdi:account-check
+          disabled_by_default: true
           web_server:
             sorting_group_id: ld2450_group
         target_count:
           id: ld2450_zone_2_target_count
           name: "${label_zone}-2 ${label_count}"
           accuracy_decimals: 0
+          icon: mdi:counter
+          disabled_by_default: true
           web_server:
             sorting_group_id: ld2450_group
     - zone:
@@ -308,12 +341,16 @@ LD2450:
         occupancy:
           id: ld2450_zone_3_occupancy
           name: "${label_zone}-3 ${label_occupied}"
+          icon: mdi:account-check
+          disabled_by_default: true
           web_server:
             sorting_group_id: ld2450_group
         target_count:
           id: ld2450_zone_3_target_count
           name: "${label_zone}-3 ${label_count}"
           accuracy_decimals: 0
+          icon: mdi:counter
+          disabled_by_default: true
           web_server:
             sorting_group_id: ld2450_group
 
@@ -346,6 +383,7 @@ text:
     initial_value: ""
     min_length: 0
     max_length: 255
+    disabled_by_default: true
     web_server:
       sorting_group_id: ld2450_group
   - platform: template
@@ -359,6 +397,7 @@ text:
     initial_value: ""
     min_length: 0
     max_length: 255
+    disabled_by_default: true
     web_server:
       sorting_group_id: ld2450_group
 
@@ -392,6 +431,7 @@ number:
     step: 0.05
     optimistic: true
     restore_value: true
+    disabled_by_default: true
     on_value:
       - lambda: "id(ld2450_zone_2).set_margin(x);"
     web_server:
@@ -407,6 +447,7 @@ number:
     step: 0.05
     optimistic: true
     restore_value: true
+    disabled_by_default: true
     on_value:
       - lambda: "id(ld2450_zone_3).set_margin(x);"
     web_server:
