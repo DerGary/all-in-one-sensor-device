@@ -1,5 +1,13 @@
 ## 🆕 Changelog
 
+### V2.1.2
+
+1. Air quality state is now always visible in Home Assistant (no longer hidden by default)
+1. Air quality state now shows translated values ("Good", "Warning", "Critical") instead of internal strings
+1. Air quality state and occupancy no longer show "unknown" after the device boots — they start at "Good" and "not occupied" immediately
+1. Humidity is now clamped to 0–100% so offset calibration can never push the value out of range
+1. All Home Assistant entities now have icons
+
 ### V2.1.1
 
 1. Changed LD2410B seat to reduce reflections.
