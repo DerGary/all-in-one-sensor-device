@@ -1,5 +1,12 @@
 ## 🆕 Changelog
 
+### V2.1.3
+
+1. Occupancy LED color adjusted to a lighter, more neutral warm white
+1. The Occupied sensor now turns back on if presence is detected within 10 seconds of it turning off
+1. Update ESPHome to 2026.6
+1. BME680 air quality status now uses translated labels ("Good", "Warning", "Critical") instead of hardcoded English strings
+
 ### V2.1.2
 
 1. Air quality state is now always visible in Home Assistant (no longer hidden by default)

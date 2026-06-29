@@ -2,6 +2,10 @@
 
 [Makerworld](https://makerworld.com/de/models/2180710-all-in-one-smart-home-sensor-case-v2#profileId-2381634)
 
+## 🆕 Also check out the Ultimate Version
+
+The V2.1 is the budget-friendly version of this series and will continue to be maintained and improved. For rooms where you need more — multi-target tracking, zone tracking, reliable presence detection for very still people (e.g. watching TV or sleeping), more accurate temperature & humidity, more sophisticated air quality measurements, or a more reliable PIR sensor — check out the [Ultimate Smart Home Sensor Case](https://makerworld.com/de/models/2946707-ultimate-smart-home-sensor-case). It comes at a higher component cost, but offers significantly more capability where it counts.
+
 ## Please read the disclaimer at the bottom before printing
 
 Hello everyone 👋, this has been one of my biggest projects so far. If you have any questions about the project please ask them in the comments then I can answer them and everyone can learn from that.

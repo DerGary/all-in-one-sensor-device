@@ -1,7 +1,7 @@
 
 # Ultimate Smart Home Sensor Case
 
-<!-- [Makerworld](tbd) -->
+[Makerworld](https://makerworld.com/de/models/2946707-ultimate-smart-home-sensor-case#profileId-3300915)
 
 ## Please read the disclaimer at the bottom before printing
 

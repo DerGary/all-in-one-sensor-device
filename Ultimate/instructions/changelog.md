@@ -1,6 +1,12 @@
 
 ## 🆕 Changelog
 
+### v1.0.1
+
+1. Occupancy LED color adjusted to a lighter, more neutral warm white
+1. The Occupied sensor now turns back on if presence is detected within 10 seconds of it turning off
+1. Update ESPHome to 2026.6
+
 ### What it does better than the All-In-One Smart Home Sensor Case V2
 
 1. Multi-person, zone-based presence tracking: The LD2450 allows tracking multiple people simultaneously and triggering automations based on their position within defined room zones.

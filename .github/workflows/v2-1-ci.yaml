@@ -46,7 +46,7 @@ jobs:
   build-bin:
     runs-on: ubuntu-latest
     container:
-      image: esphome/esphome:stable
+      image: esphome/esphome:2026.6
     strategy:
       fail-fast: false
       matrix:
@@ -66,11 +66,14 @@ jobs:
         run: |
           mkdir -p output
           
-          if [[ "${{ github.ref_type }}" == "tag" && "${{ github.ref_name }}" == v2.1* ]]; then
-            VERSION="${{ github.ref_name }}"
-          else
-            VERSION="v2.1-dev.${{ github.run_number }}"
-          fi
+          case "$GITHUB_REF" in
+            refs/tags/v2.1*)
+              VERSION="${GITHUB_REF#refs/tags/}"
+              ;;
+            *)
+              VERSION="v2.1-dev.${{ github.run_number }}"
+              ;;
+          esac
           
           BASE_NAME="firmware_${{ matrix.variant }}_${{ matrix.temp }}_${{ matrix.lang }}_${VERSION}"
           
