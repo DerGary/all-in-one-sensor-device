@@ -3,9 +3,9 @@ script:
     then:
       - lambda: |-
           if (int(id(iaq).state) >= 200) {
-            id(air_quality_status).publish_state("critical");
+            id(air_quality_status).publish_state("${label_air_quality_critical}");
           } else if (int(id(iaq).state) >= 150) {
-            id(air_quality_status).publish_state("warning");
+            id(air_quality_status).publish_state("${label_air_quality_warning}");
           } else {
-            id(air_quality_status).publish_state("");
+            id(air_quality_status).publish_state("${label_air_quality_good}");
           }

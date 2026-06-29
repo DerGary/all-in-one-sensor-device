@@ -12,6 +12,10 @@ globals:
     type: bool
     restore_value: no
     initial_value: "false"
+  - id: occupied_off_millis
+    type: uint32_t
+    restore_value: no
+    initial_value: "0"
 
 binary_sensor:
   - platform: template
@@ -69,7 +73,7 @@ script:
           ESP_LOGI("occupied", "Turn on light");
           auto call = id(status_led).turn_on();
           call.set_brightness(1.0);
-          call.set_rgb(1.0, 0.75, 0.55);
+          call.set_rgb(1.0, 0.89, 0.8);
           call.set_transition_length(0);
           call.set_effect("none");
           call.perform();
@@ -86,8 +90,11 @@ script:
           if(id(motion).state == true){
             ESP_LOGI("occupied", "set occupied to true");
             id(occupied).publish_state(true);
-          }
-          if(id(motion).state == false && id(presence).state == false){
+          } else if(id(presence).state == true && id(occupied).state == false && (millis() - id(occupied_off_millis)) < 10000){
+            ESP_LOGI("occupied", "presence returned within 10s of going unoccupied, set occupied to true");
+            id(occupied).publish_state(true);
+          } else if(id(motion).state == false && id(presence).state == false){
             ESP_LOGI("occupied", "set occupied to false");
+            id(occupied_off_millis) = millis();
             id(occupied).publish_state(false);
           }
