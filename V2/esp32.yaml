@@ -15,8 +15,6 @@ packages:
       humidity_offset_initial_value: 0.0
       password: !secret password
       api_key: ${apikey}
-      wifi_ssid: !secret wifi-ssid
-      wifi_password: !secret wifi-password
       variant: esp32
 
   ## WiFi: includes BLE tracker and Bluetooth proxy. Set credentials in secrets.yaml.
