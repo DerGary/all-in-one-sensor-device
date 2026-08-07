@@ -5,7 +5,12 @@ substitutions:
   ## Shown in HA as the Firmware text sensor. CI overrides this via `-s version`,
   ## derived from the git tag (e.g. ultimate-v1.0.1) on release builds. Keep this
   ## default in sync with the latest entry in instructions/changelog.md for local builds.
-  version: "1.0.2"
+  version: "1.0.3"
+  ## connectivity: wifi_improv (BLE-provisioned WiFi) or thread (OpenThread)
+  connectivity: wifi_improv
+  ## only used when connectivity: thread. Get your OTBR dataset TLV from Home Assistant
+  ## under Devices -> "Thread" integration -> Configure -> preferred network -> info (the little i icon).
+  openthread_tlv: CHANGEME
 
 packages:
   common: !include
@@ -14,17 +19,7 @@ packages:
       friendly_name: Ultimate Sensor # the friendly name of your device, can be anything.
       device_name: ultimate-sensor # the name of your device. It should not contain any special characters or whitespaces. the device can be found in the network by this name.
 
-  ## choose your connectivity by uncommenting the correct block (only one at a time).
-  ## WiFi: BLE-provisioned via esp32_improv, includes BLE tracker and Bluetooth proxy.
-  connectivity: !include ../connectivity/wifi_improv.yaml
-
-  ## OpenThread (Thread/Matter): esp32c6 variant only, no WiFi or BLE proxy.
-  ## Get your OTBR dataset TLV from Home Assistant under Devices -> "Thread" integration
-  ## -> Configure -> preferred network -> info (the little i icon).
-  # connectivity: !include
-  #   file: ../connectivity/thread.yaml
-  #   vars:
-  #     openthread_tlv: CHANGEME
+  connectivity: !include "../connectivity/${connectivity}.yaml"
 
   lang: !include "../lang/${lang}.yaml"
 
