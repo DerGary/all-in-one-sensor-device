@@ -188,6 +188,22 @@ Guide: <https://esphome.io/guides/installing_esphome/>
     - For ``lang`` you can choose between ``de`` and ``en``
 1. After flashing proceed with adding the sensor to your home assistant instance as described in [initial installation](#initial-installation) section above.
 
+#### OpenThread (instead of WiFi)
+
+As an alternative to WiFi, the device can connect via **OpenThread** — useful if you already run a Thread border router (e.g. via Home Assistant's OTBR add-on) and want to keep the sensor off your WiFi network. OpenThread requires the **esp32c6** variant, since it needs its 802.15.4 radio — the plain `esp32` variant cannot use it.
+
+> **⚠️ There are no precompiled OpenThread binaries.** A Thread network's credentials (the "dataset") must be compiled directly into the firmware — unlike WiFi, there is no equivalent of Improv BLE to provide them after flashing. This means every Thread-connected device needs its own custom build with its own dataset baked in. Our CI only ever compiles the OpenThread variant as a build check with a placeholder dataset (`CHANGEME`) and never publishes it as a release asset, so downloading a `thread` binary from GitHub is not possible — you must build it yourself.
+
+To build and flash with OpenThread:
+
+1. Get your Thread dataset TLV from Home Assistant: **Settings → Devices & Services → Thread** integration → **Configure** → select your preferred network → click the info (ⓘ) icon → copy the **Dataset TLVs** value.
+1. Install esphome and checkout the [Github Repository](https://github.com/DerGary/all-in-one-sensor-device) as described in [Flash code directly](#flash-code-directly) above.
+1. Navigate into the `V2.1` folder in a terminal.
+1. execute `esphome -s variant esp32c6 -s temp bme280 -s lang de -s connectivity thread -s openthread_tlv <your-tlv> run device.yaml`, replacing `<your-tlv>` with the dataset TLV from step 1.
+1. Once flashed, the device joins your Thread network directly — no WiFi pairing step is needed. Add it to Home Assistant the same way as any other Thread/Matter-adjacent ESPHome device on your network.
+
+Switching back to WiFi later requires reflashing with `-s connectivity wifi_improv` (the default).
+
 #### Status LED
 
 | Color | Pattern | Meaning |
