@@ -4,7 +4,7 @@ script:
       - lambda: |
           if (id(improv_ble_in_progress)) {
             id(control_leds_improv_ble_state).execute();
-          } else if (!id(wifi_id).is_connected() || !id(api_id).is_connected()){
+          } else if (!network::is_connected() || !id(api_id).is_connected()){
             id(control_leds_no_ha_connection_state).execute();
           } else if (id(occupancy_led_automation).state && id(occupied).state){
             id(control_leds_occupancy).execute();

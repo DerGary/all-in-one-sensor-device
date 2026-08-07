@@ -14,6 +14,18 @@ packages:
       friendly_name: Ultimate Sensor # the friendly name of your device, can be anything.
       device_name: ultimate-sensor # the name of your device. It should not contain any special characters or whitespaces. the device can be found in the network by this name.
 
+  ## choose your connectivity by uncommenting the correct block (only one at a time).
+  ## WiFi: BLE-provisioned via esp32_improv, includes BLE tracker and Bluetooth proxy.
+  connectivity: !include ../connectivity/wifi_improv.yaml
+
+  ## OpenThread (Thread/Matter): esp32c6 variant only, no WiFi or BLE proxy.
+  ## Get your OTBR dataset TLV from Home Assistant under Devices -> "Thread" integration
+  ## -> Configure -> preferred network -> info (the little i icon).
+  # connectivity: !include
+  #   file: ../connectivity/thread.yaml
+  #   vars:
+  #     openthread_tlv: CHANGEME
+
   lang: !include "../lang/${lang}.yaml"
 
   temperature: !include "../sensors/${temp}.yaml"
