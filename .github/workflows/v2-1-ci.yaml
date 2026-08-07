@@ -58,14 +58,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      - name: Compile firmware
+      - name: Determine version
+        id: version
         run: |
-          esphome -s lang ${{ matrix.lang }} -s temp ${{ matrix.temp }} -s variant ${{ matrix.variant }} compile V2.1/device.yaml
-
-      - name: Collect and rename binaries
-        run: |
-          mkdir -p output
-          
           case "$GITHUB_REF" in
             refs/tags/v2.1*)
               VERSION="${GITHUB_REF#refs/tags/}"
@@ -74,9 +69,18 @@ jobs:
               VERSION="v2.1-dev.${{ github.run_number }}"
               ;;
           esac
-          
-          BASE_NAME="firmware_${{ matrix.variant }}_${{ matrix.temp }}_${{ matrix.lang }}_${VERSION}"
-          
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Compile firmware
+        run: |
+          esphome -s lang ${{ matrix.lang }} -s temp ${{ matrix.temp }} -s variant ${{ matrix.variant }} -s version ${{ steps.version.outputs.version }} compile V2.1/device.yaml
+
+      - name: Collect and rename binaries
+        run: |
+          mkdir -p output
+
+          BASE_NAME="firmware_${{ matrix.variant }}_${{ matrix.temp }}_${{ matrix.lang }}_${{ steps.version.outputs.version }}"
+
           OTA_PATH=$(find V2.1/.esphome/build/ -name "firmware.ota.bin" | head -n 1)
           cp "$OTA_PATH" "output/${BASE_NAME}_ota.bin"
           
