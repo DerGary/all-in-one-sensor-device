@@ -8,8 +8,13 @@ substitutions:
   version: "1.0.3"
   ## connectivity: wifi_improv (BLE-provisioned WiFi) or thread (OpenThread)
   connectivity: wifi_improv
-  ## only used when connectivity: thread. Get your OTBR dataset TLV from Home Assistant
-  ## under Devices -> "Thread" integration -> Configure -> preferred network -> info (the little i icon).
+  ## only used when connectivity: thread. openthread_tlv is compiled into the firmware -
+  ## there is no post-flash provisioning like esp32_improv for WiFi, so CI only ever
+  ## compiles the thread variant as a build check with this CHANGEME placeholder and
+  ## never releases/attaches it. To actually use OpenThread, build locally with your own
+  ## TLV: `esphome -s connectivity thread -s openthread_tlv <your-tlv> ...`
+  ## Get your OTBR dataset TLV from Home Assistant under Devices -> "Thread" integration
+  ## -> Configure -> preferred network -> info (the little i icon).
   openthread_tlv: CHANGEME
 
 packages:

@@ -92,6 +92,7 @@ jobs:
           cp "$FACTORY_PATH" "output/${BASE_NAME}_factory.bin"
 
       - name: Upload artifacts for this matrix run
+        if: matrix.connectivity != 'thread'
         uses: actions/upload-artifact@v7
         with:
           name: binaries-${{ matrix.temp }}-${{ matrix.lang }}

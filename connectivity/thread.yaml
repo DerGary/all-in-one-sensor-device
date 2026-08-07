@@ -4,5 +4,8 @@ network:
 openthread:
   device_type: FTD
   tlv: ${openthread_tlv}
-  force_dataset: true
+  ## false: the compiled-in tlv is only a first-boot fallback - once a real dataset is
+  ## commissioned into flash (by whatever means), it survives reboots. true would instead
+  ## overwrite it with this compiled-in value on every boot.
+  force_dataset: false
   output_power: 0

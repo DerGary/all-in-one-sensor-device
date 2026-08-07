@@ -93,7 +93,7 @@ jobs:
 
           OTA_PATH=$(find V2.1/.esphome/build/ -name "firmware.ota.bin" | head -n 1)
           cp "$OTA_PATH" "output/${BASE_NAME}_ota.bin"
-          
+
           FACTORY_PATH=$(find V2.1/.esphome/build/ -name "firmware.factory.bin" | head -n 1)
           cp "$FACTORY_PATH" "output/${BASE_NAME}_factory.bin"
 
