@@ -199,7 +199,11 @@ To build and flash with OpenThread:
 1. Get your Thread dataset TLV from Home Assistant: **Settings → Devices & Services → Thread** integration → **Configure** → select your preferred network → click the info (ⓘ) icon → copy the **Dataset TLVs** value.
 1. Install esphome and checkout the [Github Repository](https://github.com/DerGary/all-in-one-sensor-device) as described in [Flash code directly](#flash-code-directly) above.
 1. Navigate into the `V2.1` folder in a terminal.
-1. execute `esphome -s variant esp32c6 -s temp bme280 -s lang de -s connectivity thread -s openthread_tlv <your-tlv> run device.yaml`, replacing `<your-tlv>` with the dataset TLV from step 1.
+1. execute `esphome -s variant esp32c6 -s temp <temp> -s lang <lang> -s connectivity thread -s openthread_tlv <your-tlv> run device.yaml`
+    - For ``temp`` you can choose between ``bme280`` and ``bme680``
+    - For ``lang`` you can choose between ``de`` and ``en``
+    - `variant` stays `esp32c6` — OpenThread needs its 802.15.4 radio.
+    - Replace `<your-tlv>` with the dataset TLV from step 1.
 1. Once flashed, the device joins your Thread network directly — no WiFi pairing step is needed. Add it to Home Assistant the same way as any other Thread/Matter-adjacent ESPHome device on your network.
 
 Switching back to WiFi later requires reflashing with `-s connectivity wifi_improv` (the default).
