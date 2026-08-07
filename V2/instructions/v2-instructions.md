@@ -194,6 +194,8 @@ Guide: <https://esphome.io/guides/installing_esphome/>
 1. Test whether all sensors work as expected.
 1. Once deployed in its final location, proceed with calibration.
 
+*Note:* if you use a esp32 c6 board, this device can ditch Wifi an instead use OpenThread to join your existing Thread network. Simply uncomment the OpenThread block in esp32supermini.yaml (and remove the wifi block) and ad your openthread-tlv to the secrets. you can find the openthread-tlv in homeassistant under devices -> "thread" integration -> configure -> preferred network -> info (the little i icon). 
+
 ### 🎯 Calibration
 
 Calibration is **non-trivial** and may take time and multiple iterations. I mainly use **offset calibration**, which is the easiest approach, though there are more accurate methods also available.

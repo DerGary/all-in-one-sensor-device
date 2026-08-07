@@ -11,15 +11,24 @@ packages:
   common: !include
     file: ./common.yaml
     vars:
-      wifi_output_power: 8.5dB ## you may need to increase this if the esp is far away from your wifi access point. This is the minimal output power and improves the reliability of the motion sensor.
       temperature_offset_initial_value: 0.0
       humidity_offset_initial_value: 0.0
-      username: !secret username
       password: !secret password
       api_key: ${apikey}
       wifi_ssid: !secret wifi-ssid
       wifi_password: !secret wifi-password
       variant: esp32
+
+  ## WiFi: includes BLE tracker and Bluetooth proxy. Set credentials in secrets.yaml.
+  connectivity: !include
+    file: ../connectivity/wifi.yaml
+    vars:
+      wifi_output_power: 8.5dB
+      wifi_ssid: !secret wifi-ssid
+      wifi_password: !secret wifi-password
+      username: !secret username
+      password: !secret password
+
 
   ## choose which language you are using by uncommenting the correct line
   # lang: !include ../lang/de.yaml

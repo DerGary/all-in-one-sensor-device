@@ -1,0 +1,8 @@
+network:
+  enable_ipv6: true
+
+openthread:
+  device_type: FTD
+  tlv: ${openthread_tlv}
+  force_dataset: true
+  output_power: 0
