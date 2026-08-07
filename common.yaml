@@ -117,6 +117,15 @@ binary_sensor:
     icon: mdi:chip
     name: "${friendly_name} Status"
 
+text_sensor:
+  ## reports the firmware version set in this device's device.yaml, so it's visible
+  ## in Home Assistant without checking the flashed binary's filename.
+  - platform: template
+    name: ${label_firmware}
+    icon: mdi:tag-outline
+    entity_category: diagnostic
+    lambda: return {"${version}"};
+
 ## These values are necessary to calibrate the sensor.
 number:
   - platform: template
