@@ -5,17 +5,18 @@ substitutions:
   ## Shown in HA as the Firmware text sensor. CI overrides this via `-s version`,
   ## derived from the git tag (e.g. v2.1.3) on release builds. Keep this default in
   ## sync with the latest entry in instructions/changelog.md for local builds.
-  version: "2.1.5"
+  version: "2.1.4"
   ## connectivity: wifi_improv (BLE-provisioned WiFi) or thread (OpenThread, esp32c6 variant only)
   connectivity: wifi_improv
   ## only used when connectivity: thread. openthread_tlv is compiled into the firmware -
   ## there is no post-flash provisioning like esp32_improv for WiFi, so CI only ever
-  ## compiles the thread variant as a build check with this CHANGEME placeholder and
-  ## never releases/attaches it. To actually use OpenThread, build locally with your own
+  ## compiles the thread variant as a build check with this dummy placeholder (must be
+  ## valid hex - ESPHome validates it at config time) and never releases/attaches it.
+  ## To actually use OpenThread, build locally with your own
   ## TLV: `esphome -s connectivity thread -s variant esp32c6 -s openthread_tlv <your-tlv> ...`
   ## Get your OTBR dataset TLV from Home Assistant under Devices -> "Thread" integration
   ## -> Configure -> preferred network -> info (the little i icon).
-  openthread_tlv: CHANGEME
+  openthread_tlv: "00"
 
 packages:
   common: !include

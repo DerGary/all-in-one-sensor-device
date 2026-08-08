@@ -6,4 +6,5 @@
 2. Follow the assembly instructions in the PDF file
 
 ![[./instructions/changelog]]
+![[../V2/changelog]]
 ![[./instructions/disclaimer]]
