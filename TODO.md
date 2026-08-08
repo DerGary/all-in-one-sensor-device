@@ -1,13 +1,8 @@
 # TODO
 
-## General
-
-- Add a Text Sensor which gets feed from substitutions that always show the current Version of the Sensor
-
 ## Changelog
 
 - Create a changelog file in V2 (old version) and reference/include it from the V2.1 changelog
-- Add a V2 changelog entry documenting TheDiffi's OpenThread support contribution (#6)
 
 ## Calibration
 
