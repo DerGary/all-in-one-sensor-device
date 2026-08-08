@@ -1,5 +1,9 @@
 ## 🆕 Changelog
 
+### V2.1.5
+
+1. Add OpenThread as a connectivity alternative to WiFi (esp32c6 variant, requires a local build with your own OTBR TLV)
+
 ### V2.1.4
 
 1. Add a Firmware version diagnostic sensor, showing the flashed release version in Home Assistant

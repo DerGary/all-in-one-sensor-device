@@ -74,6 +74,7 @@ jobs:
       matrix:
         lang: [de, en]
         temp: [sht4x, bme280]
+        connectivity: [wifi_improv, thread]
 
     steps:
       - name: Checkout code
@@ -94,9 +95,12 @@ jobs:
 
       - name: Compile firmware
         run: |
-          esphome -s lang ${{ matrix.lang }} -s temp ${{ matrix.temp }} -s version ${{ steps.version.outputs.version }} compile Ultimate/device.yaml
+          esphome -s lang ${{ matrix.lang }} -s temp ${{ matrix.temp }} -s connectivity ${{ matrix.connectivity }} -s version ${{ steps.version.outputs.version }} compile Ultimate/device.yaml
 
+      # openthread_tlv compiled into firmware, no post-flash provisioning like esp32_improv -
+      # thread variant compiled here as build check only, never collected/uploaded/released.
       - name: Collect and rename binaries
+        if: matrix.connectivity != 'thread'
         run: |
           mkdir -p output
 
@@ -109,6 +113,7 @@ jobs:
           cp "$FACTORY_PATH" "output/${BASE_NAME}_factory.bin"
 
       - name: Upload artifacts for this matrix run
+        if: matrix.connectivity != 'thread'
         uses: actions/upload-artifact@v7
         with:
           name: binaries-${{ matrix.temp }}-${{ matrix.lang }}

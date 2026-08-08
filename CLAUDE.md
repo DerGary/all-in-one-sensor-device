@@ -78,6 +78,12 @@ cd Ultimate/instructions && bash renderPdf.sh   # or V2.1/instructions
 
 See `TODO.md` for tracked follow-ups (currently: changelog cleanup, adding OpenThread as a connectivity alternative to WiFi for V2.1/Ultimate).
 
+## Changelog
+
+Every user-facing change to `V2.1/` or `Ultimate/` must add an entry to the relevant `instructions/changelog.md` (`V2.1/instructions/changelog.md` and/or `Ultimate/instructions/changelog.md`) in the same commit/PR as the change itself — not deferred to a later cleanup pass. Add under a new next-version heading matching the version bump; see existing entries for format.
+
+Bumping the changelog heading also requires bumping the matching `version:` substitution in the device's `device.yaml` (`Ultimate/device.yaml` / `V2.1/device.yaml`) to the same version, in the same commit/PR — it's the default shown in the Firmware text sensor for local builds and must stay in sync with the changelog.
+
 ## Releases and release notes
 
 Releases are triggered by pushing a tag matching `ultimate*` (e.g. `ultimate-v1.2.0`) or `v2.1*` / `v2.0*` for the other revisions. CI then builds the full matrix, renders the PDF, and creates a GitHub Release with all binaries and the PDF attached.
