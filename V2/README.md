@@ -39,6 +39,10 @@ My goal with this project was to create **the ultimate DIY smart home sensor dev
 
 ## 🆕 Changelog
 
+### V2.0.1
+
+1. Add OpenThread as a connectivity alternative to WiFi (contributed by [TheDiffi](https://github.com/TheDiffi), [#6](https://github.com/DerGary/all-in-one-sensor-device/pull/6))
+
 ### V2.0.0
 
 1. 3 different versions for different boards

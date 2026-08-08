@@ -5,7 +5,17 @@ substitutions:
   ## Shown in HA as the Firmware text sensor. CI overrides this via `-s version`,
   ## derived from the git tag (e.g. ultimate-v1.0.1) on release builds. Keep this
   ## default in sync with the latest entry in instructions/changelog.md for local builds.
-  version: "1.0.2"
+  version: "1.0.3"
+  ## connectivity: wifi_improv (BLE-provisioned WiFi) or thread (OpenThread)
+  connectivity: wifi_improv
+  ## only used when connectivity: thread. openthread_tlv is compiled into the firmware -
+  ## there is no post-flash provisioning like esp32_improv for WiFi, so CI only ever
+  ## compiles the thread variant as a build check with this CHANGEME placeholder and
+  ## never releases/attaches it. To actually use OpenThread, build locally with your own
+  ## TLV: `esphome -s connectivity thread -s openthread_tlv <your-tlv> ...`
+  ## Get your OTBR dataset TLV from Home Assistant under Devices -> "Thread" integration
+  ## -> Configure -> preferred network -> info (the little i icon).
+  openthread_tlv: CHANGEME
 
 packages:
   common: !include
@@ -13,6 +23,8 @@ packages:
     vars:
       friendly_name: Ultimate Sensor # the friendly name of your device, can be anything.
       device_name: ultimate-sensor # the name of your device. It should not contain any special characters or whitespaces. the device can be found in the network by this name.
+
+  connectivity: !include "../connectivity/${connectivity}.yaml"
 
   lang: !include "../lang/${lang}.yaml"
 

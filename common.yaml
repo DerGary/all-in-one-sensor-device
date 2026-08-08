@@ -3,45 +3,12 @@ esphome:
   friendly_name: ${friendly_name}
   name_add_mac_suffix: True
   includes:
-    - "<esp_wifi.h>"
-  on_boot:
-    priority: 200.0
-    then:
-      - lambda: |-
-          float val = id(wifi_tx_power_dbm);
-          int8_t power_val = (int8_t)(val * 4);
-
-          wifi::global_wifi_component->set_output_power(val);
-
-          esp_err_t err = esp_wifi_set_max_tx_power(power_val);
-
-          if (err == ESP_OK) {
-            ESP_LOGI("wifi_control", "Max TX Power changed to %.2f dBm.", val);
-          } else {
-            ESP_LOGE("wifi_control", "Error changing max tx power: %s", esp_err_to_name(err));
-          }
-
-globals:
-  - id: wifi_tx_power_dbm
-    type: float
-    restore_value: True
-    initial_value: "8.5"
+    - "<esphome/components/network/util.h>"
 
 esp32:
   variant: ${variant}
   framework:
     type: esp-idf
-
-## Remove this if you don't want to track bluetooth device presence.
-esp32_ble_tracker:
-  scan_parameters:
-    active: True # Whether to send scan-request packets to devices to gather more info (like devicename)
-    interval: 211ms # suggested 211ms # default 320ms
-    window: 30ms # suggested 120ms # default 30ms
-
-## Remove this if you don't need to expand your home assistants bluetooth range
-bluetooth_proxy:
-  active: true
 
 ## Enables logging, eats ram, only enable if necessary.
 # logger:
@@ -61,28 +28,6 @@ ota:
   - platform: esphome
   - platform: web_server
 
-wifi:
-  id: wifi_id
-  output_power: "20db"
-  on_connect:
-    - lambda: id(improv_ble_in_progress) = false;
-    - script.execute: control_leds
-  on_disconnect:
-    - script.execute: control_leds
-
-esp32_improv:
-  authorizer: none
-  # next_url: https://my.home-assistant.io/redirect/config_flow_start?domain=esphome&ip_address={{ip_address}}
-  on_start:
-    - lambda: id(improv_ble_in_progress) = true;
-    - script.execute: control_leds
-  on_provisioned:
-    - lambda: id(improv_ble_in_progress) = false;
-    - script.execute: control_leds
-  on_stop:
-    - lambda: id(improv_ble_in_progress) = false;
-    - script.execute: control_leds
-
 sensor:
   ## this will report the uptime of the device. If your device reboots unexpectedly you can see it in this value.
   - platform: uptime
@@ -101,15 +46,6 @@ sensor:
     unit_of_measurement: "b"
     update_interval: 60s
     disabled_by_default: true
-
-  ## this reports the wifi signal strength of your wifi access point. If you want to reduce or increase your wifi output power of your access point you can use this value for reference. This value does not reflect the output power of the esp device, but the output power of the wifi access point.
-  - platform: wifi_signal # Reports the WiFi signal strength/RSSI in dB
-    disabled_by_default: true
-    name: ${label_wifi_signal}
-    id: wifi_signal_db
-    icon: mdi:wifi
-    update_interval: 1s
-    entity_category: "diagnostic"
 
 binary_sensor:
   ## this reports whether the device is online.
@@ -152,35 +88,6 @@ number:
     unit_of_measurement: "%"
     icon: mdi:water-plus
     entity_category: config
-  - platform: template
-    disabled_by_default: true
-    name: "${label_wifi_strength}"
-    id: wifi_power_slider
-    icon: "mdi:wifi-strength-4"
-    unit_of_measurement: "dBm"
-    min_value: 8.5
-    max_value: 20
-    step: 0.5
-    lambda: |-
-      return id(wifi_tx_power_dbm);
-    set_action:
-      then:
-        - globals.set:
-            id: wifi_tx_power_dbm
-            value: !lambda return x;
-        - lambda: |-
-            float val = id(wifi_tx_power_dbm);
-            int8_t power_val = (int8_t)(val * 4);
-
-            wifi::global_wifi_component->set_output_power(val);
-
-            esp_err_t err = esp_wifi_set_max_tx_power(power_val);
-
-            if (err == ESP_OK) {
-              ESP_LOGI("wifi_control", "Max TX Power changed to %.2f dBm.", val);
-            } else {
-              ESP_LOGE("wifi_control", "Error changing max tx power: %s", esp_err_to_name(err));
-            }
 
 button:
   ## This button can be used to restart the device

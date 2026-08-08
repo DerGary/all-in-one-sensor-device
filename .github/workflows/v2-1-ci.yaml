@@ -53,6 +53,11 @@ jobs:
         lang: [de, en]
         temp: [bme680, bme280]
         variant: [esp32, esp32c6]
+        connectivity: [wifi_improv, thread]
+        exclude:
+          # OpenThread requires the esp32c6's 802.15.4 radio
+          - variant: esp32
+            connectivity: thread
 
     steps:
       - name: Checkout code
@@ -73,9 +78,14 @@ jobs:
 
       - name: Compile firmware
         run: |
-          esphome -s lang ${{ matrix.lang }} -s temp ${{ matrix.temp }} -s variant ${{ matrix.variant }} -s version ${{ steps.version.outputs.version }} compile V2.1/device.yaml
+          esphome -s lang ${{ matrix.lang }} -s temp ${{ matrix.temp }} -s variant ${{ matrix.variant }} -s connectivity ${{ matrix.connectivity }} -s version ${{ steps.version.outputs.version }} compile V2.1/device.yaml
 
+      # The openthread_tlv is compiled into the firmware and there is no post-flash
+      # provisioning like esp32_improv for WiFi, so the thread variant is only ever
+      # compiled here as a build check - never collected, uploaded, or released, to
+      # avoid anyone flashing a binary carrying the CHANGEME placeholder TLV.
       - name: Collect and rename binaries
+        if: matrix.connectivity != 'thread'
         run: |
           mkdir -p output
 
@@ -83,11 +93,12 @@ jobs:
 
           OTA_PATH=$(find V2.1/.esphome/build/ -name "firmware.ota.bin" | head -n 1)
           cp "$OTA_PATH" "output/${BASE_NAME}_ota.bin"
-          
+
           FACTORY_PATH=$(find V2.1/.esphome/build/ -name "firmware.factory.bin" | head -n 1)
           cp "$FACTORY_PATH" "output/${BASE_NAME}_factory.bin"
 
       - name: Upload artifacts for this matrix run
+        if: matrix.connectivity != 'thread'
         uses: actions/upload-artifact@v7
         with:
           name: binaries-${{ matrix.variant }}-${{ matrix.temp }}-${{ matrix.lang }}
