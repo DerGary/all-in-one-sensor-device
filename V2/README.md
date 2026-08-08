@@ -42,6 +42,7 @@ My goal with this project was to create **the ultimate DIY smart home sensor dev
 ### V2.0.1
 
 1. Add OpenThread as a connectivity alternative to WiFi (contributed by [TheDiffi](https://github.com/TheDiffi), [#6](https://github.com/DerGary/all-in-one-sensor-device/pull/6))
+1. Update ESPHome to 2026.7
 
 ### V2.0.0
 

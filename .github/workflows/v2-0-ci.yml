@@ -43,7 +43,7 @@ jobs:
   build-bin:
     runs-on: ubuntu-latest
     container:
-      image: esphome/esphome:2026.6
+      image: esphome/esphome:2026.7
     strategy:
       fail-fast: false
       matrix:

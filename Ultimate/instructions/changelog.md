@@ -1,6 +1,10 @@
 
 ## 🆕 Changelog
 
+### v1.0.4
+
+1. Update ESPHome to 2026.7
+
 ### v1.0.3
 
 1. Add OpenThread as a connectivity alternative to WiFi (esp32c6 variant, requires a local build with your own OTBR TLV)
