@@ -5,7 +5,7 @@ substitutions:
   ## Shown in HA as the Firmware text sensor. CI overrides this via `-s version`,
   ## derived from the git tag (e.g. v2.1.3) on release builds. Keep this default in
   ## sync with the latest entry in instructions/changelog.md for local builds.
-  version: "2.1.3"
+  version: "2.1.4"
 
 packages:
   common: !include

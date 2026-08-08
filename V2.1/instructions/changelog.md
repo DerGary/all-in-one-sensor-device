@@ -1,5 +1,9 @@
 ## 🆕 Changelog
 
+### V2.1.4
+
+1. Add a Firmware version diagnostic sensor, showing the flashed release version in Home Assistant
+
 ### V2.1.3
 
 1. Occupancy LED color adjusted to a lighter, more neutral warm white
