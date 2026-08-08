@@ -3,15 +3,34 @@ name: V2.0
 on:
   pull_request:
     branches: ["main"]
-    paths:
-      - 'V2/**'
-      - .github/workflows/v2-0-ci.yml
   push:
     tags:
       - "v2.0*"
 
 jobs:
+  # Runs unconditionally (no `paths:` filter on the trigger) so this workflow always
+  # posts a check on every PR - required status checks would otherwise wait forever
+  # on a PR that never touches these paths. Path relevance is filtered here instead,
+  # and build-pdf/build-bin are skipped (not un-triggered) when irrelevant.
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      relevant: ${{ github.event_name != 'pull_request' || steps.filter.outputs.relevant }}
+    steps:
+      - uses: actions/checkout@v6
+        if: github.event_name == 'pull_request'
+      - uses: dorny/paths-filter@v4
+        if: github.event_name == 'pull_request'
+        id: filter
+        with:
+          filters: |
+            relevant:
+              - 'V2/**'
+              - .github/workflows/v2-0-ci.yml
+
   build-pdf:
+    needs: changes
+    if: needs.changes.outputs.relevant == 'true'
     runs-on: ubuntu-latest
     container:
       image: node:26
@@ -41,6 +60,8 @@ jobs:
           if-no-files-found: error
 
   build-bin:
+    needs: changes
+    if: needs.changes.outputs.relevant == 'true'
     runs-on: ubuntu-latest
     container:
       image: esphome/esphome:2026.7
@@ -54,9 +75,24 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Compile firmware
-        run: | 
+        run: |
           esphome -s apikey "0HkBGFr/oAHaBGVJue84kroMi9UUI+9x/R7dBaUF354=" compile V2/${{ matrix.variant }}.yaml
 
+  # Always runs (even when build-pdf/build-bin were skipped as not relevant) so it can
+  # be set as the required status check in branch protection.
+  v20-ci-gate:
+    name: V2.0 CI Gate
+    runs-on: ubuntu-latest
+    needs: [changes, build-pdf, build-bin]
+    if: always()
+    steps:
+      - name: Check build results
+        run: |
+          if [ "${{ needs.build-pdf.result }}" = "failure" ] || [ "${{ needs.build-bin.result }}" = "failure" ]; then
+            echo "V2.0 CI failed"
+            exit 1
+          fi
+          echo "V2.0 CI passed (or not relevant to this PR)"
 
   release-pdf:
     needs: build-pdf
