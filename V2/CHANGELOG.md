@@ -1,5 +1,3 @@
-## 🆕 Changelog
-
 ### V2.0.3
 
 1. Add OpenThread as a connectivity alternative to WiFi (contributed by [TheDiffi](https://github.com/TheDiffi), [#6](https://github.com/DerGary/all-in-one-sensor-device/pull/6))

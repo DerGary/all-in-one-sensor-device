@@ -45,4 +45,4 @@
 
 ### V2.0.x and earlier (predecessor: All-In-One Smart Home Sensor Case V2)
 
-See the [V2 changelog](../../V2/CHANGELOG.md).
+![[../../V2/CHANGELOG]]
