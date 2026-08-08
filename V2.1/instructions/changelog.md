@@ -1,16 +1,10 @@
 ## 🆕 Changelog
 
-### V2.1.6
-
-1. Update ESPHome to 2026.7
-
-### V2.1.5
-
-1. Add OpenThread as a connectivity alternative to WiFi (esp32c6 variant, requires a local build with your own OTBR TLV)
-
 ### V2.1.4
 
 1. Add a Firmware version diagnostic sensor, showing the flashed release version in Home Assistant
+1. Add OpenThread as a connectivity alternative to WiFi (esp32c6 variant, requires a local build with your own OTBR TLV)
+1. Update ESPHome to 2026.7
 
 ### V2.1.3
 
