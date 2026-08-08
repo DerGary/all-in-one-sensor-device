@@ -3,18 +3,37 @@ name: V2.1
 on:
   pull_request:
     branches: ["main"]
-    paths:
-      - 'V2.1/**'
-      - 'sensors/**'
-      - 'lang/**'
-      - 'automations/**'
-      - .github/workflows/v2-1-ci.yaml
   push:
     tags:
       - "v2.1*"
 
 jobs:
+  # Runs unconditionally (no `paths:` filter on the trigger) so this workflow always
+  # posts a check on every PR - required status checks would otherwise wait forever
+  # on a PR that never touches these paths. Path relevance is filtered here instead,
+  # and build-pdf/build-bin are skipped (not un-triggered) when irrelevant.
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      relevant: ${{ github.event_name != 'pull_request' || steps.filter.outputs.relevant }}
+    steps:
+      - uses: actions/checkout@v6
+        if: github.event_name == 'pull_request'
+      - uses: dorny/paths-filter@v4
+        if: github.event_name == 'pull_request'
+        id: filter
+        with:
+          filters: |
+            relevant:
+              - 'V2.1/**'
+              - 'sensors/**'
+              - 'lang/**'
+              - 'automations/**'
+              - .github/workflows/v2-1-ci.yaml
+
   build-pdf:
+    needs: changes
+    if: needs.changes.outputs.relevant == 'true'
     runs-on: ubuntu-latest
     container:
       image: node:26
@@ -44,6 +63,8 @@ jobs:
           if-no-files-found: error
 
   build-bin:
+    needs: changes
+    if: needs.changes.outputs.relevant == 'true'
     runs-on: ubuntu-latest
     container:
       image: esphome/esphome:2026.6
@@ -104,8 +125,24 @@ jobs:
           name: binaries-${{ matrix.variant }}-${{ matrix.temp }}-${{ matrix.lang }}
           path: output/*.bin
 
+  # Always runs (even when build-pdf/build-bin were skipped as not relevant) so it can
+  # be set as the required status check in branch protection.
+  v21-ci-gate:
+    name: V2.1 CI Gate
+    runs-on: ubuntu-latest
+    needs: [changes, build-pdf, build-bin]
+    if: always()
+    steps:
+      - name: Check build results
+        run: |
+          if [ "${{ needs.build-pdf.result }}" = "failure" ] || [ "${{ needs.build-bin.result }}" = "failure" ]; then
+            echo "V2.1 CI failed"
+            exit 1
+          fi
+          echo "V2.1 CI passed (or not relevant to this PR)"
+
   release:
-    needs: 
+    needs:
       - build-bin
       - build-pdf
     runs-on: ubuntu-latest
