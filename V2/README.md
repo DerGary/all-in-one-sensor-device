@@ -39,7 +39,7 @@ My goal with this project was to create **the ultimate DIY smart home sensor dev
 
 ## 🆕 Changelog
 
-See [CHANGELOG.md](./CHANGELOG.md).
+See [changelog.md](./changelog.md).
 
 ### ⚠️ Disclaimer
 

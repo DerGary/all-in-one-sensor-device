@@ -42,7 +42,3 @@
     - No need to change any secrets or variables
     - An optional occupancy automation which shows the occupancy status via the status led
     - An optional air quality automation which shows the air quality status via the status led
-
-### V2.0.x and earlier (predecessor: All-In-One Smart Home Sensor Case V2)
-
-![[../../V2/CHANGELOG]]
