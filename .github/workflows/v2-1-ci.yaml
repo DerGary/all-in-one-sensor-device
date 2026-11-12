@@ -95,14 +95,15 @@ jobs:
         uses: actions/checkout@v6
 
       # ESPHome downloads ESP-IDF and its toolchains into ~/.cache/esphome (HOME is /github/home
-      # in container jobs); that only depends on the ESPHome version and the chip. The build
+      # in container jobs); that only depends on the ESPHome version, and the download is the same
+      # for esp32 and esp32c6 (all toolchains get installed), so one shared entry (1.7 GB). The build
       # directory holds the compiled objects, so only changed sources are rebuilt.
       # Fixed keys: saved once per ESPHome version and build, refreshed by the next ESPHome bump.
       - name: Cache ESP-IDF framework and toolchains
         uses: actions/cache@v6
         with:
           path: /github/home/.cache/esphome
-          key: v21-idf-2026.7-${{ matrix.variant }}
+          key: v21-idf-2026.7
 
       - name: Cache ESPHome build directory
         uses: actions/cache@v6
