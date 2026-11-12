@@ -151,7 +151,8 @@ Guide: <https://esphome.io/guides/installing_esphome/>
 1. In the assets section find the binary that fits your setup. The variations are:
     - variant = ``esp32``/`esp32c6`
     - language = `de`/`en`
-    - temperature sensor: `bme280`/`bme680`
+    - temperature sensor: `bme280`/`bme680`/`sht4x`
+    - motion sensor: no suffix = HC-SR501, `ekmc_motion` = Panasonic EKMC (only built as `esp32c6` with `sht4x`)
     - Pick the `factory` version for initial setup.
 1. Navigate to [web.esphome.io](https://web.esphome.io/).
 1. Connect the esp to your computer.
@@ -171,7 +172,8 @@ Guide: <https://esphome.io/guides/installing_esphome/>
 1. In the assets section find the binary that fits your setup. The variations are:
     - variant = ``esp32``/`esp32c6`
     - language = `de`/`en`
-    - temperature sensor: `bme280`/`bme680`
+    - temperature sensor: `bme280`/`bme680`/`sht4x`
+    - motion sensor: no suffix = HC-SR501, `ekmc_motion` = Panasonic EKMC (only built as `esp32c6` with `sht4x`)
     - Pick the ``ota`` version to update an existing sensor.
 1. Navigate to the web page of the sensor by typing its IP address in your browser.
 1. At the bottom of the page you will find the OTA update section.
@@ -184,7 +186,8 @@ Guide: <https://esphome.io/guides/installing_esphome/>
 1. Navigate into the V2.1 folder in a terminal
 1. execute `esphome -s variant esp32 -s temp bme280 -s lang de run device.yaml`
     - You can change ``esp32`` to any esphome compatible esp variant. Although you have to adhere to the **super mini** pinout when anything other than `esp32` is chosen here.
-    - For ``temp`` you can choose between ``bme280`` and ``bme680``
+    - For ``temp`` you can choose between ``bme280``, ``bme680`` and ``sht4x``
+    - Add `-s motion ekmc_motion` if you use a Panasonic EKMC PIR instead of the HC-SR501
     - For ``lang`` you can choose between ``de`` and ``en``
 1. After flashing proceed with adding the sensor to your home assistant instance as described in [initial installation](#initial-installation) section above.
 
@@ -200,7 +203,8 @@ To build and flash with OpenThread:
 1. Install esphome and checkout the [Github Repository](https://github.com/DerGary/all-in-one-sensor-device) as described in [Flash code directly](#flash-code-directly) above.
 1. Navigate into the `V2.1` folder in a terminal.
 1. execute `esphome -s variant esp32c6 -s temp <temp> -s lang <lang> -s connectivity thread -s openthread_tlv <your-tlv> run device.yaml`
-    - For ``temp`` you can choose between ``bme280`` and ``bme680``
+    - For ``temp`` you can choose between ``bme280``, ``bme680`` and ``sht4x``
+    - Add `-s motion ekmc_motion` if you use a Panasonic EKMC PIR instead of the HC-SR501
     - For ``lang`` you can choose between ``de`` and ``en``
     - `variant` stays `esp32c6` — OpenThread needs its 802.15.4 radio.
     - Replace `<your-tlv>` with the dataset TLV from step 1.
