@@ -1,5 +1,9 @@
 ## 🆕 Changelog
 
+### V2.1.5
+
+1. Add a high humidity alarm: the LED pulses turquoise above a configurable humidity threshold (default 65 %), can be enabled with a switch (off by default). Air quality alarms take priority
+
 ### V2.1.4
 
 1. Add a Firmware version diagnostic sensor, showing the flashed release version in Home Assistant

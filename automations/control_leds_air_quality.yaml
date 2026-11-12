@@ -44,6 +44,8 @@ script:
             id(control_leds_no_ha_connection_state).execute();
           } else if (id(air_quality_led_automation).state && id(air_quality_status).state != "${label_air_quality_good}"){
             id(control_leds_air_quality).execute();
+          } else if (id(humidity_led_automation).state && id(high_humidity).state){
+            id(control_leds_humidity).execute();
           } else if (id(occupancy_led_automation).state && id(occupied).state){
             id(control_leds_occupancy).execute();
           } else {

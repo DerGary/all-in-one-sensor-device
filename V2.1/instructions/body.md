@@ -217,6 +217,7 @@ Switching back to WiFi later requires reflashing with `-s connectivity wifi_impr
 | Warm White | Steady | When the occupancy automation is enabled, indicates that the area is occupied. |
 | Orange | Slow Pulse | When the air quality automation is enabled, indicates that the air quality level is warning. |
 | Red | Slow Pulse | When the air quality automation is enabled, indicates that the air quality level is critical. |
+| Turquoise | Slow Pulse | When the high humidity automation is enabled, indicates that humidity is above the configurable threshold (default 65 %). |
 
 ### 🎯 Calibration
 

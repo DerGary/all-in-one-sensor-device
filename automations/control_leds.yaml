@@ -6,6 +6,8 @@ script:
             id(control_leds_improv_ble_state).execute();
           } else if (!network::is_connected() || !id(api_id).is_connected()){
             id(control_leds_no_ha_connection_state).execute();
+          } else if (id(humidity_led_automation).state && id(high_humidity).state){
+            id(control_leds_humidity).execute();
           } else if (id(occupancy_led_automation).state && id(occupied).state){
             id(control_leds_occupancy).execute();
           } else {
