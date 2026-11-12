@@ -35,11 +35,60 @@ binary_sensor:
             return {};
           }
           return x;
+  - platform: template
+    name: ${label_high_humidity}
+    id: high_humidity
+    icon: mdi:water-alert
+    device_class: moisture
+    # 2% hysteresis below the threshold so the LED doesn't flicker around it
+    lambda: |
+      float h = id(humidity).state;
+      float threshold = id(humidity_alarm_threshold).state;
+      if (isnan(h)) {
+        return {};
+      }
+      if (h >= threshold) {
+        return true;
+      }
+      if (h < threshold - 2) {
+        return false;
+      }
+      return id(high_humidity).has_state() && id(high_humidity).state;
+    on_state:
+      then:
+        - lambda: |
+            if(id(humidity_led_automation).state){
+              id(control_leds).execute();
+            }
+
+number:
+  - platform: template
+    name: ${label_humidity_alarm_threshold}
+    id: humidity_alarm_threshold
+    icon: mdi:water-percent-alert
+    entity_category: config
+    optimistic: true
+    restore_value: true
+    initial_value: 65
+    min_value: 30
+    max_value: 100
+    step: 1
+    unit_of_measurement: "%"
 
 switch:
   - platform: template
     id: occupancy_led_automation
     name: ${label_occupancy_automation}
+    icon: mdi:lightbulb-auto
+    entity_category: config
+    restore_mode: RESTORE_DEFAULT_OFF
+    optimistic: True
+    on_state:
+      then:
+        - script.execute: control_leds
+  - platform: template
+    id: humidity_led_automation
+    name: ${label_humidity_led_automation}
     icon: mdi:lightbulb-auto
     entity_category: config
     restore_mode: RESTORE_DEFAULT_OFF
@@ -76,6 +125,15 @@ script:
           call.set_rgb(1.0, 0.89, 0.8);
           call.set_transition_length(0);
           call.set_effect("none");
+          call.perform();
+  - id: control_leds_humidity
+    then:
+      - lambda: |
+          ESP_LOGI("humidity", "Turn on high humidity light");
+          auto call = id(status_led).turn_on();
+          call.set_brightness(1.0);
+          call.set_rgb(0.0, 0.7, 1.0);
+          call.set_effect("Slow Pulse");
           call.perform();
   - id: control_leds_turn_off
     then:

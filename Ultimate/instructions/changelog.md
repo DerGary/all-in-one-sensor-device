@@ -1,6 +1,11 @@
 
 ## 🆕 Changelog
 
+### v1.0.3
+
+1. Add switches to choose whether CO₂ and/or VOC are evaluated for the air quality state and LED (both on by default)
+1. Add a high humidity alarm: the LED pulses turquoise above a configurable humidity threshold (default 65 %), can be enabled with a switch (off by default). Air quality alarms take priority
+
 ### v1.0.2
 
 1. Add a Firmware version diagnostic sensor, showing the flashed release version in Home Assistant

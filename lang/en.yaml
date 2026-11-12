@@ -66,9 +66,14 @@ substitutions:
   label_save_config: Save Configuration
   label_status_led: Status-LED
   label_air_quality_led_automation: Show air quality through LED
+  label_air_quality_evaluate_co2: Evaluate CO2 for air quality
+  label_air_quality_evaluate_voc: Evaluate VOC for air quality
   label_wifi_strength: WiFi TX Power
   label_occupied: Occupancy
   label_occupancy_automation: Show occupancy through LED
+  label_humidity_led_automation: Show high humidity through LED
+  label_humidity_alarm_threshold: High Humidity Threshold
+  label_high_humidity: High Humidity
   label_air_quality_state: Air Quality State
   label_air_quality_good: Good
   label_air_quality_warning: Warning

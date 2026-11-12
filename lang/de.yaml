@@ -66,9 +66,14 @@ substitutions:
   label_save_config: Konfiguration speichern
   label_status_led: Status-LED
   label_air_quality_led_automation: Luftqualität über LED anzeigen
+  label_air_quality_evaluate_co2: CO2 für Luftqualität auswerten
+  label_air_quality_evaluate_voc: VOC für Luftqualität auswerten
   label_wifi_strength: WiFi Sendeleistung
   label_occupied: Belegung
   label_occupancy_automation: Belegung über LED anzeigen
+  label_humidity_led_automation: Hohe Luftfeuchtigkeit über LED anzeigen
+  label_humidity_alarm_threshold: Grenzwert hohe Luftfeuchtigkeit
+  label_high_humidity: Hohe Luftfeuchtigkeit
   label_air_quality_state: Luftqualitätsstatus
   label_air_quality_good: Gut
   label_air_quality_warning: Warnung

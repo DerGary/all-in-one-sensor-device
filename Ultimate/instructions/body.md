@@ -250,10 +250,15 @@ Below is a reference of all entities this device exposes in Home Assistant. Enti
 
 | Entity | Type | HA visibility | Default value | Description |
 | ------ | ---- | ------------- | ------------- | ----------- |
-| Status-LED | Light | Visible | — | The WS2812 RGB status LED. Can be controlled manually from Home Assistant at any time, but will be overwritten by the automation whenever occupancy or air quality changes while the corresponding switch is on. |
+| Status-LED | Light | Visible | — | The WS2812 RGB status LED. Can be controlled manually from Home Assistant at any time, but will be overwritten by the automation whenever occupancy, air quality or high humidity changes while the corresponding switch is on. |
 | Show air quality through LED | Switch (config) | Visible | Off | When on, the LED pulses orange (warning) or red (critical) when air quality thresholds are exceeded. |
+| Evaluate CO2 for air quality | Switch (config) | Visible | On | When off, CO₂ readings are ignored for the Air Quality State (and therefore the LED). |
+| Evaluate VOC for air quality | Switch (config) | Visible | On | When off, TVOC readings are ignored for the Air Quality State (and therefore the LED). |
 | Show occupancy through LED | Switch (config) | Visible | Off | When on, the LED glows warm white while the room is occupied. |
-| Air Quality State | Text sensor | Visible | — | Current air quality alarm level: `Good`, `Warning`, or `Critical` (translated to the selected language). Warning triggers when CO₂ exceeds ~1250 ppm or TVOC exceeds ~660 ppb; critical when CO₂ exceeds ~2000 ppm or TVOC exceeds ~2200 ppb. Useful for custom automations that need to react to the same thresholds the LED uses. |
+| Show high humidity through LED | Switch (config) | Visible | Off | When on, the LED pulses turquoise while High Humidity is on. Air quality alarms take priority over the humidity alarm, which takes priority over occupancy. |
+| High Humidity Threshold | Number (config) | Visible | 65 % | Humidity at which High Humidity turns on. It turns off again once humidity drops 2 % below the threshold. |
+| High Humidity | Binary sensor | Visible | — | On while humidity is at or above the High Humidity Threshold. |
+| Air Quality State | Text sensor | Visible | — | Current air quality alarm level: `Good`, `Warning`, or `Critical` (translated to the selected language). Warning triggers when CO₂ exceeds ~1250 ppm or TVOC exceeds ~660 ppb; critical when CO₂ exceeds ~2000 ppm or TVOC exceeds ~2200 ppb. Only values whose "Evaluate … for air quality" switch is on are considered. Useful for custom automations that need to react to the same thresholds the LED uses. |
 
 #### Temperature & Humidity
 

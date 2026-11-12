@@ -1,13 +1,37 @@
+switch:
+  - platform: template
+    id: air_quality_evaluate_co2
+    name: ${label_air_quality_evaluate_co2}
+    icon: mdi:molecule-co2
+    entity_category: config
+    restore_mode: RESTORE_DEFAULT_ON
+    optimistic: True
+    on_state:
+      then:
+        - script.execute: set_air_quality_status
+  - platform: template
+    id: air_quality_evaluate_voc
+    name: ${label_air_quality_evaluate_voc}
+    icon: mdi:air-filter
+    entity_category: config
+    restore_mode: RESTORE_DEFAULT_ON
+    optimistic: True
+    on_state:
+      then:
+        - script.execute: set_air_quality_status
+
 script:
   - id: set_air_quality_status
     then:
       - lambda: |-
+          bool use_co2 = id(air_quality_evaluate_co2).state;
+          bool use_tvoc = id(air_quality_evaluate_voc).state;
           float current_tvoc = id(tvoc).state;
           float current_co2 = id(co2).state;
 
-          if (current_co2 > 2000 || current_tvoc > 2200) {
+          if ((use_co2 && current_co2 > 2000) || (use_tvoc && current_tvoc > 2200)) {
             id(air_quality_status).publish_state("${label_air_quality_critical}");
-          } else if (current_co2 > 1250 || current_tvoc > 660) {
+          } else if ((use_co2 && current_co2 > 1250) || (use_tvoc && current_tvoc > 660)) {
             id(air_quality_status).publish_state("${label_air_quality_warning}");
           } else {
             id(air_quality_status).publish_state("${label_air_quality_good}");
