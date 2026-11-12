@@ -1,5 +1,9 @@
 ## 🆕 Changelog
 
+### V2.1.6
+
+1. New build options for a flush-mount variant: `temp` can now be `sht4x` (SHT40/SHT41) and the motion sensor can be switched with `motion` between `hc-sr501` (default) and `ekmc_motion` (Panasonic EKMC PIR)
+
 ### V2.1.5
 
 1. Add a high humidity alarm: the LED pulses turquoise above a configurable humidity threshold (default 65 %), can be enabled with a switch (off by default). Air quality alarms take priority

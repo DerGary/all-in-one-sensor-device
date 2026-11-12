@@ -62,7 +62,7 @@ esphome -s lang de -s temp bme680 -s variant esp32 run V2.1/device.yaml
 
 Substitutions available per device (see each `device.yaml`'s `packages:` vars and CI matrix for the full set):
 - `Ultimate/device.yaml`: `lang` (`de`|`en`), `temp` (`sht4x`|`bme280`).
-- `V2.1/device.yaml`: `lang` (`de`|`en`), `temp` (`bme680`|`bme280`), `variant` (`esp32`|`esp32c6`).
+- `V2.1/device.yaml`: `lang` (`de`|`en`), `temp` (`bme680`|`bme280`|`sht4x`), `motion` (`hc-sr501`|`ekmc_motion`), `variant` (`esp32`|`esp32c6`).
 
 `<device>/compileAndUpdate.sh` files are local, gitignored scripts with hardcoded per-room device IPs for `esphome run --device <ip>` OTA updates — not committed source, don't rely on them existing or being accurate.
 
