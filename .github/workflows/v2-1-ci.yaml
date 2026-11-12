@@ -69,9 +69,6 @@ jobs:
     container:
       # Keep the version in the cache keys below in sync with this image tag
       image: esphome/esphome:2026.7
-    env:
-      # Explicit so the cache path below is stable (HOME is /github/home in container jobs)
-      PLATFORMIO_CORE_DIR: /github/home/.platformio
     strategy:
       fail-fast: false
       matrix:
@@ -97,14 +94,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      # Toolchains and frameworks only depend on the ESPHome version and the chip, the build
-      # directory holds the compiled framework objects, so only changed sources are rebuilt.
+      # ESPHome downloads ESP-IDF and its toolchains into ~/.cache/esphome (HOME is /github/home
+      # in container jobs); that only depends on the ESPHome version and the chip. The build
+      # directory holds the compiled objects, so only changed sources are rebuilt.
       # Fixed keys: saved once per ESPHome version and build, refreshed by the next ESPHome bump.
-      - name: Cache PlatformIO toolchains
+      - name: Cache ESP-IDF framework and toolchains
         uses: actions/cache@v6
         with:
-          path: /github/home/.platformio
-          key: v21-pio-2026.7-${{ matrix.variant }}
+          path: /github/home/.cache/esphome
+          key: v21-idf-2026.7-${{ matrix.variant }}
 
       - name: Cache ESPHome build directory
         uses: actions/cache@v6
