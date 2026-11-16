@@ -9,7 +9,7 @@ This repo is a DIY "All-In-One Smart Home Sensor" — an ESP32 + [ESPHome](https
 - `V1/` — oldest revision, BME280/BME680 only, self-contained (not actively developed).
 - `V2/` — uses its own `common.yaml` and `secrets.yaml`-based config (legacy, not shared with the rest of the tree).
 - `V2.1/` — current "All-In-One Sensor", entry point `V2.1/device.yaml`. Shares the root `common.yaml`/`sensors/`/`lang/`/`automations/`.
-- `FlushMount/` — V2.1 sensor set as an insert for a deep hollow-wall box (any box with the dimensions listed in `FlushMount/instructions/intro.md`, e.g. Kaiser 9064-01) with a Mean Well IRM-10-5 mains PSU, entry point `FlushMount/device.yaml`. Fixed hardware: ESP32-C6 Super Mini, SHT41, Panasonic EKMC PIR (`ekmc_motion`), BH1750, LD2410B, WS2812B; only `lang` and `connectivity` are substitutions. Shares the root `common.yaml`/`sensors/`/`lang/`/`automations/`. The enclosure is generated in Fusion 360 outside this repo.
+- `FlushMount/` — V2.1 sensor set as a mains-powered insert for a deep wall box, entry point `FlushMount/device.yaml`. Also shares the root `common.yaml`/`sensors/`/`lang/`/`automations/`.
 - `Ultimate/` — newest/most actively developed revision, entry point `Ultimate/device.yaml`. Adds LD2450 + C4001 dual presence sensing, status LED, more env sensors. Also shares the root `common.yaml`/`sensors/`/`lang/`/`automations/`.
 
 When asked to make changes, check which revision(s) are affected — most active work targets `Ultimate/`. Changes to `sensors/`, `lang/`, `automations/`, or `common.yaml` affect `V2.1`, `FlushMount` and `Ultimate` (and CI for the affected ones will run), so verify nothing breaks for any of them.
