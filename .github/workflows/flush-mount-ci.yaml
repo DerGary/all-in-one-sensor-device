@@ -105,7 +105,9 @@ jobs:
         run: |
           case "$GITHUB_REF" in
             refs/tags/flush-mount*)
-              VERSION="${GITHUB_REF#refs/tags/}"
+              # flush-mount-v1.0.0 -> v1.0.0, the device name is already part of the file names
+              VERSION="${GITHUB_REF#refs/tags/flush-mount}"
+              VERSION="${VERSION#-}"
               ;;
             *)
               VERSION="flush-mount-dev.${{ github.run_number }}"
@@ -150,10 +152,18 @@ jobs:
     steps:
       - name: Check build results
         run: |
-          if [ "${{ needs.build-pdf.result }}" = "failure" ] || [ "${{ needs.build-bin.result }}" = "failure" ]; then
-            echo "Flush-Mount CI failed"
+          # The path filter itself must have run, and no build may have failed or been cancelled.
+          # "skipped" builds are fine (PR not relevant to this device).
+          if [ "${{ needs.changes.result }}" != "success" ]; then
+            echo "Flush-Mount CI failed: path filter did not run"
             exit 1
           fi
+          for r in "${{ needs.build-pdf.result }}" "${{ needs.build-bin.result }}"; do
+            if [ "$r" = "failure" ] || [ "$r" = "cancelled" ]; then
+              echo "Flush-Mount CI failed"
+              exit 1
+            fi
+          done
           echo "Flush-Mount CI passed (or not relevant to this PR)"
 
   release:

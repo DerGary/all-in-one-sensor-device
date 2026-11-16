@@ -59,7 +59,7 @@ You also need:
 
 #### Other frames and cover plates
 
-The frame and the cover plate are parametric in the included Fusion 360 file. Open **Modify → Change Parameters** and set the size of your switch range, then export the components *Rahmen (parametrisch)* and *Zentralscheibe (parametrisch)*. The comments of each parameter list the values for Busch-balance® SI and future® linear.
+The frame and the cover plate are parametric in the Fusion 360 file on MakerWorld. Open **Modify → Change Parameters** and set the size of your switch range, then export the components *Rahmen (parametrisch)* and *Zentralscheibe (parametrisch)*. The comments of each parameter list the values for Busch-balance® SI and future® linear.
 
 | Parameter | Meaning |
 | --- | --- |
@@ -169,7 +169,7 @@ The order matters, because some wires have to be threaded through the parts befo
     - **PIR:** put it into its socket so the two lugs sit in their pockets, then screw the **clamp ring (part 7)** with 2x M1.7x6mm from the back.
     - **Presence sensor:** lay the LD2410B into its seat, the plug end goes through the opening in the flange. Screw the **bracket (part 6)** over it with 2x M1.7x6mm.
     - **Brightness sensor:** screw the BH1750 onto its domes (2x M2x3mm).
-    - **Temperature sensor:** push the board against the back wall of its chamber, slide the **SHT plug (part 10)** over the wires and press it into the slot, then screw the SHT41 (1x M2x3mm).
+    - **Temperature sensor:** push the board against the back wall of its chamber, press the **SHT plug (part 10)** into the slot next to the wires (its left side is open for them), then screw the SHT41 (1x M2x3mm).
     - **LED:** slide the LED segment into the grooves of its holder and bend the short end over the posts.
 1. Screw part 1 to part 2 (3x M2x3mm).
 1. **Mounting (electrician):** switch off the circuit and verify it is dead. Connect L and N of the power supply to the mains cable with suitable connectors, insulate PE and bend it away. Push the insert into the wall box and fasten it with the device screws through the slots of the flange (both orientations work).

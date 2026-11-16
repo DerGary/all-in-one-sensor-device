@@ -26,6 +26,8 @@ jobs:
           filters: |
             relevant:
               - 'V2.1/**'
+              - 'common.yaml'
+              - 'connectivity/**'
               - 'sensors/**'
               - 'lang/**'
               - 'automations/**'
@@ -158,10 +160,18 @@ jobs:
     steps:
       - name: Check build results
         run: |
-          if [ "${{ needs.build-pdf.result }}" = "failure" ] || [ "${{ needs.build-bin.result }}" = "failure" ]; then
-            echo "V2.1 CI failed"
+          # The path filter itself must have run, and no build may have failed or been cancelled.
+          # "skipped" builds are fine (PR not relevant to this device).
+          if [ "${{ needs.changes.result }}" != "success" ]; then
+            echo "V2.1 CI failed: path filter did not run"
             exit 1
           fi
+          for r in "${{ needs.build-pdf.result }}" "${{ needs.build-bin.result }}"; do
+            if [ "$r" = "failure" ] || [ "$r" = "cancelled" ]; then
+              echo "V2.1 CI failed"
+              exit 1
+            fi
+          done
           echo "V2.1 CI passed (or not relevant to this PR)"
 
   release:
