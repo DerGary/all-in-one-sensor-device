@@ -115,7 +115,7 @@ The ESP32-C6 Super Mini has only one GND pin, so the GND rows of the two distrib
 
 The distribution boards are drawn as rails: all holes of a row are connected. The exact hole of each wire is in the tables below.
 
-![Wiring diagram](images/Wiring.png)
+<img src="images/Wiring.png" width="100%" alt="Wiring diagram">
 
 #### Distribution boards
 
