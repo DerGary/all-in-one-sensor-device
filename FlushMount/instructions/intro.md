@@ -2,6 +2,10 @@
 
 <!-- TODO: Makerworld link once published -->
 
+## 🆕 Also check out the Ultimate Version
+
+This flush-mount version uses the sensor set of the budget-friendly V2.1. For rooms where you need more — multi-target tracking, zone tracking, reliable presence detection for very still people (e.g. watching TV or sleeping), more accurate temperature & humidity, more sophisticated air quality measurements, or a more reliable PIR sensor — check out the [Ultimate Smart Home Sensor Case](https://makerworld.com/de/models/2946707-ultimate-smart-home-sensor-case). It comes at a higher component cost, but offers significantly more capability where it counts.
+
 ## Please read the disclaimer at the bottom before building
 
 > **⚠️ This device is connected to 230 V mains.** The power supply sits inside the wall box. Connecting it to mains must only be done by a qualified electrician. Mistakes can kill you or start a fire.
@@ -9,6 +13,10 @@
 Hello everyone 👋, this is the flush-mount version of my [All-In-One Smart Home Sensor Case V2.1](https://makerworld.com/de/models/2180710-all-in-one-smart-home-sensor-case-v2#profileId-2381634). It contains the same set of sensors, but instead of sitting on a shelf with a USB cable, it disappears into a deep hollow-wall box behind a normal switch frame. If you have any questions about the project please ask them in the comments then I can answer them and everyone can learn from that.
 
 ![Exploded view](images/ExplodedView.png)
+
+When I started building my smart home, I realized that most devices only cover very specific use cases. To get full functionality in each room, you usually need to buy multiple different devices.
+
+My goal with this project was to create **the ultimate DIY smart home sensor device** that integrates all the essential sensors needed to achieve the following:
 
 ## 🎯 Goals
 

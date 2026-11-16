@@ -16,7 +16,7 @@ You can buy the parts wherever you like. I only linked parts where the exact ver
 | Name | Hint | Link |
 | ----- | ------ | ------ |
 | Deep wall box | See "What it fits" above, e.g. Kaiser 9064-01. | |
-| ESP32-C6 Super Mini | The insert is designed for this board only. | [Aliexpress](https://de.aliexpress.com/item/1005009089500839.html) (you need to choose the correct version manually) |
+| ESP32-C6 Super Mini | Other Super Mini boards (e.g. ESP32-C3 or ESP32-S3) have the same size and fit into the insert as well, but the firmware and the wiring tables are made for the ESP32-C6. With another board you have to adapt the board and the pins in `device.yaml` yourself, and OpenThread only works with the C6. | [Aliexpress](https://de.aliexpress.com/item/1005009089500839.html) (you need to choose the correct version manually) |
 | Power Supply Mean Well IRM-10-5 | 5 V / 2 A module for mains, sits in its own capsule at the back of the wall box. | |
 | Temperature Sensor SHT41 | Small breakout board with 2 mounting holes. | |
 | Motion Sensor Panasonic EKMC1603111 | Small PIR with a Ø20.5 mm lens that looks through the cover plate. Much more reliable than the HC-SR501. | |
