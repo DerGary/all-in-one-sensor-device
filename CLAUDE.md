@@ -9,6 +9,7 @@ This repo is a DIY "All-In-One Smart Home Sensor" — an ESP32 + [ESPHome](https
 - `V1/` — oldest revision, BME280/BME680 only, self-contained (not actively developed).
 - `V2/` — uses its own `common.yaml` and `secrets.yaml`-based config (legacy, not shared with the rest of the tree).
 - `V2.1/` — current "All-In-One Sensor", entry point `V2.1/device.yaml`. Shares the root `common.yaml`/`sensors/`/`lang/`/`automations/`.
+- `FlushMount/` — V2.1 sensor set as an insert for a deep hollow-wall box (Kaiser 9064-01) with a Mean Well IRM-10-5 mains PSU, entry point `FlushMount/device.yaml`. Fixed hardware: ESP32-C6 Super Mini, SHT41, Panasonic EKMC PIR (`ekmc_motion`), BH1750, LD2410B, WS2812B; only `lang` and `connectivity` are substitutions. Shares the root `common.yaml`/`sensors/`/`lang/`/`automations/`. The enclosure is generated in Fusion 360 outside this repo.
 - `Ultimate/` — newest/most actively developed revision, entry point `Ultimate/device.yaml`. Adds LD2450 + C4001 dual presence sensing, status LED, more env sensors. Also shares the root `common.yaml`/`sensors/`/`lang/`/`automations/`.
 
 When asked to make changes, check which revision(s) are affected — most active work targets `Ultimate/`. Changes to `sensors/`, `lang/`, `automations/`, or `common.yaml` affect both `V2.1` and `Ultimate` (and CI for both will run), so verify nothing breaks for either.
@@ -58,11 +59,15 @@ esphome -s lang en -s temp sht4x run Ultimate/device.yaml --device <ip-or-port>
 
 # Same pattern for V2.1 (note the extra `variant` substitution: esp32 | esp32c6)
 esphome -s lang de -s temp bme680 -s variant esp32 run V2.1/device.yaml
+
+# FlushMount: fixed hardware, only language (and connectivity)
+esphome -s lang de run FlushMount/device.yaml
 ```
 
 Substitutions available per device (see each `device.yaml`'s `packages:` vars and CI matrix for the full set):
 - `Ultimate/device.yaml`: `lang` (`de`|`en`), `temp` (`sht4x`|`bme280`).
-- `V2.1/device.yaml`: `lang` (`de`|`en`), `temp` (`bme680`|`bme280`|`sht4x`), `motion` (`hc-sr501`|`ekmc_motion`), `variant` (`esp32`|`esp32c6`).
+- `V2.1/device.yaml`: `lang` (`de`|`en`), `temp` (`bme680`|`bme280`), `variant` (`esp32`|`esp32c6`).
+- `FlushMount/device.yaml`: `lang` (`de`|`en`), `connectivity` (`wifi_improv`|`thread`); the hardware is fixed.
 
 `<device>/compileAndUpdate.sh` files are local, gitignored scripts with hardcoded per-room device IPs for `esphome run --device <ip>` OTA updates — not committed source, don't rely on them existing or being accurate.
 
@@ -80,13 +85,13 @@ See `TODO.md` for tracked follow-ups (currently: changelog cleanup, adding OpenT
 
 ## Changelog
 
-Every user-facing change to `V2.1/` or `Ultimate/` must add an entry to the relevant `instructions/changelog.md` (`V2.1/instructions/changelog.md` and/or `Ultimate/instructions/changelog.md`) in the same commit/PR as the change itself — not deferred to a later cleanup pass. Add under a new next-version heading matching the version bump; see existing entries for format.
+Every user-facing change to `V2.1/`, `FlushMount/` or `Ultimate/` must add an entry to the relevant `instructions/changelog.md` (`V2.1/instructions/changelog.md`, `FlushMount/instructions/changelog.md` and/or `Ultimate/instructions/changelog.md`) in the same commit/PR as the change itself — not deferred to a later cleanup pass. Add under a new next-version heading matching the version bump; see existing entries for format.
 
-Bumping the changelog heading also requires bumping the matching `version:` substitution in the device's `device.yaml` (`Ultimate/device.yaml` / `V2.1/device.yaml`) to the same version, in the same commit/PR — it's the default shown in the Firmware text sensor for local builds and must stay in sync with the changelog.
+Bumping the changelog heading also requires bumping the matching `version:` substitution in the device's `device.yaml` (`Ultimate/device.yaml` / `V2.1/device.yaml` / `FlushMount/device.yaml`) to the same version, in the same commit/PR — it's the default shown in the Firmware text sensor for local builds and must stay in sync with the changelog.
 
 ## Releases and release notes
 
-Releases are triggered by pushing a tag matching `ultimate*` (e.g. `ultimate-v1.2.0`) or `v2.1*` / `v2.0*` for the other revisions. CI then builds the full matrix, renders the PDF, and creates a GitHub Release with all binaries and the PDF attached.
+Releases are triggered by pushing a tag matching `ultimate*` (e.g. `ultimate-v1.2.0`) or `v2.1*` / `v2.0*` / `flush-mount*` (e.g. `flush-mount-v1.0.0`) for the other revisions. CI then builds the full matrix, renders the PDF, and creates a GitHub Release with all binaries and the PDF attached.
 
 **Release notes are auto-generated from PR titles** (`generate_release_notes: true` in the workflow). GitHub groups merged PRs between the previous tag and the new one — the PR *title* is what appears in the public changelog, not commit messages.
 
@@ -98,4 +103,4 @@ Guidelines so that release notes are meaningful to end users:
 
 ## CI
 
-GitHub Actions workflows (`.github/workflows/{ultimate-ci,v2-1-ci,v2-0-ci}.yaml`) trigger on PRs touching their device folder (plus the shared `sensors/`, `lang/`, `automations/`, `components/` for Ultimate/V2.1) and on version-prefixed tag pushes (`ultimate*`, `v2.1*`, `v2.0*`). Each compiles the full build matrix (language × temperature sensor × board variant, where applicable) using the `esphome/esphome:stable` container image, renders the instructions PDF, and on a tag push attaches binaries + the PDF to a GitHub Release. There is no separate lint/test step — successful `esphome compile` across the matrix *is* the correctness check.
+GitHub Actions workflows (`.github/workflows/{ultimate-ci,v2-1-ci,v2-0-ci,flush-mount-ci}.yaml`) trigger on PRs touching their device folder (plus the shared `sensors/`, `lang/`, `automations/`, `components/` for Ultimate/V2.1/FlushMount) and on version-prefixed tag pushes (`ultimate*`, `v2.1*`, `v2.0*`, `flush-mount*`). Each compiles the full build matrix (language × temperature sensor × board variant, where applicable) using the `esphome/esphome:stable` container image, renders the instructions PDF, and on a tag push attaches binaries + the PDF to a GitHub Release. There is no separate lint/test step — successful `esphome compile` across the matrix *is* the correctness check.

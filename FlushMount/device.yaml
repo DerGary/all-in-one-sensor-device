@@ -1,0 +1,63 @@
+substitutions:
+  lang: de
+  ## Fixed hardware of the flush-mount sensor: ESP32-C6 Super Mini, SHT41 and a Panasonic EKMC PIR.
+  ## `variant` is used by common.yaml, `temp` by the status LED automation.
+  variant: esp32c6
+  temp: sht4x
+  ## Shown in HA as the Firmware text sensor. CI overrides this via `-s version`,
+  ## derived from the git tag on release builds. Keep this default in
+  ## sync with the latest entry in instructions/changelog.md for local builds.
+  version: "1.0.0"
+  ## connectivity: wifi_improv (BLE-provisioned WiFi) or thread (OpenThread)
+  connectivity: wifi_improv
+  ## only used when connectivity: thread. openthread_tlv is compiled into the firmware -
+  ## there is no post-flash provisioning like esp32_improv for WiFi, so CI only ever
+  ## compiles the thread variant as a build check with this dummy placeholder (must be
+  ## valid hex - ESPHome validates it at config time) and never releases/attaches it.
+  ## To actually use OpenThread, build locally with your own
+  ## TLV: `esphome -s connectivity thread -s openthread_tlv <your-tlv> ...`
+  ## Get your OTBR dataset TLV from Home Assistant under Devices -> "Thread" integration
+  ## -> Configure -> preferred network -> info (the little i icon).
+  openthread_tlv: "00"
+
+packages:
+  common: !include
+    file: ../common.yaml
+    vars:
+      device_name: all-in-one-sensor # the name of your device. It should not contain any special characters or whitespaces. the device can be found in the network by this name.
+      friendly_name: All in One Sensor # the friendly name of your device, can be anything.
+
+  connectivity: !include "../connectivity/${connectivity}.yaml"
+
+  lang: !include "../lang/${lang}.yaml"
+
+  temperature: !include ../sensors/sht4x.yaml
+
+  motion: !include
+    file: ../sensors/ekmc_motion.yaml
+    vars:
+      pin: GPIO7
+  illuminance: !include ../sensors/bh1750.yaml
+  presence: !include
+    file: ../sensors/ld2410.yaml
+    vars:
+      tx_pin: GPIO17
+      rx_pin: GPIO16
+  led: !include
+    file: ../sensors/ws2812.yaml
+    vars:
+      pin: GPIO18
+  status_led: !include
+    file: ../automations/status_led.yaml
+    vars:
+      sensor: "${temp}"
+
+web_server:
+  port: 80
+  local: true
+
+## setup the i2c bus and define the pins to use.
+i2c:
+  sda: GPIO20
+  scl: GPIO19
+  scan: true
