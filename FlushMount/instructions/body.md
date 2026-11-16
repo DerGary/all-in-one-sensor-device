@@ -174,7 +174,7 @@ I built it from the back to the front: first the power supply on part 2, then th
 
     | Power supply in the capsule | 5V wires through the divider wall |
     | --- | --- |
-    | <img src="images/PowerSupplyCapsule.jpg" height="350" alt="Power supply in the capsule"> | <img src="images/CarrierWires.jpg" height="350" alt="5V wires through the divider wall"> |
+    | <img src="images/PowerSupplyCapsule.jpg" width="195" alt="Power supply in the capsule"> | <img src="images/CarrierWires.jpg" width="347" alt="5V wires through the divider wall"> |
 
 1. Solder **one end** of the wires to the **temperature sensor**, the **brightness sensor**, the **presence sensor cable** and the input end of the **LED segment**.
 
@@ -210,7 +210,7 @@ I built it from the back to the front: first the power supply on part 2, then th
 
     | Frame and cover plate | Installed |
     | --- | --- |
-    | <img src="images/FrameAndCover.jpg" height="350" alt="Frame and cover plate"> | <img src="images/Installed.jpg" height="350" alt="Installed"> |
+    | <img src="images/FrameAndCover.jpg" width="195" alt="Frame and cover plate"> | <img src="images/Installed.jpg" width="347" alt="Installed"> |
 
 **Congratulations — you’re done!** 🥳🎉
 
