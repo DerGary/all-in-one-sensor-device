@@ -43,19 +43,25 @@ You also need:
 
 ### 🖨️ Printed Parts
 
-| Part | Orientation | Hint |
+| Part | Picture | Orientation | Hint |
+| --- | --- | --- | --- |
+| 1 Front | <img src="images/Part1.jpg" width="180" alt="Part1"> <img src="images/Part1Back.jpg" width="180" alt="Part1Back"> | Back of the flange on the build plate | Holds all sensors. The pin in the middle holds the cover plate; use the modifier for it (more walls, 100 % infill). |
+| 2 Carrier with divider wall | <img src="images/Part2.jpg" width="180" alt="Part2"> | Divider wall on the build plate | Holds the ESP and the two distribution boards in its chambers. The divider wall separates the mains side (back) from the low-voltage side (front). |
+| 3 Power supply capsule | <img src="images/Part3.jpg" width="180" alt="Part3"> | Divider side on the build plate | Encloses the mains power supply, screwed to the back of part 2. |
+| 6 Presence sensor bracket | <img src="images/Part6.jpg" width="180" alt="Part6"> | Flat | Holds the LD2410B. |
+| 7 PIR clamp ring | <img src="images/Part7.jpg" width="180" alt="Part7"> | Flat | Holds the PIR in its socket from the back. |
+| 8 Cover plate | <img src="images/Part8.jpg" width="180" alt="Part8"> <img src="images/Part8Back.jpg" width="180" alt="Part8Back"> | Front on the build plate | Printed together with part 9. The slotted sleeve on the back clamps onto the pin of part 1. |
+| 9 Light window |  | In the hole of part 8 | Transparent filament, multi-color print with part 8. |
+| 10 SHT plug | <img src="images/Part10.jpg" width="180" alt="Part10"> | Collar on the build plate | Closes the slot of the temperature sensor in the flange so no warm air rises from the wall box. Its left side is open for the wires. |
+| 11 Frame (optional) | <img src="images/Part11.jpg" width="180" alt="Part11"> | Front on the build plate | Only if you don’t use an original frame. future® linear needs supports. |
+| 4 Light plug (optional) | <img src="images/Part4.jpg" width="180" alt="Part4"> | Collar on the build plate | Only with an original Busch-Jaeger cover plate, transparent. |
+| 5 Drilling template (optional) | <img src="images/Part5.jpg" width="180" alt="Part5"> | Flat | Only to drill an original Busch-Jaeger cover plate. |
+
+This is how the sensors sit on part 1 and the ESP and the power supply on part 2:
+
+| Part 1 with sensors | Part 2 with ESP | Part 2 with power supply (back) |
 | --- | --- | --- |
-| 1 Front | Back of the flange on the build plate | Holds all sensors. Use the modifier for the pin (more walls, 100 % infill). |
-| 2 Carrier with divider wall | Divider wall on the build plate | Holds the ESP and the two distribution boards. |
-| 3 Power supply capsule | Divider side on the build plate | Encloses the mains power supply. |
-| 6 Presence sensor bracket | Flat | Holds the LD2410B. |
-| 7 PIR clamp ring | Flat | Holds the PIR. |
-| 8 Cover plate | Front on the build plate | Printed together with part 9. |
-| 9 Light window | In the hole of part 8 | Transparent filament, multi-color print with part 8. |
-| 10 SHT plug | Collar on the build plate | Closes the slot of the temperature sensor in the flange so no warm air rises from the wall box. |
-| 11 Frame (optional) | Front on the build plate | Only if you don’t use an original frame. future® linear needs supports. |
-| 4 Light plug (optional) | Collar on the build plate | Only with an original Busch-Jaeger cover plate, transparent. |
-| 5 Drilling template (optional) | Flat | Only to drill an original Busch-Jaeger cover plate. |
+| <img src="images/Part1WithSensors.jpg" width="260" alt="Part1WithSensors"> | <img src="images/Part2WithEsp.jpg" width="260" alt="Part2WithEsp"> | <img src="images/Part2WithEspAndPsu.jpg" width="260" alt="Part2WithEspAndPsu"> |
 
 #### Other frames and cover plates
 
@@ -101,9 +107,15 @@ Make sure you don't mix 5V and 3.3V.
 | I2C SCL (SHT41, BH1750) | GPIO19 |
 | ESP TX → LD2410B RX | GPIO17 |
 | LD2410B TX → ESP RX | GPIO16 |
-| Status LED DIN | GPIO18 |
+| Status LED data input | GPIO18 |
 
 The ESP32-C6 Super Mini has only one GND pin, so the GND rows of the two distribution boards are connected with a bridge wire.
+
+#### Wiring diagram
+
+The distribution boards are drawn as rails: all holes of a row are connected. The exact hole of each wire is in the tables below.
+
+![Wiring diagram](images/Wiring.png)
 
 #### Distribution boards
 
@@ -125,7 +137,7 @@ Each cell is one hole, the holes of a row are connected. When you cut the proto 
 | 3V3 (red) | PIR VDD | 100 µF + | SHT41 VDD | BH1750 VCC | ESP 3V3 |
 | GND (black) | PIR GND | 100 µF − | SHT41 GND | BH1750 GND | Bridge from 5V board |
 
-The 100 nF capacitor goes directly across VDD and GND of the PIR, the 100 µF capacitor next to the PIR on the distribution board. PIR Out, LD2410B TX/RX and LED DIN go directly to the ESP.
+The 100 nF capacitor goes directly across VDD and GND of the PIR, the 100 µF capacitor next to the PIR on the distribution board. PIR Out, LD2410B TX/RX and the LED data input go directly to the ESP.
 
 #### Wire lengths
 
@@ -150,30 +162,58 @@ These are the lengths I cut (in mm, including 3.5 mm stripped on each end). The 
 | LD2410B TX → ESP GPIO16 | blue | 100 |
 | LD2410B RX → ESP GPIO17 | green | 100 |
 | LED 5V/GND → 5V board | white/black | 50 |
-| LED DIN → ESP GPIO18 | orange | 65 |
+| LED data input → ESP GPIO18 | orange | 65 |
 
 ### 🔢 Assembly Instructions
 
-The order matters, because some wires have to be threaded through the parts before soldering.
+The order matters, because some wires have to be threaded through the parts before soldering. The PIR comes last: its wires go through the PIR socket of part 1 and the lens does not fit through, so after that part 1 hangs on the wiring harness.
 
+1. Cut all wires to length (see the table above) and tin the wire ends.
+1. **LED:** solder the wires to the input end of the LED segment and thread them from the front through the slot in the flange of **part 1**.
+1. **Temperature sensor:** solder the wires to the SHT41 and push them from the front through the slot in the flange of part 1.
+1. Solder **one end** of the remaining wires to the **brightness sensor** and to the **presence sensor cable**.
+
+    | Presence Sensor | Brightness Sensor |
+    | ---- | ---- |
+    | <img src="images/LD2410.jpg" height="250" alt="Presence Sensor"> | <img src="images/BH1750.jpg" height="250" alt="Brightness Sensor"> |
+
+1. Solder the **other ends** to the **distribution boards** and the **ESP** according to the wiring diagram and the tables above, together with the 100 µF capacitor (+ to 3V3). Leave out the power supply and the PIR for now.
 1. **Power supply:** solder the mains wires to the AC pins of the IRM-10-5 and insulate them with heat shrink. Solder the white and black 5V wires to +V and −V.
-1. Slide the power supply from the front into the **capsule (part 3)**. Thread the 5V wires from the back through the small opening in the divider wall of **part 2**, then screw the capsule to the divider wall (2x M1.7x6mm from the front). The divider wall separates the mains side (back) from the low-voltage side (front).
-1. **PIR:** thread the PIR wires from the front through the hole of the PIR socket in **part 1** before soldering — the lens does not fit through. Solder the 100 nF capacitor directly to VDD and GND of the PIR.
-1. **LED:** solder the wires to the DIN end of the LED segment and thread them from the front through the slot in the flange of part 1.
-1. **Temperature sensor:** push the SHT41 wires through the slot in the flange of part 1.
-1. Solder the whole wiring harness outside of the insert according to the tables above. Tin all wire ends first.
+1. Slide the power supply from the front into the **capsule (part 3)**. Thread the 5V wires from the back through the small opening in the divider wall of **part 2**, then screw the capsule to the divider wall (2x M1.7x6mm from the front). Solder the 5V wires to the 5V board.
+
+    | Power supply in the capsule | 5V wires through the divider wall |
+    | --- | --- |
+    | <img src="images/PowerSupplyCapsule.jpg" height="350" alt="Power supply in the capsule"> | <img src="images/CarrierWires.jpg" height="350" alt="5V wires through the divider wall"> |
+
 1. Use a **multimeter** to verify that solder joints of different colors do not bridge. Any short can damage components and may cause smoke or even fire.
-1. Now it's time to check whether all the soldering has worked out. Power the ESP via USB-C, flash the software (see the software section), verify that all sensors are detected and reporting, then return here to complete assembly. **Never connect USB and mains at the same time.**
 1. Slide the ESP (components facing front, USB-C to the right) and both distribution boards from the right into the chambers of part 2.
+
+    <img src="images/WiringHarness.jpg" height="400" alt="ESP and distribution boards in part 2">
+
+1. **PIR:** thread the PIR wires from the front through the hole of the PIR socket in **part 1**, then solder the 100 nF capacitor directly to VDD and GND of the PIR. Solder VDD and GND to the 3.3V board and OUT to GPIO7 of the ESP.
+1. Now it's time to check whether all the soldering has worked out. Power the ESP via USB-C, flash the software (see the software section), verify that all sensors are detected and reporting, then return here to complete assembly. **Never connect USB and mains at the same time.**
 1. Hold part 1 about 4–5 cm in front of part 2 and put the sensors in:
     - **PIR:** put it into its socket so the two lugs sit in their pockets, then screw the **clamp ring (part 7)** with 2x M1.7x6mm from the back.
     - **Presence sensor:** lay the LD2410B into its seat, the plug end goes through the opening in the flange. Screw the **bracket (part 6)** over it with 2x M1.7x6mm.
     - **Brightness sensor:** screw the BH1750 onto its domes (2x M2x3mm).
     - **Temperature sensor:** push the board against the back wall of its chamber, press the **SHT plug (part 10)** into the slot next to the wires (its left side is open for them), then screw the SHT41 (1x M2x3mm).
     - **LED:** slide the LED segment into the grooves of its holder and bend the short end over the posts.
+
+    <img src="images/SensorsInPlace.jpg" height="400" alt="Sensors in place">
+
 1. Screw part 1 to part 2 (3x M2x3mm).
+
+    <img src="images/InsertSide.jpg" height="400" alt="Insert from the side">
+
 1. **Mounting (electrician):** switch off the circuit and verify it is dead. Connect L and N of the power supply to the mains cable with suitable connectors, insulate PE and bend it away. Push the insert into the wall box and fasten it with the device screws through the slots of the flange (both orientations work).
+
+    <img src="images/InsertInBox.jpg" height="400" alt="Insert in the wall box">
+
 1. Put the frame on and push the cover plate onto the pin in the middle until it sits on the frame. It holds the frame in place.
+
+    | Frame and cover plate | Installed |
+    | --- | --- |
+    | <img src="images/FrameAndCover.jpg" height="350" alt="Frame and cover plate"> | <img src="images/Installed.jpg" height="350" alt="Installed"> |
 
 **Congratulations — you’re done!** 🥳🎉
 
@@ -270,7 +310,8 @@ This sensor is the most challenging to calibrate. The g0-g8 values depict the di
 1. Ensure **no one is in the room** while calibrating.
 1. Let the sensor sit for **10 minutes** while Home Assistant gathers **g0–g8 move/still** energy values.
 1. Review the history of each **g0–g8** value in Home Assistant. Find the **highest** value each.
-1. Set each **g0–g8 move and still threshold** to the highest observed value for this distance **plus 5 to 10**.
+1. Set the **g0–g8 still thresholds** to **10 % higher** than the highest observed value for this distance.
+1. Set the **g0–g8 move thresholds** to **20 % higher** than the highest observed value for this distance.
 1. **Disable engineering mode**
 
 ### 🚫 Don'ts
