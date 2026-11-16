@@ -10,7 +10,7 @@ This flush-mount version uses the sensor set of the budget-friendly V2.1. For ro
 
 > **⚠️ This device is connected to 230 V mains.** The power supply sits inside the wall box. Connecting it to mains must only be done by a qualified electrician. Mistakes can kill you or start a fire.
 
-Hello everyone 👋, this is the flush-mount version of my [All-In-One Smart Home Sensor Case V2.1](https://makerworld.com/de/models/2180710-all-in-one-smart-home-sensor-case-v2#profileId-2381634). It contains the same set of sensors, but instead of sitting on a shelf with a USB cable, it disappears into a deep hollow-wall box behind a normal switch frame. If you have any questions about the project please ask them in the comments then I can answer them and everyone can learn from that.
+Hello everyone 👋, this is the flush-mount version of my [All-In-One Smart Home Sensor Case V2.1](https://makerworld.com/de/models/2180710-all-in-one-smart-home-sensor-case-v2#profileId-2381634). It contains almost the same set of sensors (only air quality is missing), but instead of sitting on a shelf with a USB cable, it disappears into a deep hollow-wall box behind a normal switch frame. If you have any questions about the project please ask them in the comments then I can answer them and everyone can learn from that.
 
 ![Exploded view](images/ExplodedView.png)
 

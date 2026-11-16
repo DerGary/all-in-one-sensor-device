@@ -166,33 +166,33 @@ These are the lengths I cut (in mm, including 3.5 mm stripped on each end). The 
 
 ### 🔢 Assembly Instructions
 
-The order matters, because some wires have to be threaded through the parts before soldering. The PIR comes last: its wires go through the PIR socket of part 1 and the lens does not fit through, so after that part 1 hangs on the wiring harness.
+I built it from the back to the front: first the power supply on part 2, then the wiring harness, and part 1 with the sensors at the very end. The PIR is soldered last, because its wires have to go through the PIR socket of part 1 and the lens does not fit through.
 
 1. Cut all wires to length (see the table above) and tin the wire ends.
-1. **LED:** solder the wires to the input end of the LED segment and thread them from the front through the slot in the flange of **part 1**.
-1. **Temperature sensor:** solder the wires to the SHT41 and push them from the front through the slot in the flange of part 1.
-1. Solder **one end** of the remaining wires to the **brightness sensor** and to the **presence sensor cable**.
-
-    | Presence Sensor | Brightness Sensor |
-    | ---- | ---- |
-    | <img src="images/LD2410.jpg" height="250" alt="Presence Sensor"> | <img src="images/BH1750.jpg" height="250" alt="Brightness Sensor"> |
-
-1. Solder the **other ends** to the **distribution boards** and the **ESP** according to the wiring diagram and the tables above, together with the 100 µF capacitor (+ to 3V3). Leave out the power supply and the PIR for now.
 1. **Power supply:** solder the mains wires to the AC pins of the IRM-10-5 and insulate them with heat shrink. Solder the white and black 5V wires to +V and −V.
-1. Slide the power supply from the front into the **capsule (part 3)**. Thread the 5V wires from the back through the small opening in the divider wall of **part 2**, then screw the capsule to the divider wall (2x M1.7x6mm from the front). Solder the 5V wires to the 5V board.
+1. Slide the power supply from the front into the **capsule (part 3)**. Thread the 5V wires from the back through the small opening in the divider wall of **part 2**, then screw the capsule to the divider wall (2x M1.7x6mm from the front).
 
     | Power supply in the capsule | 5V wires through the divider wall |
     | --- | --- |
     | <img src="images/PowerSupplyCapsule.jpg" height="350" alt="Power supply in the capsule"> | <img src="images/CarrierWires.jpg" height="350" alt="5V wires through the divider wall"> |
 
+1. Solder **one end** of the wires to the **temperature sensor**, the **brightness sensor**, the **presence sensor cable** and the input end of the **LED segment**.
+
+    | Presence Sensor | Brightness Sensor |
+    | ---- | ---- |
+    | <img src="images/LD2410.jpg" height="250" alt="Presence Sensor"> | <img src="images/BH1750.jpg" height="250" alt="Brightness Sensor"> |
+
+1. Solder the **other ends** to the **distribution boards** and the **ESP** according to the wiring diagram and the tables above, together with the 100 µF capacitor (+ to 3V3). Leave out the PIR for now.
+1. **Prepare the PIR:** solder the 100 nF capacitor directly to VDD and GND of the PIR and solder its three wires to the PIR.
+1. Solder the 5V wires of the **power supply** to the 5V board.
 1. Use a **multimeter** to verify that solder joints of different colors do not bridge. Any short can damage components and may cause smoke or even fire.
 1. Slide the ESP (components facing front, USB-C to the right) and both distribution boards from the right into the chambers of part 2.
 
     <img src="images/WiringHarness.jpg" height="400" alt="ESP and distribution boards in part 2">
 
-1. **PIR:** thread the PIR wires from the front through the hole of the PIR socket in **part 1**, then solder the 100 nF capacitor directly to VDD and GND of the PIR. Solder VDD and GND to the 3.3V board and OUT to GPIO7 of the ESP.
+1. **PIR:** thread the PIR wires from the front through the hole of the PIR socket in **part 1**, then solder VDD and GND to the 3.3V board and OUT to GPIO7 of the ESP. Check these joints with the multimeter as well.
 1. Now it's time to check whether all the soldering has worked out. Power the ESP via USB-C, flash the software (see the software section), verify that all sensors are detected and reporting, then return here to complete assembly. **Never connect USB and mains at the same time.**
-1. Hold part 1 about 4–5 cm in front of part 2 and put the sensors in:
+1. Hold part 1 about 4–5 cm in front of part 2, push the sensors and the LED from the back through their openings in part 1 and fasten them:
     - **PIR:** put it into its socket so the two lugs sit in their pockets, then screw the **clamp ring (part 7)** with 2x M1.7x6mm from the back.
     - **Presence sensor:** lay the LD2410B into its seat, the plug end goes through the opening in the flange. Screw the **bracket (part 6)** over it with 2x M1.7x6mm.
     - **Brightness sensor:** screw the BH1750 onto its domes (2x M2x3mm).
