@@ -69,13 +69,13 @@ The frame and the cover plate are parametric in the Fusion 360 file on MakerWorl
 
 | Parameter | Meaning |
 | --- | --- |
-| `rahmen_breite`, `rahmen_hoehe`, `rahmen_tiefe` | Outer size and height of the frame |
-| `rahmen_ecke_aussen`, `rahmen_ecke_innen` | Fillet of the outer corners and of the corners of the opening (0 = sharp) |
-| `scheibe_breite`, `scheibe_hoehe`, `scheibe_ecke` | Size and corner fillet of the cover plate |
-| `scheibe_luft` | Gap between cover plate and frame on each side |
-| `lippe_breite`, `lippe_hoehe`, `lippe_ecke` | Opening of the inner lip of the frame (not smaller than 51 mm) |
-| `rahmen_lippe_dicke` | Thickness of the inner lip |
-| `dosenrand` | Height of the rim of your wall box above the wall |
+| `frame_width`, `frame_height`, `frame_depth` | Outer size and height of the frame |
+| `frame_corner_outer`, `frame_corner_inner` | Fillet of the outer corners and of the corners of the opening (0 = sharp) |
+| `plate_width`, `plate_height`, `plate_corner` | Size and corner fillet of the cover plate |
+| `plate_gap` | Gap between cover plate and frame on each side |
+| `lip_width`, `lip_height`, `lip_corner` | Opening of the inner lip of the frame (not smaller than 51 mm) |
+| `frame_lip_thickness` | Thickness of the inner lip |
+| `box_rim` | Height of the rim of your wall box above the wall |
 
 #### Using an original Busch-Jaeger cover plate
 
