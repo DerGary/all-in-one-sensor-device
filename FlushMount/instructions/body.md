@@ -120,7 +120,7 @@ The distribution boards are drawn as rails: all holes of a row are connected. Th
 
 #### Distribution boards
 
-Each cell is one hole, the holes of a row are connected. When you cut the proto board, cut through the next row of holes so the edge holes stay intact.
+Each cell is one hole, the holes of a row must be connected. Depending on your proto board the holes of a row are already connected (strip board), otherwise each hole is a separate solder pad and you have to bridge the holes of a row with solder or a piece of bare wire. Only bridge along a row, never between two rows. When you cut the proto board, cut through the next row of holes so the edge holes stay intact.
 
 **5V/GND board** 2 × 5 holes:
 
@@ -184,7 +184,7 @@ I built it from the back to the front: first the power supply on part 2, then th
 1. Solder the **other ends** to the **distribution boards** and the **ESP** according to the wiring diagram and the tables above, together with the 100 µF capacitor (stripe/− to GND, + to 3V3). Solder the three **PIR wires** only to the 3.3V board and GPIO7 for now, their other end stays free.
 1. **Prepare the PIR:** solder the 100 nF capacitor directly to VDD and GND of the PIR (ceramic, either way round).
 1. Solder the 5V wires of the **power supply** to the 5V board.
-1. Use a **multimeter** to verify that solder joints of different colors do not bridge. Any short can damage components and may cause smoke or even fire.
+1. Use a **multimeter** to verify that solder joints of different colors do not bridge, especially the solder bridges on the distribution boards: all holes of a row must be connected, neighboring rows must not. Any short can damage components and may cause smoke or even fire.
 1. Slide the ESP (components facing front, USB-C to the right) and both distribution boards from the right into the chambers of part 2.
 
     <img src="images/WiringHarness.jpg" height="400" alt="ESP and distribution boards in part 2">
