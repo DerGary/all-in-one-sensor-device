@@ -1,0 +1,196 @@
+name: Flush-Mount
+
+on:
+  pull_request:
+    branches: ["main"]
+  push:
+    tags:
+      - "flush-mount*"
+
+jobs:
+  # Runs unconditionally (no `paths:` filter on the trigger) so this workflow always
+  # posts a check on every PR - required status checks would otherwise wait forever
+  # on a PR that never touches these paths. Path relevance is filtered here instead,
+  # and build-pdf/build-bin are skipped (not un-triggered) when irrelevant.
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      relevant: ${{ github.event_name != 'pull_request' || steps.filter.outputs.relevant }}
+    steps:
+      - uses: actions/checkout@v6
+        if: github.event_name == 'pull_request'
+      - uses: dorny/paths-filter@v4
+        if: github.event_name == 'pull_request'
+        id: filter
+        with:
+          filters: |
+            relevant:
+              - 'FlushMount/**'
+              - 'common.yaml'
+              - 'connectivity/**'
+              - 'sensors/**'
+              - 'lang/**'
+              - 'automations/**'
+              - .github/workflows/flush-mount-ci.yaml
+
+  build-pdf:
+    needs: changes
+    if: needs.changes.outputs.relevant == 'true'
+    runs-on: ubuntu-latest
+    container:
+      image: node:26
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Install Dependencies
+        run: |
+            apt-get update
+            apt-get install -y chromium fonts-noto-color-emoji
+
+      - name: Install md-to-pdf globally
+        run: npm i -g md-to-pdf
+
+      - name: Run PDF render script
+        working-directory: FlushMount/instructions
+        run: |
+          chmod +x ./renderPdf.sh
+          ./renderPdf.sh
+
+      - name: Upload PDF Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: flush-mount-instructions-pdf
+          path: ./FlushMount/instructions/flush-mount-instructions.pdf
+          if-no-files-found: error
+
+  build-bin:
+    needs: changes
+    if: needs.changes.outputs.relevant == 'true'
+    runs-on: ubuntu-latest
+    container:
+      # Keep the version in the cache keys below in sync with this image tag
+      image: esphome/esphome:2026.7
+    strategy:
+      fail-fast: false
+      matrix:
+        # The hardware is fixed (ESP32-C6, SHT41, EKMC), only language and connectivity vary.
+        include:
+          - { lang: de, connectivity: wifi_improv }
+          - { lang: en, connectivity: wifi_improv }
+          # OpenThread: one compile check only, so PRs can't break it. Never released (the dataset is
+          # compiled in and thread builds can't be updated over the air).
+          - { lang: de, connectivity: thread }
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      # Same caching as the V2.1 workflow: ESP-IDF and toolchains only depend on the ESPHome
+      # version, the build directory per build so only changed sources are rebuilt.
+      - name: Cache ESP-IDF framework and toolchains
+        uses: actions/cache@v6
+        with:
+          path: /github/home/.cache/esphome
+          key: flush-mount-idf-2026.7
+
+      - name: Cache ESPHome build directory
+        uses: actions/cache@v6
+        with:
+          path: FlushMount/.esphome
+          key: flush-mount-build-2026.7-${{ matrix.connectivity }}-${{ matrix.lang }}
+
+      - name: Determine version
+        id: version
+        run: |
+          case "$GITHUB_REF" in
+            refs/tags/flush-mount*)
+              # flush-mount-v1.0.0 -> v1.0.0, the device name is already part of the file names
+              VERSION="${GITHUB_REF#refs/tags/flush-mount}"
+              VERSION="${VERSION#-}"
+              ;;
+            *)
+              VERSION="flush-mount-dev.${{ github.run_number }}"
+              ;;
+          esac
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Compile firmware
+        run: |
+          esphome -s lang ${{ matrix.lang }} -s connectivity ${{ matrix.connectivity }} -s version ${{ steps.version.outputs.version }} compile FlushMount/device.yaml
+
+      # The openthread_tlv is compiled into the firmware and there is no post-flash
+      # provisioning like esp32_improv for WiFi, so the thread variant is only ever
+      # compiled here as a build check - never collected, uploaded, or released.
+      - name: Collect and rename binaries
+        if: matrix.connectivity != 'thread'
+        run: |
+          mkdir -p output
+
+          BASE_NAME="firmware_flush-mount_${{ matrix.lang }}_${{ steps.version.outputs.version }}"
+
+          OTA_PATH=$(find FlushMount/.esphome/build/ -name "firmware.ota.bin" | head -n 1)
+          cp "$OTA_PATH" "output/${BASE_NAME}_ota.bin"
+
+          FACTORY_PATH=$(find FlushMount/.esphome/build/ -name "firmware.factory.bin" | head -n 1)
+          cp "$FACTORY_PATH" "output/${BASE_NAME}_factory.bin"
+
+      - name: Upload artifacts for this matrix run
+        if: matrix.connectivity != 'thread'
+        uses: actions/upload-artifact@v7
+        with:
+          name: binaries-flush-mount-${{ matrix.lang }}
+          path: output/*.bin
+
+  # Always runs (even when build-pdf/build-bin were skipped as not relevant) so it can
+  # be set as the required status check in branch protection.
+  flush-mount-ci-gate:
+    name: Flush-Mount CI Gate
+    runs-on: ubuntu-latest
+    needs: [changes, build-pdf, build-bin]
+    if: always()
+    steps:
+      - name: Check build results
+        run: |
+          # The path filter itself must have run, and no build may have failed or been cancelled.
+          # "skipped" builds are fine (PR not relevant to this device).
+          if [ "${{ needs.changes.result }}" != "success" ]; then
+            echo "Flush-Mount CI failed: path filter did not run"
+            exit 1
+          fi
+          for r in "${{ needs.build-pdf.result }}" "${{ needs.build-bin.result }}"; do
+            if [ "$r" = "failure" ] || [ "$r" = "cancelled" ]; then
+              echo "Flush-Mount CI failed"
+              exit 1
+            fi
+          done
+          echo "Flush-Mount CI passed (or not relevant to this PR)"
+
+  release:
+    needs:
+      - build-bin
+      - build-pdf
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/flush-mount')
+
+    permissions:
+      contents: write
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v8
+        with:
+          path: all-artifacts
+          merge-multiple: true # Flattens all artifacts into a single folder
+
+      - name: Rename Instructions
+        working-directory: all-artifacts
+        run: mv flush-mount-instructions.pdf ${{ github.ref_name }}-instructions.pdf
+
+      - name: Create GitHub Release and attach assets
+        uses: softprops/action-gh-release@v3
+        with:
+          files: all-artifacts/*
+          name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true

@@ -26,6 +26,8 @@ jobs:
           filters: |
             relevant:
               - 'V2.1/**'
+              - 'common.yaml'
+              - 'connectivity/**'
               - 'sensors/**'
               - 'lang/**'
               - 'automations/**'
@@ -67,22 +69,45 @@ jobs:
     if: needs.changes.outputs.relevant == 'true'
     runs-on: ubuntu-latest
     container:
+      # Keep the version in the cache keys below in sync with this image tag
       image: esphome/esphome:2026.7
     strategy:
       fail-fast: false
       matrix:
-        lang: [de, en]
-        temp: [bme680, bme280]
-        variant: [esp32, esp32c6]
-        connectivity: [wifi_improv, thread]
-        exclude:
-          # OpenThread requires the esp32c6's 802.15.4 radio
-          - variant: esp32
-            connectivity: thread
+        # Every build is listed explicitly: only combinations that match real hardware are built.
+        include:
+          - { lang: de, temp: bme680, variant: esp32, connectivity: wifi_improv }
+          - { lang: en, temp: bme680, variant: esp32, connectivity: wifi_improv }
+          - { lang: de, temp: bme680, variant: esp32c6, connectivity: wifi_improv }
+          - { lang: en, temp: bme680, variant: esp32c6, connectivity: wifi_improv }
+          - { lang: de, temp: bme280, variant: esp32, connectivity: wifi_improv }
+          - { lang: en, temp: bme280, variant: esp32, connectivity: wifi_improv }
+          - { lang: de, temp: bme280, variant: esp32c6, connectivity: wifi_improv }
+          - { lang: en, temp: bme280, variant: esp32c6, connectivity: wifi_improv }
+          # OpenThread: one compile check only, so PRs can't break it. Never released (the dataset is
+          # compiled in and thread builds can't be updated over the air); needs the esp32c6 radio.
+          - { lang: de, temp: bme680, variant: esp32c6, connectivity: thread }
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+
+      # ESPHome downloads ESP-IDF and its toolchains into ~/.cache/esphome (HOME is /github/home
+      # in container jobs); that only depends on the ESPHome version, and the download is the same
+      # for esp32 and esp32c6 (all toolchains get installed), so one shared entry (1.7 GB). The build
+      # directory holds the compiled objects, so only changed sources are rebuilt.
+      # Fixed keys: saved once per ESPHome version and build, refreshed by the next ESPHome bump.
+      - name: Cache ESP-IDF framework and toolchains
+        uses: actions/cache@v6
+        with:
+          path: /github/home/.cache/esphome
+          key: v21-idf-2026.7
+
+      - name: Cache ESPHome build directory
+        uses: actions/cache@v6
+        with:
+          path: V2.1/.esphome
+          key: v21-build-2026.7-${{ matrix.variant }}-${{ matrix.temp }}-${{ matrix.connectivity }}-${{ matrix.lang }}
 
       - name: Determine version
         id: version
@@ -135,10 +160,18 @@ jobs:
     steps:
       - name: Check build results
         run: |
-          if [ "${{ needs.build-pdf.result }}" = "failure" ] || [ "${{ needs.build-bin.result }}" = "failure" ]; then
-            echo "V2.1 CI failed"
+          # The path filter itself must have run, and no build may have failed or been cancelled.
+          # "skipped" builds are fine (PR not relevant to this device).
+          if [ "${{ needs.changes.result }}" != "success" ]; then
+            echo "V2.1 CI failed: path filter did not run"
             exit 1
           fi
+          for r in "${{ needs.build-pdf.result }}" "${{ needs.build-bin.result }}"; do
+            if [ "$r" = "failure" ] || [ "$r" = "cancelled" ]; then
+              echo "V2.1 CI failed"
+              exit 1
+            fi
+          done
           echo "V2.1 CI passed (or not relevant to this PR)"
 
   release:
