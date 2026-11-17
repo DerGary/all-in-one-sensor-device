@@ -44,4 +44,4 @@ Busch-Jaeger, Busch-balance and future are trademarks of Busch-Jaeger Elektro Gm
 - **Settings:** standard profile, 0.20 mm layer height, 0.4 mm nozzle
 - **Part 1 (front):** the pin in the middle that holds the cover plate is printed with 100 % infill using the modifier included in the print file, otherwise it can break off.
 - **Cover plate:** print the light window in transparent filament in the same print (multi-color).
-- **Frames:** print front side down. The future® linear frame needs supports from the build plate under its inner lip. If your printer prints outer dimensions too small, use X-Y contour compensation **only for the frames** — never for the cover plate, its clamping sleeve would get too tight and break.
+- **Frames:** print front side down. Both frames need supports from the build plate under their inner lip. If your printer prints outer dimensions too small, use X-Y contour compensation **only for the frames** — never for the cover plate, its clamping sleeve would get too tight and break.

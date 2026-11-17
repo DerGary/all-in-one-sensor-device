@@ -53,11 +53,11 @@ You also need:
 | 8 Cover plate | <img src="images/Part8.jpg" width="180" alt="Part8"> <img src="images/Part8Back.jpg" width="180" alt="Part8Back"> | Front on the build plate | Printed together with part 9. The slotted sleeve on the back clamps onto the pin of part 1. |
 | 9 Light window |  | In the hole of part 8 | Transparent filament, multi-color print with part 8. |
 | 10 SHT plug | <img src="images/Part10.jpg" width="180" alt="Part10"> | Collar on the build plate | Closes the slot of the temperature sensor in the flange so no warm air rises from the wall box. Its left side is open for the wires. |
-| 11 Frame (optional) | <img src="images/Part11.jpg" width="180" alt="Part11"> | Front on the build plate | Only if you don’t use an original frame. future® linear needs supports. |
+| 11 Frame (optional) | <img src="images/Part11.jpg" width="180" alt="Part11"> | Front on the build plate | Only if you don’t use an original frame. Needs supports under the inner lip. |
 | 4 Light plug (optional) | <img src="images/Part4.jpg" width="180" alt="Part4"> | Collar on the build plate | Only with an original Busch-Jaeger cover plate, transparent. |
 | 5 Drilling template (optional) | <img src="images/Part5.jpg" width="180" alt="Part5"> | Flat | Only to drill an original Busch-Jaeger cover plate. |
 
-This is how the sensors sit on part 1 and the ESP and the power supply on part 2:
+This is how the sensors sit on part 1 (yellow PIR, green presence sensor, blue brightness sensor, red temperature sensor, purple LED) and the ESP and the power supply on part 2:
 
 | Part 1 with sensors | Part 2 with ESP | Part 2 with power supply (back) |
 | --- | --- | --- |
@@ -79,6 +79,7 @@ The frame and the cover plate are parametric in the Fusion 360 file on MakerWorl
 
 #### Using an original Busch-Jaeger cover plate
 
+1. Find the bottom of the cover plate: the two struts on its inside are at the bottom.
 1. Put the drilling template (part 5) over the cover plate, the notch marks the top.
 1. Pre-drill the two holes with Ø2.5 mm.
 1. Drill the PIR hole to **Ø21 mm** and the light hole to **Ø4.5 mm**.
@@ -137,7 +138,7 @@ Each cell is one hole, the holes of a row are connected. When you cut the proto 
 | 3V3 (red) | PIR VDD | 100 µF + | SHT41 VDD | BH1750 VCC | ESP 3V3 |
 | GND (black) | PIR GND | 100 µF − | SHT41 GND | BH1750 GND | Bridge from 5V board |
 
-The 100 nF capacitor goes directly across VDD and GND of the PIR, the 100 µF capacitor next to the PIR on the distribution board. PIR Out, LD2410B TX/RX and the LED data input go directly to the ESP.
+The 100 nF capacitor goes directly across VDD and GND of the PIR, the 100 µF capacitor next to the PIR on the distribution board. The 100 µF is an electrolytic capacitor and has a polarity: the stripe on its side marks the − leg (also the shorter one), which goes to GND. Soldered the wrong way round it can fail or even burst. The 100 nF ceramic capacitor has no polarity, both ways are fine. PIR Out, LD2410B TX/RX and the LED data input go directly to the ESP.
 
 #### Wire lengths
 
@@ -180,8 +181,8 @@ I built it from the back to the front: first the power supply on part 2, then th
 
     <img src="images/BH1750.jpg" height="250" alt="Brightness sensor with its wires">
 
-1. Solder the **other ends** to the **distribution boards** and the **ESP** according to the wiring diagram and the tables above, together with the 100 µF capacitor (+ to 3V3). Solder the three **PIR wires** only to the 3.3V board and GPIO7 for now, their other end stays free.
-1. **Prepare the PIR:** solder the 100 nF capacitor directly to VDD and GND of the PIR.
+1. Solder the **other ends** to the **distribution boards** and the **ESP** according to the wiring diagram and the tables above, together with the 100 µF capacitor (stripe/− to GND, + to 3V3). Solder the three **PIR wires** only to the 3.3V board and GPIO7 for now, their other end stays free.
+1. **Prepare the PIR:** solder the 100 nF capacitor directly to VDD and GND of the PIR (ceramic, either way round).
 1. Solder the 5V wires of the **power supply** to the 5V board.
 1. Use a **multimeter** to verify that solder joints of different colors do not bridge. Any short can damage components and may cause smoke or even fire.
 1. Slide the ESP (components facing front, USB-C to the right) and both distribution boards from the right into the chambers of part 2.
