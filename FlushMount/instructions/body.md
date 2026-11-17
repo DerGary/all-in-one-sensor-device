@@ -55,7 +55,7 @@ You also need:
 | 10 SHT plug | <img src="images/Part10.jpg" width="180" alt="Part10"> | Collar on the build plate | Closes the slot of the temperature sensor in the flange so no warm air rises from the wall box. Its left side is open for the wires. |
 | 11 Frame (optional) | <img src="images/Part11.jpg" width="180" alt="Part11"> | Front on the build plate | Only if you don’t use an original frame. Needs supports under the inner lip. |
 | 4 Light plug (optional) | <img src="images/Part4.jpg" width="180" alt="Part4"> | Collar on the build plate | Only with an original Busch-Jaeger cover plate, transparent. |
-| 5 Drilling template (optional) | <img src="images/Part5.jpg" width="180" alt="Part5"> | Flat | Only to drill an original Busch-Jaeger cover plate. |
+| 5 Drilling template (optional) | <img src="images/Part5.jpg" width="180" alt="Part5"> | Closed top on the build plate | Only to drill an original Busch-Jaeger cover plate. |
 
 This is how the sensors sit on part 1 (yellow PIR, green presence sensor, blue brightness sensor, red temperature sensor, purple LED) and the ESP and the power supply on part 2:
 
