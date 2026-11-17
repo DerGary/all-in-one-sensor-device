@@ -59,7 +59,7 @@ You also need:
 
 This is how the sensors sit on part 1 (yellow PIR, green presence sensor, blue brightness sensor, red temperature sensor, purple LED) and the ESP and the power supply on part 2:
 
-| Part 1 with sensors | Part 2 with ESP | Part 2 with power supply (back) |
+| Part 1 with sensors | Part 2 with ESP and distribution boards | Part 2 with power supply (back) |
 | --- | --- | --- |
 | <img src="images/Part1WithSensors.jpg" width="260" alt="Part1WithSensors"> | <img src="images/Part2WithEsp.jpg" width="260" alt="Part2WithEsp"> | <img src="images/Part2WithEspAndPsu.jpg" width="260" alt="Part2WithEspAndPsu"> |
 
