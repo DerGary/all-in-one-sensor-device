@@ -1,6 +1,6 @@
 # All-In-One Smart Home Sensor – Flush-Mount
 
-<!-- TODO: Makerworld link once published -->
+[Makerworld](https://makerworld.com/de/models/3630191-all-in-one-smart-home-sensor-flush-mount#profileId-4162540)
 
 ## 🆕 Also check out the Ultimate Version
 
